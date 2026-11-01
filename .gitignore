@@ -1,0 +1,9 @@
+node_modules/
+dist/
+reports/
+.pramanasutra/
+*.tgz
+.env
+.env.*
+!.env.example
+coverage/

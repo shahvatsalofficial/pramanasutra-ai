@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "strict",
+  "releaseRequiresExecutedEvidence": true,
+  "blockOnFocusedTests": true,
+  "allowAutomatedDeployment": false,
+  "manualApprovalsRequired": true
+}

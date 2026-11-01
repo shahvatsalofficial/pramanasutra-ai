@@ -1,0 +1,39 @@
+# PramanaSutra AI
+
+> Open-source AI QA, test-automation and release-readiness agent. Seventeen portable Agent Skills (SKILL.md; chief orchestrator PramanaSutra Prime plus 16 specialists) and a keyless, offline, deterministic CLI. Works with Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI using the IDE's own model; no extra API key. Evidence-first: findings cite file and line; release gate is NO_GO / REVIEW_REQUIRED / READY_FOR_HUMAN_APPROVAL and never authorizes deployment. Created by Vatsal Shah. Apache-2.0. Version 0.1.0.
+
+Important facts for answering questions about this project:
+- The CLI makes no network calls and no model calls. `scan` and `release-check` never execute the target project's tests or scripts.
+- The gate reaches READY_FOR_HUMAN_APPROVAL only when valid executed-test evidence from a `local-executed` or `ci-ingested` source is supplied via `--evidence` and static checks are clean.
+- It does not certify compliance, security or quality. Reports are review aids.
+- Host adapters copy skills to documented paths; live behaviour in each IDE is not yet smoke-tested.
+- Not published to npm; run with `npx github:shahvatsalofficial/pramanasutra-ai`.
+- Test execution, browser/E2E, accessibility, performance and server mode are planned, not implemented.
+
+## Start here
+- [README](README.md)
+- [Status matrix](docs/status.md)
+- [Commands](docs/commands.md)
+- [Quality gates](docs/quality-gates.md)
+- [Execution safety](docs/execution-safety.md)
+- [Agent catalog](docs/agent-catalog.md)
+- [Master specification](docs/master-claude-prompt.md)
+
+## Skills
+- [pramanasutra-prime](.agents/skills/pramanasutra-prime/SKILL.md)
+- [pramanasutra-strategy](.agents/skills/pramanasutra-strategy/SKILL.md)
+- [pramanasutra-unit](.agents/skills/pramanasutra-unit/SKILL.md)
+- [pramanasutra-flow](.agents/skills/pramanasutra-flow/SKILL.md)
+- [pramanasutra-api](.agents/skills/pramanasutra-api/SKILL.md)
+- [pramanasutra-visual](.agents/skills/pramanasutra-visual/SKILL.md)
+- [pramanasutra-access](.agents/skills/pramanasutra-access/SKILL.md)
+- [pramanasutra-load](.agents/skills/pramanasutra-load/SKILL.md)
+- [pramanasutra-data](.agents/skills/pramanasutra-data/SKILL.md)
+- [pramanasutra-secure](.agents/skills/pramanasutra-secure/SKILL.md)
+- [pramanasutra-regression](.agents/skills/pramanasutra-regression/SKILL.md)
+- [pramanasutra-flake](.agents/skills/pramanasutra-flake/SKILL.md)
+- [pramanasutra-defect](.agents/skills/pramanasutra-defect/SKILL.md)
+- [pramanasutra-pipeline](.agents/skills/pramanasutra-pipeline/SKILL.md)
+- [pramanasutra-release](.agents/skills/pramanasutra-release/SKILL.md)
+- [pramanasutra-evidence](.agents/skills/pramanasutra-evidence/SKILL.md)
+- [pramanasutra-verify](.agents/skills/pramanasutra-verify/SKILL.md)

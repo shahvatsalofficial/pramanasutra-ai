@@ -1,0 +1,21 @@
+{
+  "name": "@vatsalshah/pramanasutra",
+  "version": "0.1.0",
+  "description": "PramanaSutra AI: open-source AI QA, test automation and release-readiness agent skills for Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI, plus a keyless, offline, evidence-first CLI.",
+  "keywords": ["qa","quality-assurance","test-automation","release-engineering","release-readiness","quality-gate","ai-agent","agent-skills","claude-code","cursor","codex","github-copilot","gemini-cli","flaky-tests","regression-testing","ci-cd","sdet","llm"],
+  "license": "Apache-2.0",
+  "author": "Vatsal Shah",
+  "homepage": "https://github.com/shahvatsalofficial/pramanasutra-ai#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/shahvatsalofficial/pramanasutra-ai.git" },
+  "bugs": { "url": "https://github.com/shahvatsalofficial/pramanasutra-ai/issues" },
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "bin": { "pramanasutra": "./packages/cli/bin/pramanasutra.mjs" },
+  "files": ["packages/cli", ".agents", ".claude", "policies", "templates", "workflows", "docs", "README.md", "LICENSE", "NOTICE", "llms.txt", "CHANGELOG.md"],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "doctor": "node packages/cli/bin/pramanasutra.mjs doctor",
+    "scan:example": "node packages/cli/bin/pramanasutra.mjs scan --path examples/sample-app --out reports/example",
+    "gate:example": "node packages/cli/bin/pramanasutra.mjs release-check --path examples/sample-app --out reports/example"
+  }
+}

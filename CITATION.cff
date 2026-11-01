@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use PramanaSutra AI, please cite it as below."
+title: "PramanaSutra AI: evidence-first QA and release-readiness agent"
+type: software
+authors:
+  - family-names: Shah
+    given-names: Vatsal
+    alias: shahvatsalofficial
+version: 0.1.0
+date-released: 2026-11-01
+license: Apache-2.0
+repository-code: "https://github.com/shahvatsalofficial/pramanasutra-ai"
+keywords:
+  - quality assurance
+  - test automation
+  - release engineering
+  - agent skills
+  - quality gates

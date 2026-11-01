@@ -1,0 +1,18 @@
+# Implementation status (starter)
+
+| Capability | Status | Evidence / limitation |
+|---|---|---|
+| Node.js CLI doctor/scan/agents/init | Implemented | Runs on current Node runtime; run `npm test` |
+| Offline static QA heuristic checks | Implemented | No real test execution or code coverage measurement |
+| Release decision (`NO_GO`/`REVIEW_REQUIRED`/`READY_FOR_HUMAN_APPROVAL`) | Implemented | Ready state only with valid supplied executed-test evidence; not production approval |
+| Evidence ingestion (`--evidence`, `verify`) | Implemented | Schema-validated JSON; provenance depends on source |
+| JSON/Markdown/HTML reports | Implemented | Local report files, escaped HTML |
+| Prime and 16 specialist Agent Skills | Implemented as instructions | Host AI needed for model reasoning |
+| Claude/Cursor/Codex/Gemini/Copilot skill copy installer | Implemented | Paths only; host functionality unverified until tested |
+| Windows/macOS/Linux launchers | Implemented wrappers | Cross-OS CI configured; outcomes not yet observed here |
+| Actual target test execution | Planned | Never imply execution from static scanning |
+| Framework adapters, browser, device tests | Planned | Not included in starter |
+| Accessibility and performance measurement | Planned | No automated verification yet |
+| SBOM/provenance and hosted release workflow | Planned | No SLSA claims |
+| Standalone AI APIs, Ollama, secured server | Planned | Not implemented |
+| Production release authorization/deployment | Out of scope without human approval | Never deploy automatically |

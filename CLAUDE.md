@@ -1,0 +1,3 @@
+# Claude Code entrypoint — PramanaSutra AI
+
+Read `AGENTS.md`, `docs/master-claude-prompt.md` and `docs/status.md`. The root directory here is the project root. Do not create nested `pramanasutra/` inside it. Implement working source code, run tests, report honest command output, and separate implemented vs planned. The canonical skills live under `.agents/skills/`. To copy them into Claude's recognized directory in a target repository, run `node packages/cli/bin/pramanasutra.mjs init --ide claude --target <path>` after inspecting the destination. Never overwrite host customizations without permission.
