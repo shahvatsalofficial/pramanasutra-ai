@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Functional specification | PramanaSutra AI</title>
+<meta name="description" content="Every user-visible requirement of PramanaSutra AI v0.2.0 with inputs, outputs, decision rules and scenarios.">
+<link rel="canonical" href="https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/02-functional-specification.html">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Functional specification | PramanaSutra AI">
+<meta property="og:description" content="Every user-visible requirement of PramanaSutra AI v0.2.0 with inputs, outputs, decision rules and scenarios.">
+<meta property="og:url" content="https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/02-functional-specification.html">
+<meta property="og:site_name" content="PramanaSutra AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Functional specification | PramanaSutra AI">
+<meta name="twitter:description" content="Every user-visible requirement of PramanaSutra AI v0.2.0 with inputs, outputs, decision rules and scenarios.">
+<meta name="author" content="Vatsal Shah">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var t=localStorage.getItem('ps-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Functional specification","description":"Every user-visible requirement of PramanaSutra AI v0.2.0 with inputs, outputs, decision rules and scenarios.","author":{"@type":"Person","name":"Vatsal Shah"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"PramanaSutra AI","url":"https://shahvatsalofficial.github.io/pramanasutra-ai"}}</script>
+</head>
+<body class="doc">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">Menu</button>
+    <a class="brand" href="../index.html" aria-label="PramanaSutra AI home"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor" opacity=".12"/><path d="M6 24 16 7l10 17M10.5 18h11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PramanaSutra <b>AI</b></span></a>
+    <nav class="top-links" aria-label="Primary"><a href="../handbook/index.html">Handbook</a><a href="../handbook/05-user-guide.html">Get started</a><a href="../handbook/08-testing-and-proof.html">Proof</a><a href="https://github.com/shahvatsalofficial/pramanasutra-ai" rel="noopener">GitHub</a></nav>
+    <button class="theme-btn" type="button" aria-label="Toggle color theme"><span class="sun" aria-hidden="true">Light</span><span class="moon" aria-hidden="true">Dark</span></button>
+  </div>
+</header>
+<div class="layout">
+  <aside id="sidebar" class="sidebar" aria-label="Documentation"><div class="nav-group"><p class="nav-title">Handbook</p><ul><li><a href="../handbook/index.html">Overview</a></li><li><a href="../handbook/01-executive-summary.html">Executive summary</a></li><li><a href="../handbook/02-functional-specification.html" aria-current="page">Functional specification</a></li><li><a href="../handbook/03-technical-specification.html">Technical specification</a></li><li><a href="../handbook/04-architecture.html">Architecture</a></li><li><a href="../handbook/05-user-guide.html">User guide</a></li><li><a href="../handbook/06-cli-reference.html">CLI reference</a></li><li><a href="../handbook/07-security-privacy-legal.html">Security, privacy and legal</a></li><li><a href="../handbook/08-testing-and-proof.html">Testing and proof</a></li><li><a href="../handbook/09-compatibility-and-roadmap.html">Compatibility and roadmap</a></li><li><a href="../handbook/10-contributor-guide.html">Contributor guide</a></li><li><a href="../handbook/11-glossary-and-faq.html">Glossary and FAQ</a></li><li><a href="../handbook/12-rule-catalog.html">Rule catalog</a></li></ul></div><div class="nav-group"><p class="nav-title">Reference</p><ul><li><a href="../legal/trademark-and-name-clearance.html">Trademark and name clearance</a></li></ul></div></aside>
+  <main id="main" class="content"><article class="prose"><p class="crumbs"><a href="../index.html">PramanaSutra AI</a> / Handbook</p><h1 id="functional-specification">Functional specification</h1>
+<p class="lede">Every user-visible requirement of PramanaSutra AI v0.2.0 with inputs, outputs, decision rules and scenarios.</p><p class="meta">Version 0.2.0 &middot; Source: <a href="https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/docs/handbook/02-functional-specification.md" rel="noopener">docs/handbook/02-functional-specification.md</a></p>
+<h2 id="actors">Actors<a class="anchor" href="#actors" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table 1: Actors"><table><thead><tr><th scope="col">Actor</th><th scope="col">Goal</th></tr></thead><tbody><tr><td>Developer</td><td>Find test-hygiene problems before merging</td></tr><tr><td>QA lead</td><td>Get an auditable, readable report</td></tr><tr><td>Release manager</td><td>Know whether evidence supports a release and what is missing</td></tr><tr><td>CI system</td><td>Fail a build on <code>NO_GO</code> or <code>REVIEW_REQUIRED</code> via exit codes</td></tr><tr><td>AI IDE assistant</td><td>Follow the QA method defined by the skills</td></tr></tbody></table></div>
+<h2 id="functional-requirements">Functional requirements<a class="anchor" href="#functional-requirements" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table 2: Functional requirements"><table><thead><tr><th scope="col">ID</th><th scope="col">Requirement</th><th scope="col">Verified by</th></tr></thead><tbody><tr><td>F-01</td><td><code>doctor</code> reports Node version, platform and that no AI key is needed</td><td>CLI test</td></tr><tr><td>F-02</td><td><code>agents list</code> lists the 17 bundled skills</td><td>CLI test</td></tr><tr><td>F-03</td><td><code>scan</code> inventories files, test files, manifests and CI workflows without executing anything</td><td>scanner tests</td></tr><tr><td>F-04</td><td><code>scan</code> flags focused tests (<code>.only</code>, <code>fit</code>, <code>fdescribe</code>) as high severity with file and line</td><td>scanner tests</td></tr><tr><td>F-05</td><td><code>scan</code> flags skipped tests in JS/TS, pytest, unittest, JUnit and Go as low severity</td><td>scanner tests</td></tr><tr><td>F-06</td><td><code>scan</code> reports missing tests, missing CI and missing license</td><td>scanner tests</td></tr><tr><td>F-07</td><td>Every run writes <code>report.md</code>, <code>report.html</code>, <code>report.json</code> (default <code>./pramanasutra-reports</code>)</td><td>CLI tests</td></tr><tr><td>F-08</td><td>HTML reports escape all untrusted text</td><td>XSS test</td></tr><tr><td>F-09</td><td><code>release-check</code> returns exit 2 for <code>NO_GO</code>, 3 for <code>REVIEW_REQUIRED</code>, 0 for <code>READY_FOR_HUMAN_APPROVAL</code></td><td>CLI tests</td></tr><tr><td>F-10</td><td><code>release-check --evidence</code> accepts a validated test-evidence file</td><td>evidence tests</td></tr><tr><td>F-11</td><td>The gate never reaches ready without passing evidence from <code>local-executed</code> or <code>ci-ingested</code></td><td>gate tests</td></tr><tr><td>F-12</td><td><code>verify --evidence</code> validates an evidence file and exits 1 if invalid</td><td>CLI tests</td></tr><tr><td>F-13</td><td><code>--policy</code> loads a fail-closed JSON policy</td><td>policy tests</td></tr><tr><td>F-14</td><td><code>init</code> copies skills to a host-specific path and refuses to overwrite without <code>--force</code></td><td>installer tests</td></tr><tr><td>F-15</td><td>Invalid input exits 1 with a one-line message and no stack trace</td><td>CLI tests</td></tr></tbody></table></div>
+<h2 id="release-decision-rules">Release decision rules<a class="anchor" href="#release-decision-rules" aria-label="Link to this section">#</a></h2>
+<p>Evaluated in this order:</p>
+<ol><li>Any blocking static finding under the active policy gives <code>NO_GO</code>.</li><li>Supplied evidence with failures or a non-zero exit code gives <code>NO_GO</code>.</li><li>Otherwise collect missing items: evidence not passing (if the policy requires it), incomplete scan, no tests, no CI, no license.</li><li>Any missing item gives <code>REVIEW_REQUIRED</code>.</li><li>Nothing missing gives <code>READY_FOR_HUMAN_APPROVAL</code>.</li></ol>
+<p><code>requiresHumanApproval</code> is always <code>true</code>; <code>automatedDeploymentAuthorized</code> is always <code>false</code>.</p>
+<h2 id="evidence-states">Evidence states<a class="anchor" href="#evidence-states" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table 3: Evidence states"><table><thead><tr><th scope="col">State</th><th scope="col">Meaning</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>absent</code></td><td>No evidence supplied</td><td><code>REVIEW_REQUIRED</code></td></tr><tr><td><code>failing</code></td><td>Failures or non-zero exit code</td><td><code>NO_GO</code></td></tr><tr><td><code>inconclusive</code></td><td>Zero passed tests</td><td><code>REVIEW_REQUIRED</code></td></tr><tr><td><code>unverified</code></td><td>Source is <code>external-unverified</code></td><td><code>REVIEW_REQUIRED</code></td></tr><tr><td><code>passing</code></td><td>Exit 0, passed above 0, failed 0, trusted source</td><td>Counts toward ready</td></tr></tbody></table></div>
+<h2 id="scenarios">Scenarios<a class="anchor" href="#scenarios" aria-label="Link to this section">#</a></h2>
+<p><strong>Clean project with passing CI evidence.</strong> Tests, CI and license present; no findings; evidence <code>ci-ingested</code>, 12 passed. Result: <code>READY_FOR_HUMAN_APPROVAL</code>, exit 0.</p>
+<p><strong>Focused test left in.</strong> <code>test.only(...)</code> in <code>tests/a.test.js:2</code>. Result: <code>NO_GO</code>, exit 2, finding with remediation &quot;Remove .only&quot;.</p>
+<p><strong>No evidence supplied.</strong> Clean static scan. Result: <code>REVIEW_REQUIRED</code>, exit 3, reason &quot;No executed-test evidence supplied&quot;.</p>
+<p><strong>Unsafe file names.</strong> A test named <code>a &amp; b (x) $y 'q'.test.js</code>. Result: scanned normally; HTML shows the name escaped.</p>
+<h2 id="out-of-scope-in-v020">Out of scope in v0.2.0<a class="anchor" href="#out-of-scope-in-v020" aria-label="Link to this section">#</a></h2>
+<p>Running tests, browsers, load tests, accessibility audits, security scanners, SBOM or provenance generation, a server API, model inference from the CLI.</p></article></main>
+  <aside class="rail"><nav class="toc" aria-label="On this page"><p class="nav-title">On this page</p><ul><li class="l2"><a href="#actors">Actors</a></li><li class="l2"><a href="#functional-requirements">Functional requirements</a></li><li class="l2"><a href="#release-decision-rules">Release decision rules</a></li><li class="l2"><a href="#evidence-states">Evidence states</a></li><li class="l2"><a href="#scenarios">Scenarios</a></li><li class="l2"><a href="#out-of-scope-in-v020">Out of scope in v0.2.0</a></li></ul></nav></aside>
+</div>
+<footer class="footer">
+  <div class="footer-inner">
+    <p><strong>PramanaSutra AI</strong> v0.2.0. Test Everything. Prove Quality. Release Confidently. Created by <a href="https://github.com/shahvatsalofficial" rel="noopener">Vatsal Shah</a>. Licensed under <a href="https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/LICENSE" rel="noopener">Apache-2.0</a>.</p>
+    <p class="fine">Review aid only. Not a certification, compliance attestation, security guarantee or legal advice. Not affiliated with Anthropic, OpenAI, Cursor, GitHub or Google; product names belong to their owners. <a href="../handbook/07-security-privacy-legal.html">Legal details</a>.</p>
+  </div>
+</footer>
+<script src="../assets/site.js" type="module"></script>
+</body>
+</html>

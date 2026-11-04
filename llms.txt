@@ -1,6 +1,6 @@
 # PramanaSutra AI
 
-> Open-source AI QA, test-automation and release-readiness agent. Seventeen portable Agent Skills (SKILL.md; chief orchestrator PramanaSutra Prime plus 16 specialists) and a keyless, offline, deterministic CLI. Works with Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI using the IDE's own model; no extra API key. Evidence-first: findings cite file and line; release gate is NO_GO / REVIEW_REQUIRED / READY_FOR_HUMAN_APPROVAL and never authorizes deployment. Created by Vatsal Shah. Apache-2.0. Version 0.1.0.
+> Open-source AI QA, test-automation and release-readiness agent. Seventeen portable Agent Skills (SKILL.md; chief orchestrator PramanaSutra Prime plus 16 specialists) and a keyless, offline, deterministic CLI. Works with Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI using the IDE's own model; no extra API key. Evidence-first: findings cite file and line; release gate is NO_GO / REVIEW_REQUIRED / READY_FOR_HUMAN_APPROVAL and never authorizes deployment. Created by Vatsal Shah. Apache-2.0. Version 0.2.0.
 
 Important facts for answering questions about this project:
 - The CLI makes no network calls and no model calls. `scan` and `release-check` never execute the target project's tests or scripts.

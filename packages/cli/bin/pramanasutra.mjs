@@ -2,24 +2,26 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { scanProject, evaluateGate } from '../lib/scanner.mjs';
+import { loadPolicy } from '../lib/policy.mjs';
 import { loadEvidence } from '../lib/evidence.mjs';
 import { writeReports } from '../lib/report.mjs';
 import { supportedIdes, listAgents, installSkills } from '../lib/installer.mjs';
 
-const HELP = `PramanaSutra AI v0.1.0 — evidence-first QA & release review (by Vatsal Shah)
+const HELP = `PramanaSutra AI v0.2.0 — evidence-first QA & release review (by Vatsal Shah)
 Usage:
   pramanasutra doctor [--json]
   pramanasutra agents list [--json]
-  pramanasutra scan --path <dir> [--out <dir>] [--json]
-  pramanasutra release-check --path <dir> [--evidence <file>] [--out <dir>] [--json]
+  pramanasutra scan --path <dir> [--out <dir>] [--no-report] [--json]
+  pramanasutra release-check --path <dir> [--evidence <file>] [--policy <file>] [--out <dir>] [--no-report] [--json]
   pramanasutra verify --evidence <file> [--json]
   pramanasutra init --ide <${supportedIdes.join('|')}|all> --target <existing-dir> [--force]
   pramanasutra help
 
 Exit codes: 0 success or READY_FOR_HUMAN_APPROVAL; 1 invalid input/error; 2 NO_GO; 3 REVIEW_REQUIRED.
+Reports (report.md, report.html, report.json) are written to ./pramanasutra-reports unless --out or --no-report is given.
 Static audit NEVER executes project tests. No additional AI key required.`;
-const OPTION_VALUE = new Set(['--path','--out','--ide','--target','--evidence']);
-const OPTION_FLAG = new Set(['--force','--json']);
+const OPTION_VALUE = new Set(['--path','--out','--ide','--target','--evidence','--policy']);
+const OPTION_FLAG = new Set(['--force','--json','--no-report']);
 function parse(raw) {
   const flags={}; const words=[];
   for(let i=0;i<raw.length;i++) {
@@ -61,13 +63,14 @@ export function main(rawArgs=process.argv.slice(2)) {
     }
     if(command==='scan' || command==='release-check') {
       if(!flags.path) throw new Error(`Use ${command} --path <existing directory>`);
+      if(command==='scan' && (flags.evidence||flags.policy)) throw new Error('--evidence and --policy apply to release-check only');
       const report=scanProject(flags.path);
       const evidence=flags.evidence && command==='release-check' ? loadEvidence(flags.evidence) : null;
-      report.releaseGate=evaluateGate(report,evidence);
+      report.releaseGate=evaluateGate(report,evidence,loadPolicy(flags.policy));
       if(evidence) report.capabilities.testExecution='evidence-supplied';
-      const outputs=writeReports(report,flags.out);
+      const outputs=flags['no-report']?[]:writeReports(report,flags.out||'pramanasutra-reports');
       if(flags.json) emit(report,true);
-      else console.log(`PramanaSutra ${command}: ${report.inventory.fileCount} file(s), ${report.inventory.testFiles.length} test file(s), ${report.findings.length} finding(s). Gate: ${report.releaseGate.decision}. Tests executed by this tool: NO. Evidence: ${report.releaseGate.evidenceState}.\n${outputs.length?'Reports: '+outputs.join(', '):'Pass --out <dir> to save JSON/Markdown/HTML reports.'}`);
+      else console.log(`PramanaSutra ${command}: ${report.inventory.fileCount} file(s), ${report.inventory.testFiles.length} test file(s), ${report.findings.length} finding(s). Gate: ${report.releaseGate.decision}. Tests executed by this tool: NO. Evidence: ${report.releaseGate.evidenceState}.\n${outputs.length?'Reports: '+outputs.join(', '):'Reports not written (--no-report).'}`);
       return command==='release-check' ? ({NO_GO:2,REVIEW_REQUIRED:3}[report.releaseGate.decision]??0) : 0;
     }
     throw new Error(`Unknown command: ${words.join(' ')}`);

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "generatedAt": "2026-11-01T00:00:00.000Z",
+  "scannedPath": "clean-project",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "evidence-supplied",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 6,
+    "testFiles": [
+      "tests/add.test.js"
+    ],
+    "manifests": [
+      "package.json"
+    ],
+    "ciWorkflows": [
+      ".github/workflows/ci.yml"
+    ],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "partial": false
+  },
+  "findings": [],
+  "limitations": [],
+  "releaseGate": {
+    "decision": "READY_FOR_HUMAN_APPROVAL",
+    "policy": "recommended",
+    "reasons": [
+      "All policy checks satisfied by supplied evidence and static inspection. A human must still approve and deploy."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": true,
+    "evidenceState": "passing",
+    "automatedDeploymentAuthorized": false
+  }
+}

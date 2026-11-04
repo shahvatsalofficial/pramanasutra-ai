@@ -11,6 +11,9 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 ![Node](https://img.shields.io/badge/node-%E2%89%A520-339933)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
+![Tests](https://img.shields.io/badge/tests-32%20passing-brightgreen)
+
+[**Documentation site**](https://shahvatsalofficial.github.io/pramanasutra-ai/) &middot; [Handbook](docs/handbook/README.md) &middot; [Proof and test results](docs/handbook/08-testing-and-proof.md) &middot; [Sample report](examples/sample-output/focused-test/report.md)
 
 </div>
 
@@ -31,13 +34,26 @@ Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0.
 | "Green" dashboards hide what was not checked | Capabilities are reported as `executed` / `not-run` / `not-supported` |
 | Another tool, another key, another bill | Zero runtime dependencies, offline, no key |
 
+## Proof, not promises
+
+| Evidence | Result |
+|---|---|
+| Automated tests (`npm test`) | **34 tests: 32 passed, 0 failed, 2 skipped** by OS limits ([captured output](docs/proof/test-results.txt)) |
+| CI matrix | Ubuntu, macOS, Windows x Node 20 and 22 ([Actions](https://github.com/shahvatsalofficial/pramanasutra-ai/actions)) |
+| Labeled fixtures | 6 of 6 give exactly the expected rules and decision ([results](docs/proof/eval-results.json)) |
+| Static analysis | CodeQL on push, pull request and weekly |
+| Runtime dependencies | **0** |
+| Network calls by the CLI | **0** |
+
+**Read the fine print.** The fixtures were written by the rule author, so perfect precision and recall is a *regression guarantee*, not real-world accuracy. **Not yet proven:** live behavior in each AI IDE, accuracy on large real repositories, an independent security review, and trademark clearance. See [testing and proof](docs/handbook/08-testing-and-proof.md).
+
 ## 60-second start
 
 Requires Node.js 20+.
 
 ```bash
-# audit any repo: read-only, offline
-npx github:shahvatsalofficial/pramanasutra-ai release-check --path . --out reports
+# audit any repo: read-only, offline, no API key. Writes ./pramanasutra-reports/report.{md,html,json}
+npx github:shahvatsalofficial/pramanasutra-ai release-check --path .
 
 # install the skills for your AI IDE
 npx github:shahvatsalofficial/pramanasutra-ai init --ide claude --target .
@@ -51,9 +67,30 @@ From a clone:
 
 ```bash
 node packages/cli/bin/pramanasutra.mjs doctor
-node packages/cli/bin/pramanasutra.mjs release-check --path examples/sample-app --out reports/demo   # exit 2 = NO_GO (intentional)
-node packages/cli/bin/pramanasutra.mjs verify --evidence examples/evidence/passing.json
+node packages/cli/bin/pramanasutra.mjs release-check --path fixtures/focused-test    # exit 2 = NO_GO (intentional)
+node packages/cli/bin/pramanasutra.mjs release-check --path fixtures/clean-project --evidence fixtures/clean-project/evidence.json   # exit 0
 npm test
+```
+
+## Reports: Markdown and HTML for people, JSON for tools
+
+Every `scan` and `release-check` writes three files to `./pramanasutra-reports` (change with `--out`, disable with `--no-report`):
+
+| File | For |
+|---|---|
+| `report.md` | Pull requests, tickets, plain reading |
+| `report.html` | Sharing and printing; light and dark; every value escaped |
+| `report.json` | CI and tooling (schema 1.0.0) |
+
+Examples you can open now: [Markdown](examples/sample-output/focused-test/report.md), [JSON](examples/sample-output/focused-test/report.json), and the [HTML source](examples/sample-output/focused-test/report.html) (download and open in a browser).
+
+Abridged real output:
+
+```text
+PramanaSutra release-check: 4 file(s), 1 test file(s), 1 finding(s). Gate: NO_GO.
+Tests executed by this tool: NO. Evidence: absent.
+
+FOCUSED_TEST  high  medium  tests/a.test.js:2  Focused test found
 ```
 
 ## Release gate
@@ -81,7 +118,7 @@ Evidence schema: [report-schema](docs/report-schema.md). Details: [quality gates
 | `doctor` | Environment check |
 | `agents list` | List bundled skills |
 | `scan --path <dir> [--out <dir>]` | Static QA audit; JSON, Markdown, escaped HTML reports |
-| `release-check --path <dir> [--evidence <file>]` | Scan plus release gate (exit codes above) |
+| `release-check --path <dir> [--evidence <file>] [--policy <file>]` | Scan plus release gate (exit codes above) |
 | `verify --evidence <file>` | Validate an evidence file |
 | `init --ide <claude\|cursor\|codex\|gemini\|copilot\|generic\|all> --target <dir>` | Copy skills; refuses to overwrite without `--force` |
 
@@ -104,7 +141,16 @@ Scan is read-only on the target, skips symlinks, never runs project scripts, cap
 - Heuristic rules, not a parser; expect false positives and negatives.
 - Does **not** run tests, browsers, load tests, accessibility or security scanners. Those are *planned* ([status](docs/status.md)).
 - Does not certify quality, security or compliance.
-- Cross-OS CI is configured; results appear in the Actions tab once run.
+- It is not published to npm; run it with `npx github:shahvatsalofficial/pramanasutra-ai`.
+- Names are not trademark-cleared; see [legal](docs/handbook/07-security-privacy-legal.md).
+
+## Legal
+
+Licensed under **Apache-2.0** ([LICENSE](LICENSE), [NOTICE](NOTICE)). No runtime dependencies are bundled ([third-party notices](THIRD_PARTY_NOTICES.md)). Claude, Cursor, OpenAI Codex, GitHub Copilot, Gemini and other product names belong to their owners and are used only to describe compatibility; this project is not affiliated with or endorsed by them. The name "PramanaSutra" is not a registered trademark and has not been trademark-cleared ([details](docs/legal/trademark-and-name-clearance.md)). Output is decision support, not a certification, compliance attestation or legal advice. Provided "as is".
+
+## Documentation
+
+[Executive summary](docs/handbook/01-executive-summary.md) &middot; [Functional spec](docs/handbook/02-functional-specification.md) &middot; [Technical spec](docs/handbook/03-technical-specification.md) &middot; [Architecture](docs/handbook/04-architecture.md) &middot; [User guide](docs/handbook/05-user-guide.md) &middot; [CLI reference](docs/handbook/06-cli-reference.md) &middot; [Security, privacy, legal](docs/handbook/07-security-privacy-legal.md) &middot; [Testing and proof](docs/handbook/08-testing-and-proof.md) &middot; [Roadmap](docs/handbook/09-compatibility-and-roadmap.md) &middot; [Contributing](docs/handbook/10-contributor-guide.md) &middot; [Glossary and FAQ](docs/handbook/11-glossary-and-faq.md) &middot; [Rule catalog](docs/handbook/12-rule-catalog.md)
 
 ## FAQ
 

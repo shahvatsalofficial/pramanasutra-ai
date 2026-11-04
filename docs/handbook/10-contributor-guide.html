@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contributor guide | PramanaSutra AI</title>
+<meta name="description" content="How to set up, test, add rules, skills and host adapters, and submit changes to PramanaSutra AI.">
+<link rel="canonical" href="https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/10-contributor-guide.html">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Contributor guide | PramanaSutra AI">
+<meta property="og:description" content="How to set up, test, add rules, skills and host adapters, and submit changes to PramanaSutra AI.">
+<meta property="og:url" content="https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/10-contributor-guide.html">
+<meta property="og:site_name" content="PramanaSutra AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Contributor guide | PramanaSutra AI">
+<meta name="twitter:description" content="How to set up, test, add rules, skills and host adapters, and submit changes to PramanaSutra AI.">
+<meta name="author" content="Vatsal Shah">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var t=localStorage.getItem('ps-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Contributor guide","description":"How to set up, test, add rules, skills and host adapters, and submit changes to PramanaSutra AI.","author":{"@type":"Person","name":"Vatsal Shah"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"PramanaSutra AI","url":"https://shahvatsalofficial.github.io/pramanasutra-ai"}}</script>
+</head>
+<body class="doc">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">Menu</button>
+    <a class="brand" href="../index.html" aria-label="PramanaSutra AI home"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor" opacity=".12"/><path d="M6 24 16 7l10 17M10.5 18h11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PramanaSutra <b>AI</b></span></a>
+    <nav class="top-links" aria-label="Primary"><a href="../handbook/index.html">Handbook</a><a href="../handbook/05-user-guide.html">Get started</a><a href="../handbook/08-testing-and-proof.html">Proof</a><a href="https://github.com/shahvatsalofficial/pramanasutra-ai" rel="noopener">GitHub</a></nav>
+    <button class="theme-btn" type="button" aria-label="Toggle color theme"><span class="sun" aria-hidden="true">Light</span><span class="moon" aria-hidden="true">Dark</span></button>
+  </div>
+</header>
+<div class="layout">
+  <aside id="sidebar" class="sidebar" aria-label="Documentation"><div class="nav-group"><p class="nav-title">Handbook</p><ul><li><a href="../handbook/index.html">Overview</a></li><li><a href="../handbook/01-executive-summary.html">Executive summary</a></li><li><a href="../handbook/02-functional-specification.html">Functional specification</a></li><li><a href="../handbook/03-technical-specification.html">Technical specification</a></li><li><a href="../handbook/04-architecture.html">Architecture</a></li><li><a href="../handbook/05-user-guide.html">User guide</a></li><li><a href="../handbook/06-cli-reference.html">CLI reference</a></li><li><a href="../handbook/07-security-privacy-legal.html">Security, privacy and legal</a></li><li><a href="../handbook/08-testing-and-proof.html">Testing and proof</a></li><li><a href="../handbook/09-compatibility-and-roadmap.html">Compatibility and roadmap</a></li><li><a href="../handbook/10-contributor-guide.html" aria-current="page">Contributor guide</a></li><li><a href="../handbook/11-glossary-and-faq.html">Glossary and FAQ</a></li><li><a href="../handbook/12-rule-catalog.html">Rule catalog</a></li></ul></div><div class="nav-group"><p class="nav-title">Reference</p><ul><li><a href="../legal/trademark-and-name-clearance.html">Trademark and name clearance</a></li></ul></div></aside>
+  <main id="main" class="content"><article class="prose"><p class="crumbs"><a href="../index.html">PramanaSutra AI</a> / Handbook</p><h1 id="contributor-guide">Contributor guide</h1>
+<p class="lede">How to set up, test, add rules, skills and host adapters, and submit changes to PramanaSutra AI.</p><p class="meta">Version 0.2.0 &middot; Source: <a href="https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/docs/handbook/10-contributor-guide.md" rel="noopener">docs/handbook/10-contributor-guide.md</a></p>
+<h2 id="setup">Setup<a class="anchor" href="#setup" aria-label="Link to this section">#</a></h2>
+<div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre tabindex="0"><code class="language-bash">git clone https://github.com/shahvatsalofficial/pramanasutra-ai.git
+cd pramanasutra-ai
+npm test
+node packages/cli/bin/pramanasutra.mjs doctor</code></pre></div>
+<p>No <code>npm install</code> is needed: there are no dependencies.</p>
+<h2 id="rules-of-the-road">Rules of the road<a class="anchor" href="#rules-of-the-road" aria-label="Link to this section">#</a></h2>
+<ol><li><strong>Evidence first.</strong> Never write code or docs that imply tests ran when they did not.</li><li><strong>Fail closed.</strong> New inputs are validated; unknown values are errors.</li><li><strong>No new dependencies</strong> without a written reason in the pull request.</li><li><strong>No network, no telemetry</strong> in the CLI.</li><li><strong>Every behavior change has a test</strong> in <code>tests/cli.test.mjs</code>.</li><li><strong>Docs move with code.</strong> Update the handbook page and <code>docs/status.md</code>.</li></ol>
+<h2 id="add-a-rule">Add a rule<a class="anchor" href="#add-a-rule" aria-label="Link to this section">#</a></h2>
+<ol><li>Add the regex and finding in <code>packages/cli/lib/scanner.mjs</code>. Keep it line-based and anchored.</li><li>Add a fixture under <code>fixtures/</code> and an entry in <code>scripts/generate-proof.mjs</code>.</li><li>Add unit tests for a hit and a look-alike that must not hit.</li><li>Document it in <a href="12-rule-catalog.html">rule catalog</a>, including false positives.</li><li>Run <code>node scripts/generate-proof.mjs</code> and commit the regenerated proof.</li></ol>
+<h2 id="add-or-change-a-skill">Add or change a skill<a class="anchor" href="#add-or-change-a-skill" aria-label="Link to this section">#</a></h2>
+<ol><li>Edit <code>.agents/skills/&lt;name&gt;/SKILL.md</code>. Frontmatter needs <code>name</code> (equal to the folder) and <code>description</code>.</li><li>State triggers, inputs, safe workflow, output contract and boundaries.</li><li>Never instruct an agent to run tests, install software or contact the network without user approval.</li><li><code>npm test</code> checks names and frontmatter.</li></ol>
+<h2 id="add-a-host-adapter">Add a host adapter<a class="anchor" href="#add-a-host-adapter" aria-label="Link to this section">#</a></h2>
+<ol><li>Read the vendor's current documentation and note the access date.</li><li>Add the path to <code>ADAPTERS</code> in <code>installer.mjs</code>.</li><li>Test install, collision refusal and <code>--force</code>.</li><li>Mark it <strong>adapter</strong> until someone has tested it live and recorded the result.</li></ol>
+<h2 id="rebuild-docs-and-proof">Rebuild docs and proof<a class="anchor" href="#rebuild-docs-and-proof" aria-label="Link to this section">#</a></h2>
+<div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre tabindex="0"><code class="language-bash">node scripts/generate-proof.mjs   # test results, fixture evaluation, sample reports
+node scripts/build-docs.mjs       # HTML site from docs/**/*.md</code></pre></div>
+<h2 id="pull-requests">Pull requests<a class="anchor" href="#pull-requests" aria-label="Link to this section">#</a></h2>
+<p>Describe the change, show <code>npm test</code> output, list affected docs, and state which platforms you tested on. Security issues: follow <code>SECURITY.md</code>, not a public issue.</p>
+<h2 id="style">Style<a class="anchor" href="#style" aria-label="Link to this section">#</a></h2>
+<p>Plain ESM, small functions, clear errors with no stack traces for expected failures, UTF-8, LF line endings. Handle spaces and non-ASCII in paths.</p>
+<h2 id="conduct">Conduct<a class="anchor" href="#conduct" aria-label="Link to this section">#</a></h2>
+<p>See <code>CODE_OF_CONDUCT.md</code>. Contributions are accepted under Apache-2.0.</p></article></main>
+  <aside class="rail"><nav class="toc" aria-label="On this page"><p class="nav-title">On this page</p><ul><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#rules-of-the-road">Rules of the road</a></li><li class="l2"><a href="#add-a-rule">Add a rule</a></li><li class="l2"><a href="#add-or-change-a-skill">Add or change a skill</a></li><li class="l2"><a href="#add-a-host-adapter">Add a host adapter</a></li><li class="l2"><a href="#rebuild-docs-and-proof">Rebuild docs and proof</a></li><li class="l2"><a href="#pull-requests">Pull requests</a></li><li class="l2"><a href="#style">Style</a></li><li class="l2"><a href="#conduct">Conduct</a></li></ul></nav></aside>
+</div>
+<footer class="footer">
+  <div class="footer-inner">
+    <p><strong>PramanaSutra AI</strong> v0.2.0. Test Everything. Prove Quality. Release Confidently. Created by <a href="https://github.com/shahvatsalofficial" rel="noopener">Vatsal Shah</a>. Licensed under <a href="https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/LICENSE" rel="noopener">Apache-2.0</a>.</p>
+    <p class="fine">Review aid only. Not a certification, compliance attestation, security guarantee or legal advice. Not affiliated with Anthropic, OpenAI, Cursor, GitHub or Google; product names belong to their owners. <a href="../handbook/07-security-privacy-legal.html">Legal details</a>.</p>
+  </div>
+</footer>
+<script src="../assets/site.js" type="module"></script>
+</body>
+</html>

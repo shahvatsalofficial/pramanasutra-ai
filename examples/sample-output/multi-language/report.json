@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "generatedAt": "2026-11-01T00:00:00.000Z",
+  "scannedPath": "multi-language",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "not-run",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 3,
+    "testFiles": [
+      "pkg/b_test.go",
+      "src/UserServiceTest.java",
+      "tests/test_api.py"
+    ],
+    "manifests": [],
+    "ciWorkflows": [],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "partial": false
+  },
+  "findings": [
+    {
+      "id": "PS-SKIPPED_TEST-00003-pkg_b_test_go",
+      "ruleId": "SKIPPED_TEST",
+      "severity": "low",
+      "confidence": "medium",
+      "title": "Skipped test found",
+      "description": "A skipped test needs review before release.",
+      "evidence": {
+        "path": "pkg/b_test.go",
+        "line": 3
+      },
+      "recommendation": "Confirm the skip is intended, tracked and does not conceal a required case.",
+      "status": "observed"
+    },
+    {
+      "id": "PS-SKIPPED_TEST-00002-src_UserServiceTest_java",
+      "ruleId": "SKIPPED_TEST",
+      "severity": "low",
+      "confidence": "medium",
+      "title": "Skipped test found",
+      "description": "A skipped test needs review before release.",
+      "evidence": {
+        "path": "src/UserServiceTest.java",
+        "line": 2
+      },
+      "recommendation": "Confirm the skip is intended, tracked and does not conceal a required case.",
+      "status": "observed"
+    },
+    {
+      "id": "PS-SKIPPED_TEST-00003-tests_test_api_py",
+      "ruleId": "SKIPPED_TEST",
+      "severity": "low",
+      "confidence": "medium",
+      "title": "Skipped test found",
+      "description": "A skipped test needs review before release.",
+      "evidence": {
+        "path": "tests/test_api.py",
+        "line": 3
+      },
+      "recommendation": "Confirm the skip is intended, tracked and does not conceal a required case.",
+      "status": "observed"
+    },
+    {
+      "id": "PS-NO_CI-00000-_",
+      "ruleId": "NO_CI",
+      "severity": "medium",
+      "confidence": "medium",
+      "title": "No recognized CI workflow discovered",
+      "description": "No recognized CI configuration was found in the files scanned.",
+      "evidence": {
+        "path": ".",
+        "line": null
+      },
+      "recommendation": "Verify your CI configuration and enforce required test gates.",
+      "status": "observed"
+    },
+    {
+      "id": "PS-NO_LICENSE-00000-_",
+      "ruleId": "NO_LICENSE",
+      "severity": "low",
+      "confidence": "high",
+      "title": "No license file at root",
+      "description": "A recognized open-source license file was not found at the root.",
+      "evidence": {
+        "path": ".",
+        "line": null
+      },
+      "recommendation": "Review intended licensing and add the correct LICENSE file before publication.",
+      "status": "observed"
+    }
+  ],
+  "limitations": [],
+  "releaseGate": {
+    "decision": "REVIEW_REQUIRED",
+    "policy": "recommended",
+    "reasons": [
+      "No executed-test evidence supplied (use --evidence).",
+      "No recognized CI workflow detected.",
+      "No license file at root."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": false,
+    "evidenceState": "absent",
+    "automatedDeploymentAuthorized": false
+  }
+}

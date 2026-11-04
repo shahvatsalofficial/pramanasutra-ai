@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": "ci-ingested",
+  "command": "npm test",
+  "executedAt": "2026-11-01T10:00:00Z",
+  "exitCode": 0,
+  "passed": 1,
+  "failed": 0
+}

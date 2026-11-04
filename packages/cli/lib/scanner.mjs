@@ -1,10 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { classifyEvidence } from './evidence.mjs';
+import { DEFAULT_POLICY } from './policy.mjs';
 
-const SKIP_DIRS = new Set(['.git', 'node_modules', '.venv', 'venv', 'dist', 'build', 'target', 'coverage', '.next', '.nuxt', '.turbo', '.cache', 'reports', '.idea', '.gradle', 'vendor', 'bin', 'obj']);
+const SKIP_DIRS = new Set(['.git', 'node_modules', '.venv', 'venv', 'dist', 'build', 'target', 'coverage', '.next', '.nuxt', '.turbo', '.cache', 'reports', 'pramanasutra-reports', '.idea', '.gradle', 'vendor', 'bin', 'obj']);
 const SOURCE_EXT = /\.(?:[cm]?[jt]sx?|py|go|rs|rb|php|java|kt|swift|dart|cs|vue|svelte)$/i;
-const TEST_PATH = /(?:^|\/)(?:tests?|__tests__|specs?|e2e)(?:\/|$)|(?:\.test\.|\.spec\.|_test\.(?:go|py)|^test_[^/]*\.py$)/i;
+const TEST_PATH = /(?:^|\/)(?:tests?|__tests__|specs?|e2e)(?:\/|$)|(?:\.test\.|\.spec\.|_test\.(?:go|py|rb|dart)|_spec\.rb$|(?:^|\/)test_[^/]*\.py$)/i;
+const TEST_NAME = /[a-z0-9](?:Tests?|Spec|IT)\.(?:java|kt|cs|swift|scala|php|dart)$/;
 const FOCUSED = /^\s*(?:(?:await\s+)?(?:describe|test|it)\.only\s*\(|(?:fit|fdescribe)\s*\()/;
 const SKIPPED = /^\s*(?:(?:await\s+)?(?:describe|test|it)\.skip\s*\(|(?:xit|xdescribe)\s*\()/;
 const SKIPPED_ALT = /^\s*(?:@pytest\.mark\.(?:skip|xfail)|@unittest\.skip\w*|@Ignore|@Disabled|(?:\w+\.)?t\.Skip(?:Now)?\s*\()/;
@@ -15,7 +17,7 @@ const MAX_SOURCE_SIZE = 2_000_000;
 function finding(ruleId, severity, confidence, title, description, evidence, recommendation) {
   return { id: `PS-${ruleId}-${String(evidence.line || 0).padStart(5,'0')}-${String(evidence.path || '').replace(/[^a-z0-9]/gi,'_').slice(-45)}`, ruleId, severity, confidence, title, description, evidence, recommendation, status: 'observed' };
 }
-function isTestFile(rel) { return TEST_PATH.test(rel); }
+function isTestFile(rel) { return TEST_PATH.test(rel) || TEST_NAME.test(rel); }
 function existsFile(root, rel) {
   try { return fs.statSync(path.join(root, rel)).isFile(); } catch { return false; }
 }
@@ -85,24 +87,26 @@ export function scanProject(target) {
   return output;
 }
 
-export function evaluateGate(report, evidence = null) {
-  const blockers=report.findings.filter(f => ['critical','high'].includes(f.severity));
+export function evaluateGate(report, evidence = null, policy = DEFAULT_POLICY) {
+  const blocking = report.findings.filter(f =>
+    ['critical', 'high'].includes(f.severity) ? (f.ruleId !== 'FOCUSED_TEST' || policy.blockOnFocusedTests)
+      : (f.ruleId === 'SKIPPED_TEST' && policy.blockOnSkippedTests));
   const ev = classifyEvidence(evidence);
   const reasons = [];
   let decision;
-  if (blockers.length) {
-    decision = 'NO_GO'; reasons.push(`Found ${blockers.length} high-severity or critical static issue(s).`);
+  if (blocking.length) {
+    decision = 'NO_GO'; reasons.push(`Found ${blocking.length} blocking static finding(s) under policy "${policy.name}".`);
   } else if (ev.state === 'failing') {
     decision = 'NO_GO'; reasons.push(...ev.reasons);
   } else {
     const missing = [];
-    if (ev.state !== 'passing') missing.push(...ev.reasons);
+    if (policy.releaseRequiresExecutedEvidence && ev.state !== 'passing') missing.push(...ev.reasons);
     if (report.inventory.partial) missing.push('Scan is incomplete; treat uninspected content as unknown.');
-    if (!report.inventory.testFiles.length) missing.push('No test files detected by supported naming conventions.');
-    if (!report.inventory.ciWorkflows.length) missing.push('No recognized CI workflow detected.');
-    if (report.findings.some(f => f.ruleId === 'NO_LICENSE')) missing.push('No license file at root.');
+    if (policy.requireTests && !report.inventory.testFiles.length) missing.push('No test files detected by supported naming conventions.');
+    if (policy.requireCi && !report.inventory.ciWorkflows.length) missing.push('No recognized CI workflow detected.');
+    if (policy.requireLicense && report.findings.some(f => f.ruleId === 'NO_LICENSE')) missing.push('No license file at root.');
     if (missing.length) { decision = 'REVIEW_REQUIRED'; reasons.push(...missing); }
-    else { decision = 'READY_FOR_HUMAN_APPROVAL'; reasons.push('Executed passing test evidence supplied and static checks clean. A human must still approve and deploy.'); }
+    else { decision = 'READY_FOR_HUMAN_APPROVAL'; reasons.push('All policy checks satisfied by supplied evidence and static inspection. A human must still approve and deploy.'); }
   }
-  return { decision, reasons, requiresHumanApproval: true, executedTestEvidence: ev.state === 'passing' || ev.state === 'failing', evidenceState: ev.state, automatedDeploymentAuthorized: false };
+  return { decision, policy: policy.name, reasons, requiresHumanApproval: true, executedTestEvidence: ev.state === 'passing' || ev.state === 'failing', evidenceState: ev.state, automatedDeploymentAuthorized: false };
 }

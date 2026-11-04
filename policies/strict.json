@@ -4,5 +4,9 @@
   "releaseRequiresExecutedEvidence": true,
   "blockOnFocusedTests": true,
   "allowAutomatedDeployment": false,
-  "manualApprovalsRequired": true
+  "manualApprovalsRequired": true,
+  "blockOnSkippedTests": true,
+  "requireCi": true,
+  "requireLicense": true,
+  "requireTests": true
 }

@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>PramanaSutra AI QA &amp; Release Audit Report</title><style>:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--ac:#4f46e5;--ok:#047857;--warn:#b45309;--bad:#b91c1c}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e6eaf5;--mut:#9aa6c0;--line:#25304d;--ac:#8b93ff;--ok:#34d399;--warn:#fbbf24;--bad:#f87171}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:2rem 1rem 4rem}h1{font-size:1.9rem;margin:.2rem 0}h2{margin-top:2.2rem;font-size:1.25rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.4rem;margin:1rem 0}
+.banner{border-left:6px solid var(--ac);font-size:1.05rem}.NO_GO{border-color:var(--bad)}.REVIEW_REQUIRED{border-color:var(--warn)}.READY_FOR_HUMAN_APPROVAL{border-color:var(--ok)}
+.pill{display:inline-block;padding:.1rem .65rem;border-radius:999px;font-weight:700;font-size:.85rem;border:1px solid currentColor}
+.pill.NO_GO,.pill.critical,.pill.high{color:var(--bad)}.pill.REVIEW_REQUIRED,.pill.medium{color:var(--warn)}.pill.READY_FOR_HUMAN_APPROVAL{color:var(--ok)}.pill.low,.pill.info{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem}.stat b{display:block;font-size:1.7rem}.stat span{color:var(--mut);font-size:.9rem}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-size:.85rem}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--bg);padding:.05rem .35rem;border-radius:5px;overflow-wrap:anywhere}
+.muted{color:var(--mut)}footer{margin-top:3rem;color:var(--mut);font-size:.9rem}a{color:var(--ac)}:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+@media print{body{background:#fff;color:#000}.card{break-inside:avoid}}</style></head><body><main>
+<p class="muted">PramanaSutra AI &middot; QA &amp; Release Audit</p><h1>clean-project</h1><p class="muted">Generated 2026-11-01T00:00:00.000Z</p>
+<section class="card banner READY_FOR_HUMAN_APPROVAL" role="status"><span class="pill READY_FOR_HUMAN_APPROVAL">READY_FOR_HUMAN_APPROVAL</span><p style="margin:.6rem 0 0">All policy checks passed. A human must still approve; this is never a deploy order.</p><p class="muted" style="margin:.3rem 0 0">Policy: recommended &middot; Supplied test evidence: passing</p></section>
+<section class="grid" aria-label="Summary"><div class="stat card"><b>6</b><span>files inspected</span></div><div class="stat card"><b>1</b><span>test files</span></div><div class="stat card"><b>1</b><span>CI workflows</span></div><div class="stat card"><b>0</b><span>findings</span></div><div class="stat card"><b>0</b><span>critical + high</span></div></section>
+<p class="card"><strong>Tests executed by PramanaSutra: NO (static scan only). Executed-test results count only when supplied as evidence.</strong></p>
+<h2>Findings</h2><p class="card">No static issues detected. This does <strong>not</strong> mean the project is release-ready; other checks were not run.</p>
+<h2>Release gate reasons</h2><div class="card"><ul><li>All policy checks satisfied by supplied evidence and static inspection. A human must still approve and deploy.</li></ul></div>
+<h2>Capabilities</h2><div class="card"><table><thead><tr><th>Capability</th><th>State</th></tr></thead><tbody><tr><td>staticAudit</td><td><code>executed</code></td></tr><tr><td>testExecution</td><td><code>evidence-supplied</code></td></tr><tr><td>browser</td><td><code>not-supported</code></td></tr><tr><td>securityScan</td><td><code>not-run</code></td></tr><tr><td>performanceTest</td><td><code>not-run</code></td></tr><tr><td>aiInference</td><td><code>not-run</code></td></tr></tbody></table></div>
+<h2>Limitations</h2><div class="card"><ul><li>Heuristic checks do not prove the absence of bugs or release readiness.</li><li>No target tests, security scanners, browser, load tests or deploy checks were run by this tool.</li><li>This report is decision support, not a compliance certification.</li></ul></div>
+<footer>Created by Vatsal Shah. Generated locally; nothing was sent over the network. Not a compliance certification or release authorization.</footer></main></body></html>

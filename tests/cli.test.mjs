@@ -5,14 +5,16 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { loadEvidence } from '../packages/cli/lib/evidence.mjs';
 import { scanProject, evaluateGate } from '../packages/cli/lib/scanner.mjs';
-import { escapeHtml, html } from '../packages/cli/lib/report.mjs';
+import { escapeHtml, html, markdown } from '../packages/cli/lib/report.mjs';
 import { installSkills, listAgents } from '../packages/cli/lib/installer.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const cli=path.join(root,'packages','cli','bin','pramanasutra.mjs');
 const temp=(callback)=>{const folder=fs.mkdtempSync(path.join(os.tmpdir(),'pramanasutra-test-'));try{return callback(folder)}finally{fs.rmSync(folder,{recursive:true,force:true})}};
-const run=(args)=>spawnSync(process.execPath,[cli,...args],{encoding:'utf8'});
+const sandbox=fs.mkdtempSync(path.join(os.tmpdir(),'pramanasutra-cwd-'));
+const run=(args,cwd=sandbox)=>spawnSync(process.execPath,[cli,...args],{encoding:'utf8',cwd});
 const put=(base,rel,content)=>{const dest=path.join(base,rel);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,content);};
 
 test('doctor succeeds without a provider key',()=>{
@@ -148,3 +150,67 @@ test('HTML report escapes malicious file names',{skip:process.platform==='win32'
   put(folder,'tests/<img src=x onerror=alert(1)>.test.js','test.only("x",()=>{});');
   const content=html(scanProject(folder));assert.ok(!content.includes('<img src=x'));
 }));
+
+test('scan writes md, html and json reports by default into ./pramanasutra-reports',()=>temp(folder=>{
+  cleanProject(folder);const cwd=fs.mkdtempSync(path.join(os.tmpdir(),'ps-cwd-'));
+  try{
+    const res=run(['scan','--path',folder],cwd);assert.equal(res.status,0,res.stderr);
+    for(const f of ['report.md','report.html','report.json'])assert.ok(fs.existsSync(path.join(cwd,'pramanasutra-reports',f)),f);
+    assert.ok(!fs.existsSync(path.join(folder,'pramanasutra-reports')),'must not write into scanned project');
+    assert.match(fs.readFileSync(path.join(cwd,'pramanasutra-reports','report.md'),'utf8'),/Release decision/);
+    assert.match(fs.readFileSync(path.join(cwd,'pramanasutra-reports','report.html'),'utf8'),/<!doctype html>/);
+  }finally{fs.rmSync(cwd,{recursive:true,force:true});}
+}));
+test('--no-report writes nothing',()=>temp(folder=>{
+  cleanProject(folder);const cwd=fs.mkdtempSync(path.join(os.tmpdir(),'ps-cwd-'));
+  try{assert.equal(run(['scan','--path',folder,'--no-report'],cwd).status,0);assert.ok(!fs.existsSync(path.join(cwd,'pramanasutra-reports')));}
+  finally{fs.rmSync(cwd,{recursive:true,force:true});}
+}));
+test('scan rejects --evidence/--policy; they are release-check only',()=>temp(folder=>{
+  cleanProject(folder);assert.equal(run(['scan','--path',folder,'--policy','x.json','--no-report']).status,1);
+}));
+test('strict policy turns skipped tests into NO_GO; recommended does not',()=>temp(folder=>{
+  cleanProject(folder);put(folder,'tests/b.test.js','it.skip("x",()=>{});');put(folder,'ev.json',evidenceDoc());
+  const base=['release-check','--path',folder,'--evidence',path.join(folder,'ev.json'),'--no-report'];
+  assert.equal(run(base).status,0);
+  put(folder,'strict.json',JSON.stringify({name:'t',blockOnSkippedTests:true}));
+  assert.equal(run([...base,'--policy',path.join(folder,'strict.json')]).status,2);
+}));
+test('policy is fail-closed: unknown keys and weakened safety flags are rejected',()=>temp(folder=>{
+  cleanProject(folder);
+  for(const [name,body] of [['a',{surprise:true}],['b',{allowAutomatedDeployment:true}],['c',{requireCi:'no'}]]){
+    put(folder,name+'.json',JSON.stringify(body));
+    assert.equal(run(['release-check','--path',folder,'--policy',path.join(folder,name+'.json'),'--no-report']).status,1,name);
+  }
+}));
+test('bundled policies load',()=>{
+  for(const f of ['recommended','strict'])assert.equal(run(['release-check','--path',path.join(root,'examples','sample-app'),'--policy',path.join(root,'policies',f+'.json'),'--no-report']).status,2);
+});
+test('Java/C#/Ruby naming conventions are detected, look-alikes are not',()=>temp(folder=>{
+  put(folder,'src/UserServiceTest.java','class UserServiceTest {}');put(folder,'src/Submit.java','class Submit {}');put(folder,'spec/user_spec.rb','x');
+  const r=scanProject(folder);assert.deepEqual(r.inventory.testFiles.sort(),['spec/user_spec.rb','src/UserServiceTest.java']);
+}));
+test('report markdown and html contain decision, evidence location and remediation',()=>temp(folder=>{
+  put(folder,'tests/a.test.js','// c\ntest.only("x",()=>{});');
+  const r=scanProject(folder);r.releaseGate=evaluateGate(r);
+  const m=markdown(r),h=html(r);
+  for(const out of [m,h]){assert.match(out,/NO_GO/);assert.match(out,/tests\/a\.test\.js:2/);assert.match(out,/Remove \.only/);}
+}));
+
+test('committed fixtures produce the expected rules and decisions',()=>{
+  const expect={'clean-project':[[],'READY_FOR_HUMAN_APPROVAL'],'focused-test':[['FOCUSED_TEST'],'NO_GO'],'missing-ci':[['NO_CI'],'REVIEW_REQUIRED'],'missing-tests':[['NO_TESTS'],'REVIEW_REQUIRED'],'unsafe-names':[['FOCUSED_TEST'],'NO_GO']};
+  for(const [name,[rules,decision]] of Object.entries(expect)){
+    const dir=path.join(root,'fixtures',name);const r=scanProject(dir);
+    const evFile=path.join(dir,'evidence.json');
+    const gate=evaluateGate(r,fs.existsSync(evFile)?loadEvidence(evFile):null);
+    assert.deepEqual(r.findings.map(f=>f.ruleId).sort(),rules,name);assert.equal(gate.decision,decision,name);
+  }
+});
+test('skills: unique names, frontmatter matches folder, non-empty workflow, no network or execution instructions',()=>{
+  const names=new Set();
+  for(const n of listAgents()){
+    const c=fs.readFileSync(path.join(root,'.agents','skills',n,'SKILL.md'),'utf8');
+    assert.ok(c.startsWith('---\n')||c.startsWith('---\r\n'),n);assert.ok(!names.has(n));names.add(n);
+    assert.match(c,new RegExp(`^name: ${n}\s*$`,'m'));assert.match(c,/## Safe workflow/);assert.match(c,/never (?:fabricate|claim|approve)|Never/i);
+  }
+});

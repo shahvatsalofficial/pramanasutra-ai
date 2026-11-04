@@ -3,5 +3,9 @@
   "name": "recommended",
   "releaseRequiresExecutedEvidence": true,
   "blockOnFocusedTests": true,
-  "allowAutomatedDeployment": false
+  "allowAutomatedDeployment": false,
+  "blockOnSkippedTests": false,
+  "requireCi": true,
+  "requireLicense": true,
+  "requireTests": true
 }

@@ -1,0 +1,46 @@
+# Captured by scripts/generate-proof.mjs
+# node v24.15.0 on win32/x64 (10.0.26300)
+# exit code: 0
+
+✔ doctor succeeds without a provider key (760.7051ms)
+✔ agents catalog includes Prime and 16 specialists (7.5437ms)
+✔ focused test is high-severity blocker with exact evidence (16.7015ms)
+✔ skipped test is reported and not disguised as executed test (15.4187ms)
+✔ no tests, CI or license produce transparent warnings (5.4595ms)
+✔ clean static project still requires review without test run (36.1548ms)
+✔ report HTML escapes untrusted strings (9.9381ms)
+✔ scan command creates three reports without executing tests (621.8328ms)
+✔ release-check exit code signals NO_GO (591.7895ms)
+✔ release-check exit code signals REVIEW_REQUIRED (583.2529ms)
+✔ installer copies canonical skills into Claude target and prevents overwrite (391.0343ms)
+✔ installer refuses a target file or missing directory (7.601ms)
+✔ unknown options or missing values fail clearly (1214.8801ms)
+﹣ nested symlink is skipped rather than followed (9.7279ms) # Symlink creation prohibited by OS permissions
+✔ heuristic avoids matches embedded in fixture strings (9.8407ms)
+✔ reports do not disclose absolute target paths by default (7.4447ms)
+✔ passing CI evidence on clean project reaches READY_FOR_HUMAN_APPROVAL (exit 0) (924.0181ms)
+✔ failing evidence yields NO_GO (755.6819ms)
+✔ external-unverified evidence never reaches READY (716.9355ms)
+✔ zero-pass evidence is inconclusive, absent evidence is never READY (1388.0499ms)
+✔ verify rejects malformed evidence and accepts valid evidence (2121.9391ms)
+✔ pytest/JUnit/Go skip markers are reported (16.4543ms)
+✔ missing path and traversal-style output fail closed without stack trace (556.3416ms)
+﹣ HTML report escapes malicious file names (0.1576ms) # SKIP
+✔ scan writes md, html and json reports by default into ./pramanasutra-reports (653.5604ms)
+✔ --no-report writes nothing (572.3293ms)
+✔ scan rejects --evidence/--policy; they are release-check only (510.1772ms)
+✔ strict policy turns skipped tests into NO_GO; recommended does not (1167.1531ms)
+✔ policy is fail-closed: unknown keys and weakened safety flags are rejected (2130.0987ms)
+✔ bundled policies load (1324.1872ms)
+✔ Java/C#/Ruby naming conventions are detected, look-alikes are not (14.5841ms)
+✔ report markdown and html contain decision, evidence location and remediation (6.5972ms)
+✔ committed fixtures produce the expected rules and decisions (5.5466ms)
+✔ skills: unique names, frontmatter matches folder, non-empty workflow, no network or execution instructions (3.3669ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 17869.6401

@@ -1,0 +1,91 @@
+{
+  "generatedBy": "scripts/generate-proof.mjs",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "labeledFindings": {
+    "truePositives": 9,
+    "falsePositives": 0,
+    "falseNegatives": 0,
+    "precision": 1,
+    "recall": 1
+  },
+  "caveat": "Fixtures were written by the rule author: this is a regression guarantee, not real-world accuracy.",
+  "cases": [
+    {
+      "fixture": "clean-project",
+      "expectedRules": [],
+      "foundRules": [],
+      "decision": "READY_FOR_HUMAN_APPROVAL",
+      "expectedDecision": "READY_FOR_HUMAN_APPROVAL",
+      "pass": true
+    },
+    {
+      "fixture": "focused-test",
+      "expectedRules": [
+        "FOCUSED_TEST"
+      ],
+      "foundRules": [
+        "FOCUSED_TEST"
+      ],
+      "decision": "NO_GO",
+      "expectedDecision": "NO_GO",
+      "pass": true
+    },
+    {
+      "fixture": "missing-ci",
+      "expectedRules": [
+        "NO_CI"
+      ],
+      "foundRules": [
+        "NO_CI"
+      ],
+      "decision": "REVIEW_REQUIRED",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "pass": true
+    },
+    {
+      "fixture": "missing-tests",
+      "expectedRules": [
+        "NO_TESTS"
+      ],
+      "foundRules": [
+        "NO_TESTS"
+      ],
+      "decision": "REVIEW_REQUIRED",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "pass": true
+    },
+    {
+      "fixture": "unsafe-names",
+      "expectedRules": [
+        "FOCUSED_TEST"
+      ],
+      "foundRules": [
+        "FOCUSED_TEST"
+      ],
+      "decision": "NO_GO",
+      "expectedDecision": "NO_GO",
+      "pass": true
+    },
+    {
+      "fixture": "multi-language",
+      "expectedRules": [
+        "NO_CI",
+        "NO_LICENSE",
+        "SKIPPED_TEST",
+        "SKIPPED_TEST",
+        "SKIPPED_TEST"
+      ],
+      "foundRules": [
+        "NO_CI",
+        "NO_LICENSE",
+        "SKIPPED_TEST",
+        "SKIPPED_TEST",
+        "SKIPPED_TEST"
+      ],
+      "decision": "REVIEW_REQUIRED",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "pass": true
+    }
+  ]
+}
