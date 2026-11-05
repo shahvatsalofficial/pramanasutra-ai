@@ -7,7 +7,7 @@ PramanaSutra AI (from Sanskrit *pramana*, "valid proof") is an open-source **QA 
 1. **Seventeen Agent Skills**, led by PramanaSutra Prime, for Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI. The skill uses the IDE's own model. There is no extra API key.
 2. **A deterministic command-line tool** that reads a project, does not run its tests, and writes three files of the same audit: `report.md`, `report.html` and `report.json`. A release check then returns `NO_GO`, `REVIEW_REQUIRED` or `READY_FOR_HUMAN_APPROVAL`.
 
-Created by Vatsal Shah. Licensed Apache-2.0. Version 0.3.2. npm name: `@shahvatsal/pramanasutra`, published by `.github/workflows/publish.yml` after a GitHub Release. The command line has **zero runtime dependencies** and makes **no network calls**.
+Created by Vatsal Shah. Licensed Apache-2.0. Version 0.3.2. npm name: `pramanasutra`, published by `.github/workflows/publish.yml` after a GitHub Release. The command line has **zero runtime dependencies** and makes **no network calls**.
 
 > **Important:** The tool does not certify quality, security or compliance. `READY_FOR_HUMAN_APPROVAL` means the configured checks passed. A person still decides. It is never a deploy order.
 
@@ -35,7 +35,7 @@ Node.js 20 or newer.
 npx github:shahvatsalofficial/pramanasutra-ai release-check --path .
 ```
 
-After `npm view @shahvatsal/pramanasutra version` prints `0.3.2`, use `npx @shahvatsal/pramanasutra release-check --path .`.
+After `npm view pramanasutra version` prints `0.3.2`, use `npx pramanasutra release-check --path .`.
 
 That writes `./pramanasutra-reports/report.md`, `report.html` and `report.json` in the current directory, not inside the project you scanned. Open the HTML file in a browser. The exit code is `2` for `NO_GO`, `3` for `REVIEW_REQUIRED`, `0` for `READY_FOR_HUMAN_APPROVAL`.
 
@@ -59,7 +59,7 @@ With that same test output supplied as evidence, a release check of this reposit
 - Accuracy on large real repositories. The rules are line heuristics, not parsers.
 - An independent security review.
 - Trademark clearance of the name PramanaSutra. See [Legal](10-legal-and-compliance.md).
-- A public npm tarball. The name is `@shahvatsal/pramanasutra`. `@vatsalshah/pramanasutra` returned `404`. A local publish of `0.3.1` stopped on 2FA (`EOTP`) and the registry then refused that version with `409` because it was only staged. `npm view` showed `0.0.0-stage`. `.github/workflows/publish.yml` publishes `0.3.2` when a GitHub Release is published and an npm trusted publisher is connected.
+- A public npm tarball of the unscoped package `pramanasutra`. `@shahvatsal/pramanasutra@0.3.1` was published and then deleted so the install name would not show that scope. `@vatsalshah/pramanasutra` returned `404`. `.github/workflows/publish.yml` publishes `pramanasutra@0.3.2` when a GitHub Release is published and an npm trusted publisher is connected for that package name.
 
 ## The documentation set
 

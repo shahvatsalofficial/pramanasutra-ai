@@ -15,6 +15,6 @@ Canonical narrative: [documents/pramanasutra/13-roadmap-and-status.md](../docume
 | Required CI | Implemented | Ubuntu + Windows, Node 20 and 22, `scripts/ci-gate.mjs` |
 | macOS CI | Not scheduled | GitHub cancelled the jobs with zero steps (runs 41884015367 and 42098256304). Not a pass |
 | 17 skills and IDE copy installer | Implemented as files | Live host behavior not verified |
-| npm publish workflow | In the repo | `.github/workflows/publish.yml`. Public tarball is not up until that workflow succeeds. `@vatsalshah/pramanasutra` returns 404 for npm user `shahvatsal` |
+| npm package `pramanasutra` | Name in `package.json` | Unscoped, so the install name is `pramanasutra`. `@shahvatsal/pramanasutra` was deleted. `@vatsalshah/pramanasutra` returns 404 |
 | Executing target tests, browser, security scan, performance, server | Planned | Do not describe these as available |
 | Certification, trademark clearance, independent security review | Not claimed | See the legal and security pages |

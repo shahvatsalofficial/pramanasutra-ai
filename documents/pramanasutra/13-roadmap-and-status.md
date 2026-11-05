@@ -52,7 +52,7 @@ These README-level packages exist as notes only. The CLI does not import them.
 ## Near-term work, in order
 
 1. Keep the required CI green on Ubuntu and Windows. Add macOS back only when a runner actually starts and the log shows test output.
-2. On npm, connect trusted publisher `shahvatsalofficial/pramanasutra-ai` workflow `publish.yml`. Then `gh release create v0.3.2`. Confirm `npm view @shahvatsal/pramanasutra version` prints `0.3.2`. Do not publish `@vatsalshah/pramanasutra`.
+2. On npm, connect trusted publisher `shahvatsalofficial/pramanasutra-ai` workflow `publish.yml`. Then `gh release create v0.3.2`. Confirm `npm view pramanasutra version` prints `0.3.2`. Do not publish `@vatsalshah/pramanasutra`.
 3. One live smoke note per IDE: did `init` land where the host reads, and did a trivial prompt cite a file. Until that note exists, the compatibility table stays "not verified".
 4. A rule only with a true-positive fixture and a false-positive fixture. No drive-by patterns.
 

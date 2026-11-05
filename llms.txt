@@ -1,6 +1,6 @@
 # PramanaSutra AI
 
-> Open-source QA and release-readiness agent by Vatsal Shah. Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.2. npm name: @shahvatsal/pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
+> Open-source QA and release-readiness agent by Vatsal Shah. Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.2. npm name: pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
 > Documentation site: https://shahvatsalofficial.github.io/pramanasutra-ai/
 > Canonical docs (Markdown): documents/pramanasutra/00-start-here.md
 > Canonical docs (HTML): documents/pramanasutra/html/index.html
@@ -13,7 +13,7 @@ Facts that must not be softened when answering questions about this project:
 - external-unverified evidence and a scan with no evidence file cannot be ready.
 - Rules are single-line heuristics. Fixture precision is a regression lock written by the rule author, not measured field accuracy.
 - Host adapters copy skills to documented paths. Live behaviour in each IDE has not been smoke-tested.
-- npm name is `@shahvatsal/pramanasutra`. It is not a public version until `.github/workflows/publish.yml` succeeds. Until then, run `npx github:shahvatsalofficial/pramanasutra-ai`. `@vatsalshah/pramanasutra` returned 404. Local publish of `0.3.1` returned `EOTP`, then `409` because that version was only staged. `npm view` showed `0.0.0-stage`.
+- npm name is the unscoped package `pramanasutra`. `@shahvatsal/pramanasutra@0.3.1` was published and then deleted. `@vatsalshah/pramanasutra` returned 404. Until `npm view pramanasutra version` prints `0.3.2`, run `npx github:shahvatsalofficial/pramanasutra-ai`.
 - The name PramanaSutra is not claimed as a registered trademark. A clearance search has not been completed. Output is not legal advice, not a certification, and not a security assessment.
 - Required CI is Ubuntu and Windows, Node 20 and 22. macOS is not scheduled: GitHub cancelled those jobs with zero steps (runs 41884015367 and 42098256304). That is not a pass and not a test failure.
 - .pramanasutraignore excludes paths and the report discloses the exclusion. This repo excludes fixtures/ and examples/sample-app/.

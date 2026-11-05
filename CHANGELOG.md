@@ -3,12 +3,12 @@
 ## 0.3.2 - 2026-11-06
 
 ### Added
-- `.github/workflows/publish.yml` publishes `@shahvatsal/pramanasutra` when a GitHub Release is published. Login is npm trusted publishing (OIDC). There is no stored npm token. `ci.yml` still only runs tests.
+- `.github/workflows/publish.yml` publishes `pramanasutra` when a GitHub Release is published. Login is npm trusted publishing (OIDC). There is no stored npm token. `ci.yml` still only runs tests.
 
 ### Fixed
-- npm publish of `@vatsalshah/pramanasutra` returned `404 Not Found` because the logged-in account is `shahvatsal`, which does not own the `@vatsalshah` scope. The package name is now `@shahvatsal/pramanasutra`.
+- `@vatsalshah/pramanasutra` cannot be published. npm user `shahvatsal` does not own that scope (registry 404).
+- `@shahvatsal/pramanasutra@0.3.1` was published, then deleted, because the install name showed the scope. The public package name is the unscoped name `pramanasutra`.
 - `bin` path no longer starts with `./`, which npm 11 rewrote and reported as removed.
-- Local `npm publish` of `0.3.1` stopped on 2FA (`EOTP`), and a later put returned `409` because that version was only staged. This release is `0.3.2`. The public registry had not shown a real version (`npm view` returned `0.0.0-stage`).
 
 ## 0.3.0 - 2026-11-06
 

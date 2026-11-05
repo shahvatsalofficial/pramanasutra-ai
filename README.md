@@ -47,7 +47,7 @@ Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0.
 
 Not yet proven: live behavior in each IDE, accuracy on large real repositories, an independent security review, trademark clearance. Details: [testing and proof](documents/pramanasutra/11-testing-and-proof.md) and [legal](documents/pramanasutra/10-legal-and-compliance.md).
 
-npm name: [`@shahvatsal/pramanasutra`](https://www.npmjs.com/package/@shahvatsal/pramanasutra). `@vatsalshah/pramanasutra` cannot be published by npm user `shahvatsal` (registry 404). A public version exists only after [Publish](.github/workflows/publish.yml) succeeds. Until `npm view @shahvatsal/pramanasutra version` prints `0.3.2`, install from GitHub.
+npm name: [`pramanasutra`](https://www.npmjs.com/package/pramanasutra). `@shahvatsal/pramanasutra` was deleted. `@vatsalshah/pramanasutra` cannot be published by npm user `shahvatsal` (registry 404). Until `npm view pramanasutra version` prints `0.3.2`, install from GitHub.
 
 ## 60-second start
 
@@ -57,7 +57,7 @@ Node.js 20+.
 npx github:shahvatsalofficial/pramanasutra-ai release-check --path .
 ```
 
-After the publish workflow has put `0.3.2` on npm, the same command is `npx @shahvatsal/pramanasutra release-check --path .`.
+After the publish workflow has put `0.3.2` on npm, the same command is `npx pramanasutra release-check --path .`.
 
 Writes `./pramanasutra-reports/report.md`, `report.html` and `report.json`. Exit `2` is `NO_GO`, `3` is `REVIEW_REQUIRED`, `0` is `READY_FOR_HUMAN_APPROVAL`.
 

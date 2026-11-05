@@ -1,5 +1,5 @@
 {
-  "name": "@shahvatsal/pramanasutra",
+  "name": "pramanasutra",
   "version": "0.3.2",
   "description": "PramanaSutra AI: open-source AI QA, test automation and release-readiness agent skills for Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI, plus a keyless, offline, evidence-first CLI.",
   "keywords": [

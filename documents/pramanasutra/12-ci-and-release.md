@@ -7,7 +7,7 @@
 | File | What it gates | Badge |
 |---|---|---|
 | `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20 and 22. Unit tests, `doctor`, then `scripts/ci-gate.mjs`. Does not publish | The CI badge on the README |
-| `.github/workflows/publish.yml` | On a GitHub Release: `npm test`, then `npm publish --access public --provenance` for `@shahvatsal/pramanasutra` | None. It is not a required check |
+| `.github/workflows/publish.yml` | On a GitHub Release: `npm test`, then `npm publish --provenance` for the unscoped package `pramanasutra` | None. It is not a required check |
 | `.github/workflows/codeql.yml` | CodeQL `javascript-typescript` on Ubuntu | CodeQL badge |
 | `.github/dependabot.yml` | Update PRs for Actions | None |
 
@@ -82,9 +82,7 @@ The site URL is `https://shahvatsalofficial.github.io/pramanasutra-ai/`.
 8. On npm, as user `shahvatsal`, add a trusted publisher for `shahvatsalofficial/pramanasutra-ai` workflow file `publish.yml`. Do this once.
 9. `gh release create vX.Y.Z` with the changelog as notes. That event runs `publish.yml`.
 
-npm name is `@shahvatsal/pramanasutra`. npm user `shahvatsal` cannot publish `@vatsalshah/pramanasutra` (the registry returns 404). Local `npm publish` also stops on account 2FA (`EOTP`). Publishing is `.github/workflows/publish.yml`, which runs only when a GitHub Release is published. It uses npm trusted publishing: the job sets `id-token: write` and does not store an npm token. Connect that workflow on npm before the first release, or the job fails authentication. `ci.yml` must not publish. A green test run is not an npm release.
-
-`npm view` before this workflow existed returned `0.0.0-stage`. Version `0.3.1` was staged during the failed local publish and a second put returned `409 Cannot publish over previously staged version "0.3.1"`. This release is `0.3.2` so the workflow does not reuse that staged version.
+npm name is the unscoped package `pramanasutra`. `@shahvatsal/pramanasutra@0.3.1` was published and then deleted so the install name would not show that scope. `@vatsalshah/pramanasutra` still returns 404. Local `npm publish` asks for 2FA. `publish.yml` runs only when a GitHub Release is published, uses `id-token: write`, and does not store an npm token. Connect that workflow on npm for the package `pramanasutra` before the first release, or the job fails authentication. `ci.yml` must not publish.
 
 ## What this project will not automate
 
