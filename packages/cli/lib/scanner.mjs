@@ -8,16 +8,39 @@ const SOURCE_EXT = /\.(?:[cm]?[jt]sx?|py|go|rs|rb|php|java|kt|swift|dart|cs|vue|
 const TEST_PATH = /(?:^|\/)(?:tests?|__tests__|specs?|e2e)(?:\/|$)|(?:\.test\.|\.spec\.|_test\.(?:go|py|rb|dart)|_spec\.rb$|(?:^|\/)test_[^/]*\.py$)/i;
 const TEST_NAME = /[a-z0-9](?:Tests?|Spec|IT)\.(?:java|kt|cs|swift|scala|php|dart)$/;
 const FOCUSED = /^\s*(?:(?:await\s+)?(?:describe|test|it)\.only\s*\(|(?:fit|fdescribe)\s*\()/;
-const SKIPPED = /^\s*(?:(?:await\s+)?(?:describe|test|it)\.skip\s*\(|(?:xit|xdescribe)\s*\()/;
-const SKIPPED_ALT = /^\s*(?:@pytest\.mark\.(?:skip|xfail)|@unittest\.skip\w*|@Ignore|@Disabled|(?:\w+\.)?t\.Skip(?:Now)?\s*\()/;
+const SKIPPED = /^\s*(?:(?:await\s+)?(?:describe|test|it)\.(?:skip|todo)\s*\(|(?:xit|xtest|xdescribe)\s*\()/;
+const SKIPPED_ALT = /^\s*(?:@pytest\.mark\.(?:skip|xfail)|@unittest\.skip\w*|@Ignore\b|@Disabled\b|(?:\w+\.)?t\.Skip(?:Now)?\s*\(|pytest\.(?:skip|xfail)\s*\(|self\.skipTest\s*\(|raise\s+unittest\.SkipTest\b)/;
 const MAX_DEPTH = 22;
 const MAX_FILES = 20000;
 const MAX_SOURCE_SIZE = 2_000_000;
+
+function toolVersion() {
+  try { return JSON.parse(fs.readFileSync(new URL('../../../package.json', import.meta.url), 'utf8')).version; }
+  catch { return 'unknown'; }
+}
 
 function finding(ruleId, severity, confidence, title, description, evidence, recommendation) {
   return { id: `PS-${ruleId}-${String(evidence.line || 0).padStart(5,'0')}-${String(evidence.path || '').replace(/[^a-z0-9]/gi,'_').slice(-45)}`, ruleId, severity, confidence, title, description, evidence, recommendation, status: 'observed' };
 }
 function isTestFile(rel) { return TEST_PATH.test(rel) || TEST_NAME.test(rel); }
+function loadIgnore(root) {
+  const file = path.join(root, '.pramanasutraignore');
+  let info;
+  try { info = fs.lstatSync(file); } catch { return []; }
+  if (!info.isFile() || info.isSymbolicLink()) throw new Error('.pramanasutraignore must be a regular file (not a symlink)');
+  if (info.size > 100_000) throw new Error('.pramanasutraignore is too large');
+  const rules = [];
+  for (const raw of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    if (line.includes('..') || line.startsWith('/') || line.startsWith('\\') || line.includes('\0')) throw new Error(`Unsafe .pramanasutraignore entry: ${line}`);
+    rules.push(line.replace(/\\/g, '/').replace(/^\.\//, ''));
+  }
+  return rules;
+}
+function isIgnored(rel, rules) {
+  return rules.some((rule) => rule.endsWith('/') ? (rel === rule.slice(0, -1) || rel.startsWith(rule)) : (rel === rule || rel.startsWith(rule + '/')));
+}
 function existsFile(root, rel) {
   try { return fs.statSync(path.join(root, rel)).isFile(); } catch { return false; }
 }
@@ -30,7 +53,10 @@ export function scanProject(target) {
   const limitations = [];
   let skippedSymlinks = 0;
   let oversizedFiles = 0;
+  let binaryFiles = 0;
+  let ignoredPaths = 0;
   let truncated = false;
+  const ignore = loadIgnore(targetPath);
   const stack = [{ absolute: targetPath, depth: 0 }];
   while (stack.length) {
     const { absolute, depth } = stack.pop();
@@ -41,6 +67,8 @@ export function scanProject(target) {
     children.sort((a,b)=>a.name.localeCompare(b.name));
     for (const child of children) {
       const full = path.join(absolute, child.name);
+      const rel = path.relative(targetPath, full).split(path.sep).join('/');
+      if (isIgnored(rel, ignore)) { ignoredPaths++; continue; }
       if (child.isSymbolicLink()) { skippedSymlinks++; continue; }
       if (child.isDirectory()) {
         if (!SKIP_DIRS.has(child.name)) stack.push({ absolute: full, depth: depth + 1 });
@@ -64,7 +92,11 @@ export function scanProject(target) {
     try { size=fs.statSync(full).size; } catch { continue; }
     if (size > MAX_SOURCE_SIZE) { oversizedFiles++; continue; }
     let lines;
-    try { lines=fs.readFileSync(full,'utf8').split(/\r?\n/); } catch { continue; }
+    try {
+      const buf = fs.readFileSync(full);
+      if (buf.includes(0)) { binaryFiles++; continue; }
+      lines = buf.toString('utf8').split(/\r?\n/);
+    } catch { continue; }
     for (let i=0; i<lines.length; i++) {
       const line=lines[i];
       // Deliberately small heuristic rule set. Not a language parser.
@@ -73,14 +105,16 @@ export function scanProject(target) {
     }
   }
   if (oversizedFiles) limitations.push(`Skipped inspecting ${oversizedFiles} large test file(s) (> ${MAX_SOURCE_SIZE} bytes).`);
+  if (binaryFiles) limitations.push(`Skipped inspecting ${binaryFiles} binary test file(s); they contain NUL bytes and were not treated as source.`);
+  if (ignoredPaths) limitations.push(`Excluded ${ignoredPaths} path(s) listed in .pramanasutraignore. Excluded content was not inspected.`);
   if (!testFiles.length) findings.push(finding('NO_TESTS','medium','medium','No tests discovered','No test files matched the starter\'s supported path conventions.',{path:'.',line:null},'Confirm test framework location; add and execute relevant tests.'));
   if (!workflows.length) findings.push(finding('NO_CI','medium','medium','No recognized CI workflow discovered','No recognized CI configuration was found in the files scanned.',{path:'.',line:null},'Verify your CI configuration and enforce required test gates.'));
   const license = entries.some(p => /^(?:LICENSE|LICENSE\.md|LICENSE\.txt|COPYING)$/i.test(p));
   if (!license) findings.push(finding('NO_LICENSE','low','high','No license file at root','A recognized open-source license file was not found at the root.',{path:'.',line:null},'Review intended licensing and add the correct LICENSE file before publication.'));
   const output = {
-    schemaVersion: '1.0.0', product: 'PramanaSutra AI', generatedAt: new Date().toISOString(), scannedPath: path.basename(targetPath) || ".",
+    schemaVersion: '1.0.0', product: 'PramanaSutra AI', toolVersion: toolVersion(), generatedAt: new Date().toISOString(), scannedPath: path.basename(targetPath) || ".",
     capabilities: { staticAudit:'executed', testExecution:'not-run', browser:'not-supported', securityScan:'not-run', performanceTest:'not-run', aiInference:'not-run' },
-    inventory: { fileCount:entries.length, testFiles, manifests, ciWorkflows:workflows, skippedSymlinks, oversizedFiles, partial:truncated || oversizedFiles > 0 || limitations.some(x=>x.startsWith('Unreadable')) },
+    inventory: { fileCount:entries.length, testFiles, manifests, ciWorkflows:workflows, skippedSymlinks, oversizedFiles, binaryFiles, ignoredPaths, partial:truncated || oversizedFiles > 0 || binaryFiles > 0 || limitations.some(x=>x.startsWith('Unreadable')) },
     findings, limitations,
     releaseGate: null
   };

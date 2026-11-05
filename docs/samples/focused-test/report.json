@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "toolVersion": "0.3.0",
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "scannedPath": "focused-test",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "not-run",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 4,
+    "testFiles": [
+      "tests/a.test.js"
+    ],
+    "manifests": [
+      "package.json"
+    ],
+    "ciWorkflows": [
+      ".github/workflows/ci.yml"
+    ],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "binaryFiles": 0,
+    "ignoredPaths": 0,
+    "partial": false
+  },
+  "findings": [
+    {
+      "id": "PS-FOCUSED_TEST-00002-tests_a_test_js",
+      "ruleId": "FOCUSED_TEST",
+      "severity": "high",
+      "confidence": "medium",
+      "title": "Focused test found",
+      "description": "A focused test declaration may silently omit other tests.",
+      "evidence": {
+        "path": "tests/a.test.js",
+        "line": 2
+      },
+      "recommendation": "Remove .only / fit / fdescribe, then execute the full suite.",
+      "status": "observed"
+    }
+  ],
+  "limitations": [],
+  "releaseGate": {
+    "decision": "NO_GO",
+    "policy": "recommended",
+    "reasons": [
+      "Found 1 blocking static finding(s) under policy \"recommended\"."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": false,
+    "evidenceState": "absent",
+    "automatedDeploymentAuthorized": false
+  }
+}

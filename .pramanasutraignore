@@ -1,0 +1,5 @@
+# Paths below are labeled examples of bad or incomplete projects.
+# They are fixtures for the test suite, not this product's own tests.
+# A release-check of this repository must not treat them as product failures.
+fixtures/
+examples/sample-app/

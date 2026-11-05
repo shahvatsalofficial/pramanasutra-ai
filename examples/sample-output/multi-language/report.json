@@ -1,7 +1,8 @@
 {
   "schemaVersion": "1.0.0",
   "product": "PramanaSutra AI",
-  "generatedAt": "2026-11-01T00:00:00.000Z",
+  "toolVersion": "0.3.0",
+  "generatedAt": "2026-11-06T00:00:00.000Z",
   "scannedPath": "multi-language",
   "capabilities": {
     "staticAudit": "executed",
@@ -22,6 +23,8 @@
     "ciWorkflows": [],
     "skippedSymlinks": 0,
     "oversizedFiles": 0,
+    "binaryFiles": 0,
+    "ignoredPaths": 0,
     "partial": false
   },
   "findings": [

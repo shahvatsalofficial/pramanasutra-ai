@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Explicit allow for answer engines and LLM crawlers. This documentation is meant to be found.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://shahvatsalofficial.github.io/pramanasutra-ai/sitemap.xml

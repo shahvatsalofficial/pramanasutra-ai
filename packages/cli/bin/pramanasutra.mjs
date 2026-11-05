@@ -7,8 +7,10 @@ import { loadEvidence } from '../lib/evidence.mjs';
 import { writeReports } from '../lib/report.mjs';
 import { supportedIdes, listAgents, installSkills } from '../lib/installer.mjs';
 
-const HELP = `PramanaSutra AI v0.2.0 — evidence-first QA & release review (by Vatsal Shah)
+const VERSION = (() => { try { return JSON.parse(fs.readFileSync(new URL('../../../package.json', import.meta.url), 'utf8')).version; } catch { return 'unknown'; } })();
+const HELP = `PramanaSutra AI v${VERSION} — evidence-first QA & release review (by Vatsal Shah)
 Usage:
+  pramanasutra version
   pramanasutra doctor [--json]
   pramanasutra agents list [--json]
   pramanasutra scan --path <dir> [--out <dir>] [--no-report] [--json]
@@ -18,7 +20,8 @@ Usage:
   pramanasutra help
 
 Exit codes: 0 success or READY_FOR_HUMAN_APPROVAL; 1 invalid input/error; 2 NO_GO; 3 REVIEW_REQUIRED.
-Reports (report.md, report.html, report.json) are written to ./pramanasutra-reports unless --out or --no-report is given.
+Every scan and release-check writes three files together: report.md and report.html for people, report.json for tools.
+Default directory: ./pramanasutra-reports. Change it with --out. Skip files with --no-report.
 Static audit NEVER executes project tests. No additional AI key required.`;
 const OPTION_VALUE = new Set(['--path','--out','--ide','--target','--evidence','--policy']);
 const OPTION_FLAG = new Set(['--force','--json','--no-report']);
@@ -31,6 +34,7 @@ function parse(raw) {
       if(!raw[i+1] || raw[i+1].startsWith('--')) throw new Error(`Missing value for ${word}`);
       flags[word.slice(2)]=raw[++i];continue;
     }
+    if(word==='--help'||word==='-h'||word==='--version'||word==='-v') { words.push(word); continue; }
     if(word.startsWith('-')) throw new Error(`Unknown option: ${word}`);
     words.push(word);
   }
@@ -42,10 +46,11 @@ export function main(rawArgs=process.argv.slice(2)) {
     const { flags, words }=parse(rawArgs);
     const command=words[0] || 'help';
     if(command==='help' || command==='--help' || command==='-h') {console.log(HELP);return 0;}
+    if(command==='version' || command==='--version' || command==='-v') {emit(flags.json?{product:'PramanaSutra AI',version:VERSION}:`PramanaSutra AI ${VERSION}`,!!flags.json);return 0;}
     if(command==='doctor') {
       const major=Number(process.versions.node.split('.')[0]);
-      const obj={product:'PramanaSutra AI',node:process.version,platform:process.platform,ok:major>=20,offline:true,aiInference:false,root:process.cwd()};
-      emit(flags.json?obj:`PramanaSutra doctor: Node ${process.version}, ${process.platform}. ${obj.ok?'Ready for offline static QA.':'Node 20+ required.'} No additional AI key needed.`,!!flags.json);
+      const obj={product:'PramanaSutra AI',version:VERSION,node:process.version,platform:process.platform,ok:major>=20,offline:true,aiInference:false,root:process.cwd()};
+      emit(flags.json?obj:`PramanaSutra doctor: v${VERSION}, Node ${process.version}, ${process.platform}. ${obj.ok?'Ready for offline static QA.':'Node 20+ required.'} No additional AI key needed.`,!!flags.json);
       return obj.ok?0:1;
     }
     if(command==='agents' && words[1]==='list') {const value=listAgents(); emit(flags.json?value:value.map(s=>' - '+s).join('\n'));return 0;}
@@ -67,10 +72,13 @@ export function main(rawArgs=process.argv.slice(2)) {
       const report=scanProject(flags.path);
       const evidence=flags.evidence && command==='release-check' ? loadEvidence(flags.evidence) : null;
       report.releaseGate=evaluateGate(report,evidence,loadPolicy(flags.policy));
-      if(evidence) report.capabilities.testExecution='evidence-supplied';
+      if(evidence) {
+        report.capabilities.testExecution='evidence-supplied';
+        report.evidence={source:evidence.source,command:evidence.command,executedAt:evidence.executedAt,exitCode:evidence.exitCode,passed:evidence.passed,failed:evidence.failed,skipped:evidence.skipped,environment:evidence.environment,commit:evidence.commit};
+      }
       const outputs=flags['no-report']?[]:writeReports(report,flags.out||'pramanasutra-reports');
       if(flags.json) emit(report,true);
-      else console.log(`PramanaSutra ${command}: ${report.inventory.fileCount} file(s), ${report.inventory.testFiles.length} test file(s), ${report.findings.length} finding(s). Gate: ${report.releaseGate.decision}. Tests executed by this tool: NO. Evidence: ${report.releaseGate.evidenceState}.\n${outputs.length?'Reports: '+outputs.join(', '):'Reports not written (--no-report).'}`);
+      else console.log(`PramanaSutra ${command}: ${report.inventory.fileCount} file(s), ${report.inventory.testFiles.length} test file(s), ${report.findings.length} finding(s). Gate: ${report.releaseGate.decision}. Tests executed by this tool: NO. Evidence: ${report.releaseGate.evidenceState}.\n${outputs.length?'Reports (Markdown, HTML, JSON): '+outputs.join(', '):'Reports not written (--no-report).'}`);
       return command==='release-check' ? ({NO_GO:2,REVIEW_REQUIRED:3}[report.releaseGate.decision]??0) : 0;
     }
     throw new Error(`Unknown command: ${words.join(' ')}`);

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "toolVersion": "0.3.0",
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "scannedPath": "PramanaSutra-AI",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "evidence-supplied",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 211,
+    "testFiles": [
+      "tests/cli.test.mjs"
+    ],
+    "manifests": [
+      "package.json"
+    ],
+    "ciWorkflows": [
+      ".github/workflows/ci-macos.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/codeql.yml"
+    ],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "binaryFiles": 0,
+    "ignoredPaths": 2,
+    "partial": false
+  },
+  "findings": [],
+  "limitations": [
+    "Excluded 2 path(s) listed in .pramanasutraignore. Excluded content was not inspected."
+  ],
+  "releaseGate": {
+    "decision": "READY_FOR_HUMAN_APPROVAL",
+    "policy": "recommended",
+    "reasons": [
+      "All policy checks satisfied by supplied evidence and static inspection. A human must still approve and deploy."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": true,
+    "evidenceState": "passing",
+    "automatedDeploymentAuthorized": false
+  },
+  "evidence": {
+    "schemaVersion": "1.0.0",
+    "source": "local-executed",
+    "command": "node --test --test-reporter=spec tests/cli.test.mjs",
+    "executedAt": "2026-11-06T00:00:00.000Z",
+    "exitCode": 0,
+    "passed": 37,
+    "failed": 0,
+    "skipped": 1,
+    "environment": "win32 v24.15.0"
+  }
+}

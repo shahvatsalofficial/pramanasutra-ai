@@ -1,46 +1,51 @@
 # Captured by scripts/generate-proof.mjs
 # node v24.15.0 on win32/x64 (10.0.26300)
 # exit code: 0
+# This file is the command output. It is not a summary written by hand.
 
-✔ doctor succeeds without a provider key (760.7051ms)
-✔ agents catalog includes Prime and 16 specialists (7.5437ms)
-✔ focused test is high-severity blocker with exact evidence (16.7015ms)
-✔ skipped test is reported and not disguised as executed test (15.4187ms)
-✔ no tests, CI or license produce transparent warnings (5.4595ms)
-✔ clean static project still requires review without test run (36.1548ms)
-✔ report HTML escapes untrusted strings (9.9381ms)
-✔ scan command creates three reports without executing tests (621.8328ms)
-✔ release-check exit code signals NO_GO (591.7895ms)
-✔ release-check exit code signals REVIEW_REQUIRED (583.2529ms)
-✔ installer copies canonical skills into Claude target and prevents overwrite (391.0343ms)
-✔ installer refuses a target file or missing directory (7.601ms)
-✔ unknown options or missing values fail clearly (1214.8801ms)
-﹣ nested symlink is skipped rather than followed (9.7279ms) # Symlink creation prohibited by OS permissions
-✔ heuristic avoids matches embedded in fixture strings (9.8407ms)
-✔ reports do not disclose absolute target paths by default (7.4447ms)
-✔ passing CI evidence on clean project reaches READY_FOR_HUMAN_APPROVAL (exit 0) (924.0181ms)
-✔ failing evidence yields NO_GO (755.6819ms)
-✔ external-unverified evidence never reaches READY (716.9355ms)
-✔ zero-pass evidence is inconclusive, absent evidence is never READY (1388.0499ms)
-✔ verify rejects malformed evidence and accepts valid evidence (2121.9391ms)
-✔ pytest/JUnit/Go skip markers are reported (16.4543ms)
-✔ missing path and traversal-style output fail closed without stack trace (556.3416ms)
-﹣ HTML report escapes malicious file names (0.1576ms) # SKIP
-✔ scan writes md, html and json reports by default into ./pramanasutra-reports (653.5604ms)
-✔ --no-report writes nothing (572.3293ms)
-✔ scan rejects --evidence/--policy; they are release-check only (510.1772ms)
-✔ strict policy turns skipped tests into NO_GO; recommended does not (1167.1531ms)
-✔ policy is fail-closed: unknown keys and weakened safety flags are rejected (2130.0987ms)
-✔ bundled policies load (1324.1872ms)
-✔ Java/C#/Ruby naming conventions are detected, look-alikes are not (14.5841ms)
-✔ report markdown and html contain decision, evidence location and remediation (6.5972ms)
-✔ committed fixtures produce the expected rules and decisions (5.5466ms)
-✔ skills: unique names, frontmatter matches folder, non-empty workflow, no network or execution instructions (3.3669ms)
-ℹ tests 34
+✔ doctor succeeds without a provider key (674.9261ms)
+✔ agents catalog includes Prime and 16 specialists (5.1763ms)
+✔ focused test is high-severity blocker with exact evidence (14.6599ms)
+✔ skipped test is reported and not disguised as executed test (13.4007ms)
+✔ no tests, CI or license produce transparent warnings (6.5068ms)
+✔ clean static project still requires review without test run (40.6622ms)
+✔ report HTML escapes untrusted strings (9.9544ms)
+✔ scan command creates three reports without executing tests (721.9762ms)
+✔ release-check exit code signals NO_GO (752.6602ms)
+✔ release-check exit code signals REVIEW_REQUIRED (688.3597ms)
+✔ installer copies canonical skills into Claude target and prevents overwrite (568.4066ms)
+✔ installer refuses a target file or missing directory (19.9998ms)
+✔ unknown options or missing values fail clearly (1549.0549ms)
+﹣ nested symlink is skipped rather than followed (12.5785ms) # Symlink creation prohibited by OS permissions
+✔ heuristic avoids matches embedded in fixture strings (14.6454ms)
+✔ reports do not disclose absolute target paths by default (12.6038ms)
+✔ passing CI evidence on clean project reaches READY_FOR_HUMAN_APPROVAL (exit 0) (708.2528ms)
+✔ failing evidence yields NO_GO (730.312ms)
+✔ external-unverified evidence never reaches READY (746.9401ms)
+✔ zero-pass evidence is inconclusive, absent evidence is never READY (1470.3247ms)
+✔ verify rejects malformed evidence and accepts valid evidence (1933.9758ms)
+✔ version and --version print the package version (1982.4956ms)
+✔ release report quotes supplied evidence in Markdown and HTML (719.4914ms)
+✔ pytest.skip(), test.todo and binary tests are handled (21.4675ms)
+✔ pytest/JUnit/Go skip markers are reported (17.3381ms)
+✔ missing path and traversal-style output fail closed without stack trace (659.337ms)
+✔ HTML and Markdown reports escape malicious file names (16.349ms)
+✔ scan writes md, html and json reports by default into ./pramanasutra-reports (701.3213ms)
+✔ --no-report writes nothing (724.9455ms)
+✔ scan rejects --evidence/--policy; they are release-check only (706.3796ms)
+✔ strict policy turns skipped tests into NO_GO; recommended does not (1435.6644ms)
+✔ policy is fail-closed: unknown keys and weakened safety flags are rejected (2246.096ms)
+✔ bundled policies load (1522.3266ms)
+✔ Java/C#/Ruby naming conventions are detected, look-alikes are not (36.3112ms)
+✔ report markdown and html contain decision, evidence location and remediation (15.9552ms)
+✔ committed fixtures produce the expected rules and decisions (18.6286ms)
+✔ .pramanasutraignore excludes labeled fixtures and rejects traversal (27.7823ms)
+✔ skills: unique names, frontmatter matches folder, non-empty workflow, no network or execution instructions (12.3799ms)
+ℹ tests 38
 ℹ suites 0
-ℹ pass 32
+ℹ pass 37
 ℹ fail 0
 ℹ cancelled 0
-ℹ skipped 2
+ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 17869.6401
+ℹ duration_ms 22329.0308

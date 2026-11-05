@@ -1,8 +1,10 @@
 # PramanaSutra AI Handbook
 
-<!-- summary: Complete documentation for PramanaSutra AI, the open-source AI QA and release-readiness agent: executive, functional, technical, architecture, user, security, legal, testing and contributor guides. -->
+<!-- summary: Earlier handbook. The canonical detailed pack is documents/pramanasutra. -->
 
-PramanaSutra AI (from the Sanskrit *pramana*, "valid proof") is an open-source **AI QA engineer and release-readiness agent**. It ships 17 portable Agent Skills and a deterministic, offline CLI. Created by Vatsal Shah. Apache-2.0. Version 0.2.0.
+> **The canonical documentation is [`documents/pramanasutra`](../../documents/pramanasutra/00-start-here.md).** Those pages are the ones maintained for 0.3.0, in Markdown and in HTML. This handbook is the earlier set. Prefer the documents folder when the two differ.
+
+PramanaSutra AI (from the Sanskrit *pramana*, "valid proof") is an open-source **AI QA engineer and release-readiness agent**. It ships 17 portable Agent Skills and a deterministic, offline CLI. Created by Vatsal Shah. Apache-2.0. Version 0.3.0.
 
 This handbook is written so that a new reader needs nothing else: what it is, what it does, what it does not do, how it is built, how to use it, and how much to trust it.
 

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "toolVersion": "0.3.0",
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "scannedPath": "missing-tests",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "not-run",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 4,
+    "testFiles": [],
+    "manifests": [
+      "package.json"
+    ],
+    "ciWorkflows": [
+      ".github/workflows/ci.yml"
+    ],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "binaryFiles": 0,
+    "ignoredPaths": 0,
+    "partial": false
+  },
+  "findings": [
+    {
+      "id": "PS-NO_TESTS-00000-_",
+      "ruleId": "NO_TESTS",
+      "severity": "medium",
+      "confidence": "medium",
+      "title": "No tests discovered",
+      "description": "No test files matched the starter's supported path conventions.",
+      "evidence": {
+        "path": ".",
+        "line": null
+      },
+      "recommendation": "Confirm test framework location; add and execute relevant tests.",
+      "status": "observed"
+    }
+  ],
+  "limitations": [],
+  "releaseGate": {
+    "decision": "REVIEW_REQUIRED",
+    "policy": "recommended",
+    "reasons": [
+      "No executed-test evidence supplied (use --evidence).",
+      "No test files detected by supported naming conventions."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": false,
+    "evidenceState": "absent",
+    "automatedDeploymentAuthorized": false
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "PramanaSutra AI",
+  "toolVersion": "0.3.0",
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "scannedPath": "missing-ci",
+  "capabilities": {
+    "staticAudit": "executed",
+    "testExecution": "not-run",
+    "browser": "not-supported",
+    "securityScan": "not-run",
+    "performanceTest": "not-run",
+    "aiInference": "not-run"
+  },
+  "inventory": {
+    "fileCount": 3,
+    "testFiles": [
+      "tests/a.test.js"
+    ],
+    "manifests": [
+      "package.json"
+    ],
+    "ciWorkflows": [],
+    "skippedSymlinks": 0,
+    "oversizedFiles": 0,
+    "binaryFiles": 0,
+    "ignoredPaths": 0,
+    "partial": false
+  },
+  "findings": [
+    {
+      "id": "PS-NO_CI-00000-_",
+      "ruleId": "NO_CI",
+      "severity": "medium",
+      "confidence": "medium",
+      "title": "No recognized CI workflow discovered",
+      "description": "No recognized CI configuration was found in the files scanned.",
+      "evidence": {
+        "path": ".",
+        "line": null
+      },
+      "recommendation": "Verify your CI configuration and enforce required test gates.",
+      "status": "observed"
+    }
+  ],
+  "limitations": [],
+  "releaseGate": {
+    "decision": "REVIEW_REQUIRED",
+    "policy": "recommended",
+    "reasons": [
+      "No executed-test evidence supplied (use --evidence).",
+      "No recognized CI workflow detected."
+    ],
+    "requiresHumanApproval": true,
+    "executedTestEvidence": false,
+    "evidenceState": "absent",
+    "automatedDeploymentAuthorized": false
+  }
+}

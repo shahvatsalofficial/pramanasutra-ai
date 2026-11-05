@@ -136,6 +136,38 @@ test('verify rejects malformed evidence and accepts valid evidence',()=>temp(fol
   assert.equal(run(['verify','--evidence',path.join(folder,'worse.json')]).status,1);
   assert.equal(run(['verify','--evidence',path.join(folder,'ok.json')]).status,0);
 }));
+test('version and --version print the package version',()=>{
+  const version=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).version;
+  assert.match(run(['version']).stdout, new RegExp(version.replace(/\./g,'\\.')));
+  assert.equal(run(['--version']).status, 0);
+  assert.equal(run(['--help']).status, 0);
+});
+test('release report quotes supplied evidence in Markdown and HTML',()=>temp(folder=>{
+  cleanProject(folder);
+  put(folder,'ev.json',evidenceDoc({command:'<script>alert(1)</script>',passed:12,failed:0}));
+  const out=path.join(folder,'out');
+  const res=run(['release-check','--path',folder,'--evidence',path.join(folder,'ev.json'),'--out',out]);
+  assert.equal(res.status,0,res.stderr+res.stdout);
+  for (const ext of ['md','html']) {
+    const text=fs.readFileSync(path.join(out,`report.${ext}`),'utf8');
+    assert.match(text,/ci-ingested/);
+    assert.match(text,/READY_FOR_HUMAN_APPROVAL/);
+    assert.match(text,/>12<|>12<|Passed \| 12|\| Passed \| 12 \|/);
+    assert.ok(!text.includes('<script>alert(1)'));
+    assert.match(text,/&lt;script&gt;/);
+  }
+}));
+test('pytest.skip(), test.todo and binary tests are handled',()=>temp(folder=>{
+  put(folder,'tests/test_b.py','def test_b():\n    pytest.skip("nope")\n');
+  put(folder,'tests/c.test.js','test.todo("later");\n');
+  put(folder,'tests/bin.test.js', Buffer.from([0x74,0x65,0x73,0x74,0x2e,0x6f,0x6e,0x6c,0x79,0x28,0x00]));
+  const report=scanProject(folder);
+  const skips=report.findings.filter(x=>x.ruleId==='SKIPPED_TEST');
+  assert.equal(skips.length,2);
+  assert.equal(report.findings.some(x=>x.ruleId==='FOCUSED_TEST'),false);
+  assert.equal(report.inventory.binaryFiles,1);
+  assert.equal(report.inventory.partial,true);
+}));
 test('pytest/JUnit/Go skip markers are reported',()=>temp(folder=>{
   put(folder,'tests/test_a.py','@pytest.mark.skip\ndef test_a(): pass\n');
   put(folder,'tests/b_test.go','func TestB(t *testing.T) {\n\tt.Skip("x")\n}\n');
@@ -146,9 +178,17 @@ test('missing path and traversal-style output fail closed without stack trace',(
   const res=run(['scan','--path','/definitely/not/here']);
   assert.equal(res.status,1);assert.ok(!/at .*\.mjs/.test(res.stderr));
 });
-test('HTML report escapes malicious file names',{skip:process.platform==='win32'},()=>temp(folder=>{
-  put(folder,'tests/<img src=x onerror=alert(1)>.test.js','test.only("x",()=>{});');
-  const content=html(scanProject(folder));assert.ok(!content.includes('<img src=x'));
+test('HTML and Markdown reports escape malicious file names',()=>temp(folder=>{
+  put(folder,'tests/a.test.js','test.only("x",()=>{});');
+  const report=scanProject(folder);
+  report.findings[0].evidence.path='<img src=x onerror=alert(1)>.test.js';
+  report.findings[0].title='<script>alert(1)</script>';
+  const page=html(report);
+  const doc=markdown(report);
+  assert.ok(!page.includes('<img src=x'));
+  assert.ok(page.includes('&lt;img'));
+  assert.ok(!doc.includes('<img src=x'));
+  assert.ok(doc.includes('&lt;img'));
 }));
 
 test('scan writes md, html and json reports by default into ./pramanasutra-reports',()=>temp(folder=>{
@@ -198,7 +238,7 @@ test('report markdown and html contain decision, evidence location and remediati
 }));
 
 test('committed fixtures produce the expected rules and decisions',()=>{
-  const expect={'clean-project':[[],'READY_FOR_HUMAN_APPROVAL'],'focused-test':[['FOCUSED_TEST'],'NO_GO'],'missing-ci':[['NO_CI'],'REVIEW_REQUIRED'],'missing-tests':[['NO_TESTS'],'REVIEW_REQUIRED'],'unsafe-names':[['FOCUSED_TEST'],'NO_GO']};
+  const expect={'clean-project':[[],'READY_FOR_HUMAN_APPROVAL'],'focused-test':[['FOCUSED_TEST'],'NO_GO'],'missing-ci':[['NO_CI'],'REVIEW_REQUIRED'],'missing-tests':[['NO_TESTS'],'REVIEW_REQUIRED'],'unsafe-names':[['FOCUSED_TEST'],'NO_GO'],'multi-language':[['NO_CI','NO_LICENSE','SKIPPED_TEST','SKIPPED_TEST','SKIPPED_TEST'],'REVIEW_REQUIRED']};
   for(const [name,[rules,decision]] of Object.entries(expect)){
     const dir=path.join(root,'fixtures',name);const r=scanProject(dir);
     const evFile=path.join(dir,'evidence.json');
@@ -206,6 +246,17 @@ test('committed fixtures produce the expected rules and decisions',()=>{
     assert.deepEqual(r.findings.map(f=>f.ruleId).sort(),rules,name);assert.equal(gate.decision,decision,name);
   }
 });
+test('.pramanasutraignore excludes labeled fixtures and rejects traversal',()=>temp(folder=>{
+  put(folder,'fixtures/bad.test.js','test.only("hidden",()=>{});\n');
+  put(folder,'tests/ok.test.js','test("ok",()=>{});\n');
+  put(folder,'.pramanasutraignore','# note\nfixtures/\n');
+  const report=scanProject(folder);
+  assert.equal(report.findings.some(x=>x.ruleId==='FOCUSED_TEST'),false);
+  assert.ok(report.inventory.ignoredPaths>=1);
+  assert.match(report.limitations.join('\n'),/pramanasutraignore/);
+  put(folder,'.pramanasutraignore','../outside\n');
+  assert.throws(()=>scanProject(folder),/Unsafe/);
+}));
 test('skills: unique names, frontmatter matches folder, non-empty workflow, no network or execution instructions',()=>{
   const names=new Set();
   for(const n of listAgents()){

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/index.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/01-executive-summary.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/02-functional-specification.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/03-technical-specification.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/04-architecture.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/05-user-guide.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/06-cli-reference.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/07-security-privacy-legal.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/08-testing-and-proof.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/09-compatibility-and-roadmap.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/10-contributor-guide.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/11-glossary-and-faq.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/handbook/12-rule-catalog.html</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/legal/trademark-and-name-clearance.html</loc><lastmod>2026-11-04</lastmod></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/index.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/00-start-here.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/01-executive-summary.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/02-functional-specification.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/03-architecture.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/04-technical-reference.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/05-user-guide.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/06-cli-and-reports.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/07-rule-catalog.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/08-skills-and-agents.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/09-security-and-privacy.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/10-legal-and-compliance.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/11-testing-and-proof.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/12-ci-and-release.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/13-roadmap-and-status.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/14-faq-and-glossary.html</loc></url>
+  <url><loc>https://shahvatsalofficial.github.io/pramanasutra-ai/15-maintainer-guide.html</loc></url>
 </urlset>

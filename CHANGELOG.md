@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.3.0 - 2026-11-06
+
+### Added
+- Canonical documentation pack at `documents/pramanasutra/`: executive, functional, architecture, technical, user, rules, skills, security, legal, proof, CI, roadmap, FAQ and maintainer pages, in Markdown and generated HTML.
+- Self-audit of this repository as `documents/pramanasutra/audit/report.md` and `report.html`, produced by the CLI from a real unit-test run.
+- Sample audits copied beside the docs. Evidence counts are now a section in both Markdown and HTML reports, not only a state word.
+- `.pramanasutraignore` so labeled bad fixtures are excluded from a scan and the exclusion is written into the report. `..` entries are rejected.
+- `scripts/ci-gate.mjs`: CI runs the tests, parses the summary, and release-checks this repo. It exits 1 if it cannot read the counts.
+- Skip detection for `test.todo` / `xtest`, `pytest.skip()`, `pytest.xfail()`, `self.skipTest` and `raise unittest.SkipTest`.
+- Binary test files (NUL byte) are skipped and the scan is marked partial, so the gate cannot go ready.
+- `version` and `--version`. `doctor` includes the version from `package.json`.
+
+### Fixed
+- Required CI no longer waits on macOS. Run 41884015367 failed because both macOS jobs were cancelled in the queue with zero steps. macOS is `.github/workflows/ci-macos.yml`. Ubuntu and Windows stay required.
+- `--help` and `--version` were rejected as unknown options.
+- Markdown reports escape `<` and `>` so a hostile path is not raw HTML on GitHub.
+- The malicious-filename escape test no longer depends on creating a file the OS forbids, so it runs on Windows.
+
+### Changed
+- Reports lead with how to read them, a findings table, the test files seen, and the workflows seen.
+- `actions/checkout` and `actions/setup-node` are pinned to commit SHAs.
+- Documentation HTML does not load a chart library from a CDN.
+
 ## 0.2.0 - 2026-11-04
 
 ### Added

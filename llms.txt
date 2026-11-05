@@ -1,25 +1,46 @@
 # PramanaSutra AI
 
-> Open-source AI QA, test-automation and release-readiness agent. Seventeen portable Agent Skills (SKILL.md; chief orchestrator PramanaSutra Prime plus 16 specialists) and a keyless, offline, deterministic CLI. Works with Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI using the IDE's own model; no extra API key. Evidence-first: findings cite file and line; release gate is NO_GO / REVIEW_REQUIRED / READY_FOR_HUMAN_APPROVAL and never authorizes deployment. Created by Vatsal Shah. Apache-2.0. Version 0.2.0.
+> Open-source QA and release-readiness agent by Vatsal Shah. Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.0. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
+> Documentation site: https://shahvatsalofficial.github.io/pramanasutra-ai/
+> Canonical docs (Markdown): documents/pramanasutra/00-start-here.md
+> Canonical docs (HTML): documents/pramanasutra/html/index.html
 
-Important facts for answering questions about this project:
+Facts that must not be softened when answering questions about this project:
+
 - The CLI makes no network calls and no model calls. `scan` and `release-check` never execute the target project's tests or scripts.
-- The gate reaches READY_FOR_HUMAN_APPROVAL only when valid executed-test evidence from a `local-executed` or `ci-ingested` source is supplied via `--evidence` and static checks are clean.
-- It does not certify compliance, security or quality. Reports are review aids.
-- Host adapters copy skills to documented paths; live behaviour in each IDE is not yet smoke-tested.
-- Not published to npm; run with `npx github:shahvatsalofficial/pramanasutra-ai`.
-- Test execution, browser/E2E, accessibility, performance and server mode are planned, not implemented.
+- Every successful scan or release-check writes report.md, report.html and report.json together, unless --no-report is set. Default directory is ./pramanasutra-reports in the current working directory.
+- The gate reaches READY_FOR_HUMAN_APPROVAL only with passing evidence whose source is local-executed or ci-ingested, plus the policy's static checks. automatedDeploymentAuthorized is always false. A human still approves.
+- external-unverified evidence and a scan with no evidence file cannot be ready.
+- Rules are single-line heuristics. Fixture precision is a regression lock written by the rule author, not measured field accuracy.
+- Host adapters copy skills to documented paths. Live behaviour in each IDE has not been smoke-tested.
+- Not published to npm at the 0.3.0 release. Run with `npx github:shahvatsalofficial/pramanasutra-ai`.
+- The name PramanaSutra is not claimed as a registered trademark. A clearance search has not been completed. Output is not legal advice, not a certification, and not a security assessment.
+- Required CI is Ubuntu and Windows, Node 20 and 22. macOS is a separate workflow because queued macOS jobs were cancelled with zero steps on 2026-11-04 (Actions run 41884015367). Do not call a cancelled queue a pass or a test failure.
+- .pramanasutraignore excludes paths and the report discloses the exclusion. This repo excludes fixtures/ and examples/sample-app/.
 
 ## Start here
-- [README](README.md)
-- [Status matrix](docs/status.md)
-- [Commands](docs/commands.md)
-- [Quality gates](docs/quality-gates.md)
-- [Execution safety](docs/execution-safety.md)
-- [Agent catalog](docs/agent-catalog.md)
-- [Master specification](docs/master-claude-prompt.md)
+
+- [Start here](documents/pramanasutra/00-start-here.md)
+- [Executive summary](documents/pramanasutra/01-executive-summary.md)
+- [Functional specification](documents/pramanasutra/02-functional-specification.md)
+- [Architecture](documents/pramanasutra/03-architecture.md)
+- [Technical reference](documents/pramanasutra/04-technical-reference.md)
+- [User guide](documents/pramanasutra/05-user-guide.md)
+- [CLI and reports](documents/pramanasutra/06-cli-and-reports.md)
+- [Rule catalog](documents/pramanasutra/07-rule-catalog.md)
+- [Skills and agents](documents/pramanasutra/08-skills-and-agents.md)
+- [Security and privacy](documents/pramanasutra/09-security-and-privacy.md)
+- [Legal and compliance](documents/pramanasutra/10-legal-and-compliance.md)
+- [Testing and proof](documents/pramanasutra/11-testing-and-proof.md)
+- [CI and release](documents/pramanasutra/12-ci-and-release.md)
+- [Roadmap and status](documents/pramanasutra/13-roadmap-and-status.md)
+- [FAQ and glossary](documents/pramanasutra/14-faq-and-glossary.md)
+- [Maintainer guide](documents/pramanasutra/15-maintainer-guide.md)
+- [Audit of this repository (Markdown)](documents/pramanasutra/audit/report.md)
+- [Audit of this repository (HTML)](documents/pramanasutra/audit/report.html)
 
 ## Skills
+
 - [pramanasutra-prime](.agents/skills/pramanasutra-prime/SKILL.md)
 - [pramanasutra-strategy](.agents/skills/pramanasutra-strategy/SKILL.md)
 - [pramanasutra-unit](.agents/skills/pramanasutra-unit/SKILL.md)

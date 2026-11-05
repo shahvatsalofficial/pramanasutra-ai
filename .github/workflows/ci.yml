@@ -5,20 +5,26 @@ on:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # macOS is a separate workflow. Hosted macOS runners have been cancelled
+        # while still queued (zero steps). That must not paint this required check red.
+        os: [ubuntu-latest, windows-latest]
         node: ['20', '22']
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ matrix.node }}
       - run: npm test
       - run: node packages/cli/bin/pramanasutra.mjs doctor
-      - name: Self-scan (gate is informational)
-        run: node packages/cli/bin/pramanasutra.mjs scan --path . --out reports/self
+      - name: Release gate on this repo, using the test run as evidence
+        run: node scripts/ci-gate.mjs
