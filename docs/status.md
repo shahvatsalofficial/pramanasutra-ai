@@ -15,5 +15,6 @@ Canonical narrative: [documents/pramanasutra/13-roadmap-and-status.md](../docume
 | Required CI | Implemented | Ubuntu + Windows, Node 20 and 22, `scripts/ci-gate.mjs` |
 | macOS CI | Not scheduled | GitHub cancelled the jobs with zero steps (runs 41884015367 and 42098256304). Not a pass |
 | 17 skills and IDE copy installer | Implemented as files | Live host behavior not verified |
-| Executing target tests, browser, security scan, performance, server, npm publish | Planned or not done | Do not describe these as available |
+| npm publish workflow | In the repo | `.github/workflows/publish.yml`. Public tarball is not up until that workflow succeeds. `@vatsalshah/pramanasutra` returns 404 for npm user `shahvatsal` |
+| Executing target tests, browser, security scan, performance, server | Planned | Do not describe these as available |
 | Certification, trademark clearance, independent security review | Not claimed | See the legal and security pages |

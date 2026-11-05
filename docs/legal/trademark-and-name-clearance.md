@@ -13,7 +13,7 @@ The names **PramanaSutra** and **PramanaSutra AI** are used by the creator, Vats
 | GitHub repository name `shahvatsalofficial/pramanasutra-ai` | Created successfully, so it was free under that account |
 | Trademark registers (USPTO, EUIPO, WIPO, India) | **Not done** |
 | Domain names | **Not done** |
-| npm package `@vatsalshah/pramanasutra` | **Not published**; not checked |
+| npm package `@shahvatsal/pramanasutra` | Name chosen. Not a public version yet (`npm view` returned `0.0.0-stage`). `@vatsalshah/pramanasutra` returned 404 |
 
 ## Third-party marks
 

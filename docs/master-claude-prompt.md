@@ -5,7 +5,7 @@
 **Creator:** Vatsal Shah  
 **Proposed GitHub repository:** `pramanasutra`  
 **Proposed CLI:** `pramanasutra`  
-**Proposed npm identity:** `@vatsalshah/pramanasutra` — subject to registry verification  
+**npm identity:** `@shahvatsal/pramanasutra` (account `shahvatsal`). `@vatsalshah/pramanasutra` is not publishable by that account.  
 **License proposal:** Apache-2.0 — verify dependency, asset and contribution licenses before publishing  
 **Specification date:** 31 October 2026  
 **Status:** Definitive engineering instructions, **not** a statement of existing implementation.

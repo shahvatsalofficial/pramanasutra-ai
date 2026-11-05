@@ -18,6 +18,8 @@ From anywhere, once the repository is public on GitHub:
 npx github:shahvatsalofficial/pramanasutra-ai doctor
 ```
 
+After the publish workflow has released `0.3.2`, `npx @shahvatsal/pramanasutra doctor` is the same command.
+
 `npx` downloads the repository. The CLI that then runs still does not call a model and does not scan until you ask it to.
 
 ## Check a project

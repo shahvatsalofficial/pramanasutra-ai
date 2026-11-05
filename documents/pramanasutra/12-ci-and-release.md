@@ -6,7 +6,8 @@
 
 | File | What it gates | Badge |
 |---|---|---|
-| `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20 and 22. Unit tests, `doctor`, then `scripts/ci-gate.mjs` | The CI badge on the README |
+| `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20 and 22. Unit tests, `doctor`, then `scripts/ci-gate.mjs`. Does not publish | The CI badge on the README |
+| `.github/workflows/publish.yml` | On a GitHub Release: `npm test`, then `npm publish --access public --provenance` for `@shahvatsal/pramanasutra` | None. It is not a required check |
 | `.github/workflows/codeql.yml` | CodeQL `javascript-typescript` on Ubuntu | CodeQL badge |
 | `.github/dependabot.yml` | Update PRs for Actions | None |
 
@@ -78,10 +79,13 @@ The site URL is `https://shahvatsalofficial.github.io/pramanasutra-ai/`.
 5. Read `documents/pramanasutra/audit/report.md`. If the gate is not what you expect, stop.
 6. Commit, push to `main`.
 7. Wait until the required CI workflow is green. Do not claim macOS CI passed.
-8. `gh release create vX.Y.Z` with the changelog as notes.
+8. On npm, as user `shahvatsal`, add a trusted publisher for `shahvatsalofficial/pramanasutra-ai` workflow file `publish.yml`. Do this once.
+9. `gh release create vX.Y.Z` with the changelog as notes. That event runs `publish.yml`.
 
-npm publish of `@vatsalshah/pramanasutra` is a separate step and needs an npm login. Until that succeeds, the README must keep saying the package is not on npm and the install path is `npx github:shahvatsalofficial/pramanasutra-ai`. A release on GitHub is not an npm release.
+npm name is `@shahvatsal/pramanasutra`. npm user `shahvatsal` cannot publish `@vatsalshah/pramanasutra` (the registry returns 404). Local `npm publish` also stops on account 2FA (`EOTP`). Publishing is `.github/workflows/publish.yml`, which runs only when a GitHub Release is published. It uses npm trusted publishing: the job sets `id-token: write` and does not store an npm token. Connect that workflow on npm before the first release, or the job fails authentication. `ci.yml` must not publish. A green test run is not an npm release.
+
+`npm view` before this workflow existed returned `0.0.0-stage`. Version `0.3.1` was staged during the failed local publish and a second put returned `409 Cannot publish over previously staged version "0.3.1"`. This release is `0.3.2` so the workflow does not reuse that staged version.
 
 ## What this project will not automate
 
-Deploy, tag signing, and a SLSA provenance statement are not implemented. Do not add a badge that implies them.
+Deploy and tag signing are not implemented. `publish.yml` passes `--provenance` so npm can attach its own provenance attestation to the tarball. That is not a deploy, and it is not a separate SLSA workflow in this repository. Do not add a badge that implies either.
