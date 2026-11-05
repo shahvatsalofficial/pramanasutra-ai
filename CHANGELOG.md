@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.3 - 2026-11-06
+
+### Fixed
+- The npm page for `pramanasutra` showed a blank README. The file began with a raw HTML `<div align="center">`, which npmjs.com does not render. The README is Markdown only, and its links are absolute so they work on the package page.
+
 ## 0.3.2 - 2026-11-06
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "pramanasutra",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "PramanaSutra AI: open-source AI QA, test automation and release-readiness agent skills for Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI, plus a keyless, offline, evidence-first CLI.",
   "keywords": [
     "qa",
@@ -24,7 +24,7 @@
   ],
   "license": "Apache-2.0",
   "author": "Vatsal Shah",
-  "homepage": "https://github.com/shahvatsalofficial/pramanasutra-ai#readme",
+  "homepage": "https://shahvatsalofficial.github.io/pramanasutra-ai/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shahvatsalofficial/pramanasutra-ai.git"

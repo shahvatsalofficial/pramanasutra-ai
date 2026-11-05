@@ -15,10 +15,8 @@ node packages/cli/bin/pramanasutra.mjs doctor
 From anywhere, once the repository is public on GitHub:
 
 ```bash
-npx github:shahvatsalofficial/pramanasutra-ai doctor
+npx pramanasutra doctor
 ```
-
-After the publish workflow has released `0.3.2`, `npx pramanasutra doctor` is the same command.
 
 `npx` downloads the repository. The CLI that then runs still does not call a model and does not scan until you ask it to.
 

@@ -1,10 +1,10 @@
 # Roadmap and status
 
-<!-- summary: Honest status of PramanaSutra AI 0.3.2. Implemented, planned, and explicitly not claimed. -->
+<!-- summary: Honest status of PramanaSutra AI 0.3.3. Implemented, planned, and explicitly not claimed. -->
 
 Status words mean only what they say. **Implemented** has a command or file and a test or a committed artifact. **Planned** is a directory, a sentence, or an intention. It does not run. **Not claimed** is something people might assume that this project refuses.
 
-## Implemented in 0.3.2
+## Implemented in 0.3.3
 
 | Capability | Evidence |
 |---|---|
@@ -52,7 +52,7 @@ These README-level packages exist as notes only. The CLI does not import them.
 ## Near-term work, in order
 
 1. Keep the required CI green on Ubuntu and Windows. Add macOS back only when a runner actually starts and the log shows test output.
-2. On npm, connect trusted publisher `shahvatsalofficial/pramanasutra-ai` workflow `publish.yml`. Then `gh release create v0.3.2`. Confirm `npm view pramanasutra version` prints `0.3.2`. Do not publish `@vatsalshah/pramanasutra`.
+2. Confirm `npm view pramanasutra version` matches `package.json` after each release. Do not publish `@vatsalshah/pramanasutra`.
 3. One live smoke note per IDE: did `init` land where the host reads, and did a trivial prompt cite a file. Until that note exists, the compatibility table stays "not verified".
 4. A rule only with a true-positive fixture and a false-positive fixture. No drive-by patterns.
 
