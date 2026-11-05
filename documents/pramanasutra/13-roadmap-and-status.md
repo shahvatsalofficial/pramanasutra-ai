@@ -16,7 +16,7 @@ Status words mean only what they say. **Implemented** has a command or file and 
 | `.pramanasutraignore` | Unit test, this repo's ignore file |
 | Skill pack, 17 files, installer for six host paths | `agents list` test, installer tests |
 | Required CI on Ubuntu and Windows, Node 20 and 22, with a real release gate | `.github/workflows/ci.yml` |
-| macOS workflow that does not control the main badge | `.github/workflows/ci-macos.yml` |
+| macOS in GitHub Actions | Not scheduled. Runs 41884015367 and 42098256304 cancelled with zero steps |
 | CodeQL workflow | `.github/workflows/codeql.yml` |
 | This documentation set, Markdown and HTML | `documents/pramanasutra/` |
 | Public GitHub repository | `https://github.com/shahvatsalofficial/pramanasutra-ai` |
@@ -45,12 +45,12 @@ These README-level packages exist as notes only. The CLI does not import them.
 | Independent security review | None has been commissioned |
 | Trademark clearance | [Legal](10-legal-and-compliance.md) |
 | Field precision equal to the fixture score | The fixture score is a regression lock |
-| macOS CI always green | The queue has cancelled jobs with zero steps |
+| macOS CI passed | Those jobs never started a runner |
 | The assistant always obeys the skill | The host is outside this process |
 
 ## Near-term work, in order
 
-1. Keep the required CI green on the 0.3.0 gate, and record the first real macOS success or the next cancellation without calling either one the other.
+1. Keep the required CI green on Ubuntu and Windows. Add macOS back only when a runner actually starts and the log shows test output.
 2. Publish to npm only after `npm whoami` succeeds for the maintainer, then change the README install lines.
 3. One live smoke note per IDE: did `init` land where the host reads, and did a trivial prompt cite a file. Until that note exists, the compatibility table stays "not verified".
 4. A rule only with a true-positive fixture and a false-positive fixture. No drive-by patterns.
@@ -61,7 +61,7 @@ These README-level packages exist as notes only. The CLI does not import them.
 |---|---|
 | Node 20 and 22 on Ubuntu and Windows in CI | Required workflow. Trust the latest green run, not this sentence |
 | Node on the maintainer's Windows machine | The captured proof file |
-| macOS 14 in CI | Separate workflow. Check Actions |
+| macOS in CI | Not scheduled. Unverified |
 | Claude Code, Cursor, Codex, Copilot, Gemini CLI | Copy paths implemented. Behavior not verified |
 
 Older handbook pages under `docs/handbook/*.md` are earlier write-ups. The numbered files in this folder are the ones to update.

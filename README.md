@@ -7,7 +7,6 @@
 Evidence-first review with `file:line` findings. The audit is a Markdown file and an HTML file, plus JSON for tools. No extra API key.
 
 [![CI](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/ci.yml)
-[![CI macOS](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/ci-macos.yml)
 [![CodeQL](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/codeql.yml/badge.svg)](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/workflows/codeql.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 ![Node](https://img.shields.io/badge/node-%E2%89%A520-339933)
@@ -42,7 +41,7 @@ Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0.
 | Labeled fixtures | 6 of 6 match the expected rules and decision. Precision and recall are 1 **on those author-written fixtures**, which is a regression lock, not field accuracy. [eval-results.json](documents/pramanasutra/proof/eval-results.json) |
 | This repository, with that test output as evidence | `READY_FOR_HUMAN_APPROVAL`, 0 findings, after `fixtures/` and `examples/sample-app/` were excluded and named in the report. [audit Markdown](documents/pramanasutra/audit/report.md), [audit HTML](documents/pramanasutra/audit/report.html) |
 | Required CI | Ubuntu and Windows, Node 20 and 22, then the same release gate. [Actions](https://github.com/shahvatsalofficial/pramanasutra-ai/actions) |
-| macOS | Separate workflow. On 2026-11-04 the old in-matrix jobs were cancelled while queued, with zero steps ([run 41884015367](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/41884015367)). A later green macOS run is evidence. A cancelled queue is not |
+| macOS in GitHub Actions | Not scheduled. Jobs were cancelled with zero steps: [41884015367](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/41884015367) (queued) and [42098256304](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/42098256304) (cancelled in about a second, no runner). That is not a test result. Do not read it as a pass or a product failure |
 | Runtime dependencies | 0 |
 | Network calls by the CLI | 0 |
 

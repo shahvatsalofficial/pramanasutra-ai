@@ -15,9 +15,9 @@ This audit is three files with the same facts: **report.md** (this file), **repo
 
 ## Summary
 
-- Files inspected: 211
+- Files inspected: 292
 - Test files detected: 1
-- CI workflows detected: 3
+- CI workflows detected: 2
 - Manifests detected: 1
 - Findings: 0 (critical 0, high 0, medium 0, low 0, info 0)
 - Tests executed by PramanaSutra: NO (static scan only). Executed-test results count only when supplied as evidence.
@@ -51,7 +51,6 @@ None.
 
 ## CI workflows seen
 
-- `.github/workflows/ci-macos.yml`
 - `.github/workflows/ci.yml`
 - `.github/workflows/codeql.yml`
 

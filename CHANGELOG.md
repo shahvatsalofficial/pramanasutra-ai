@@ -13,7 +13,7 @@
 - `version` and `--version`. `doctor` includes the version from `package.json`.
 
 ### Fixed
-- Required CI no longer waits on macOS. Run 41884015367 failed because both macOS jobs were cancelled in the queue with zero steps. macOS is `.github/workflows/ci-macos.yml`. Ubuntu and Windows stay required.
+- Required CI no longer requests macOS. Run 41884015367 failed because both macOS jobs were cancelled in the queue with zero steps. A follow-up workflow on `macos-14` was cancelled the same way in about a second, with no runner (run 42098256304), so that workflow was removed. Ubuntu and Windows stay required. macOS execution is unverified in Actions.
 - `--help` and `--version` were rejected as unknown options.
 - Markdown reports escape `<` and `>` so a hostile path is not raw HTML on GitHub.
 - The malicious-filename escape test no longer depends on creating a file the OS forbids, so it runs on Windows.

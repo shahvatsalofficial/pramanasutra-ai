@@ -39,7 +39,7 @@ Supported by the artifacts in [Testing and proof](11-testing-and-proof.md):
 
 - The unit suite on the captured Windows run: 38 tests, 37 passed, 0 failed, 1 skipped (OS refused a symlink).
 - Ubuntu and Windows CI are required checks on Node 20 and 22. The job runs the tests and then the release gate with that output as evidence.
-- On 4 November 2026 the previous release's macOS jobs were cancelled by GitHub while queued, with zero steps (Actions run `41884015367`). macOS is now a separate workflow so a runner outage does not fail the required badge. A green macOS run is evidence. A cancelled queue is not, and this document does not claim one.
+- macOS is not in CI. Actions run `41884015367` cancelled both macOS jobs while they were queued, with zero steps. Run `42098256304` cancelled a `macos-14` job in about a second, with no runner. Neither run executed tests. Ubuntu and Windows are the required checks.
 - Six author-written fixtures produce exactly the expected rules. State the caveat in the same sentence: perfect precision here is a regression lock, not field accuracy.
 - The CLI's own release check of this repository, given that test evidence, was `READY_FOR_HUMAN_APPROVAL`. Read [audit/report.md](audit/report.md).
 
@@ -50,7 +50,7 @@ Supported by the artifacts in [Testing and proof](11-testing-and-proof.md):
 - "It is WCAG certified" or "SOC 2 certified" or "ISO certified." No such claim exists.
 - "Every IDE was verified." The install paths are implemented. Live host behavior is not.
 - "The name is trademark-cleared." It is not. See [Legal](10-legal-and-compliance.md).
-- "macOS CI is green" unless the separate workflow's latest run actually succeeded.
+- "Tested on macOS in CI." Those jobs never started.
 
 ## Adoption shape
 

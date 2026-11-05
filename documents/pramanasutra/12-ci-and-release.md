@@ -1,23 +1,22 @@
 # CI and release
 
-<!-- summary: How PramanaSutra AI uses GitHub Actions, why macOS is a separate workflow, how to fail a build on NO_GO, and how this project itself is released. -->
+<!-- summary: How PramanaSutra AI uses GitHub Actions, why macOS is not scheduled, how to fail a build on NO_GO, and how this project itself is released. -->
 
 ## Workflows in this repository
 
 | File | What it gates | Badge |
 |---|---|---|
 | `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20 and 22. Unit tests, `doctor`, then `scripts/ci-gate.mjs` | The CI badge on the README |
-| `.github/workflows/ci-macos.yml` | macOS 14, Node 20 and 22, same steps | Its own badge. Not required for the main badge to be green |
 | `.github/workflows/codeql.yml` | CodeQL `javascript-typescript` on Ubuntu | CodeQL badge |
 | `.github/dependabot.yml` | Update PRs for Actions | None |
 
 `actions/checkout` and `actions/setup-node` are pinned to commit SHAs. Timeouts are 20 minutes. Concurrency cancels a superseded run on the same ref.
 
-## Why macOS is not in the required matrix
+## Why macOS is not scheduled
 
-On 4 November 2026, Actions run [41884015367](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/41884015367) finished as a failure. Ubuntu and Windows jobs succeeded. Both `macos-latest` jobs were **cancelled with zero steps**. They never checked out the repo. That is a runner-queue failure, and it painted the only CI badge red.
+On 4 November 2026, Actions run [41884015367](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/41884015367) finished as a failure. Ubuntu and Windows jobs succeeded. Both `macos-latest` jobs were **cancelled with zero steps**. They never checked out the repo. That failure painted the only CI badge red.
 
-The required workflow no longer requests a macOS runner. `ci-macos.yml` still runs the same tests when GitHub provides `macos-14`. A success there is evidence the suite passed on macOS. A cancelled queue is evidence only of the queue. Do not describe a cancelled macOS run as a product defect, and do not describe it as a pass.
+A separate `macos-14` workflow was tried on the 0.3.0 push. Run [42098256304](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/42098256304) cancelled both jobs in about a second. `runner_name` was empty. No step ran. Scheduling that workflow again would only add a red badge. It was removed. macOS test execution in GitHub Actions is **unverified**. The unit suite has been run on the maintainer's Windows machine, and the required workflow covers Ubuntu and Windows.
 
 ## What the gate job proves
 
@@ -78,7 +77,7 @@ The site URL is `https://shahvatsalofficial.github.io/pramanasutra-ai/`.
 4. `node scripts/build-docs.mjs`
 5. Read `documents/pramanasutra/audit/report.md`. If the gate is not what you expect, stop.
 6. Commit, push to `main`.
-7. Wait until the required CI workflow is green. macOS may still be queued; do not block the release note on a cancelled queue, and do not claim macOS passed.
+7. Wait until the required CI workflow is green. Do not claim macOS CI passed.
 8. `gh release create vX.Y.Z` with the changelog as notes.
 
 npm publish of `@vatsalshah/pramanasutra` is a separate step and needs an npm login. Until that succeeds, the README must keep saying the package is not on npm and the install path is `npx github:shahvatsalofficial/pramanasutra-ai`. A release on GitHub is not an npm release.

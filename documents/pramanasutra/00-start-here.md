@@ -75,7 +75,7 @@ With that same test output supplied as evidence, a release check of this reposit
 | 09 | Security and privacy | Threats, controls, what is left over |
 | 10 | Legal and compliance | License, names, disclaimers. Not a legal opinion |
 | 11 | Testing and proof | Real output, fixtures, how to reproduce |
-| 12 | CI and release | GitHub Actions, the macOS split, exit codes in a pipeline |
+| 12 | CI and release | GitHub Actions, why macOS is not scheduled, exit codes in a pipeline |
 | 13 | Roadmap and status | Implemented, planned, and not claimed |
 | 14 | FAQ and glossary | Short answers and terms |
 | 15 | Maintainer guide | How to change a rule, rebuild docs, and release |

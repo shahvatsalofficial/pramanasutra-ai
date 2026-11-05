@@ -15,7 +15,7 @@ Facts that must not be softened when answering questions about this project:
 - Host adapters copy skills to documented paths. Live behaviour in each IDE has not been smoke-tested.
 - Not published to npm at the 0.3.0 release. Run with `npx github:shahvatsalofficial/pramanasutra-ai`.
 - The name PramanaSutra is not claimed as a registered trademark. A clearance search has not been completed. Output is not legal advice, not a certification, and not a security assessment.
-- Required CI is Ubuntu and Windows, Node 20 and 22. macOS is a separate workflow because queued macOS jobs were cancelled with zero steps on 2026-11-04 (Actions run 41884015367). Do not call a cancelled queue a pass or a test failure.
+- Required CI is Ubuntu and Windows, Node 20 and 22. macOS is not scheduled: GitHub cancelled those jobs with zero steps (runs 41884015367 and 42098256304). That is not a pass and not a test failure.
 - .pramanasutraignore excludes paths and the report discloses the exclusion. This repo excludes fixtures/ and examples/sample-app/.
 
 ## Start here

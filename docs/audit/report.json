@@ -13,7 +13,7 @@
     "aiInference": "not-run"
   },
   "inventory": {
-    "fileCount": 211,
+    "fileCount": 292,
     "testFiles": [
       "tests/cli.test.mjs"
     ],
@@ -21,7 +21,6 @@
       "package.json"
     ],
     "ciWorkflows": [
-      ".github/workflows/ci-macos.yml",
       ".github/workflows/ci.yml",
       ".github/workflows/codeql.yml"
     ],
