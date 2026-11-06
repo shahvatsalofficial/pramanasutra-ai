@@ -11,7 +11,14 @@ const GATE_TEXT = {
   REVIEW_REQUIRED: 'Evidence is missing or incomplete. A human must review before any release decision.',
   READY_FOR_HUMAN_APPROVAL: 'All policy checks passed. A human must still approve; this is never a deploy order.'
 };
+const CI_NONE = 'None recognised (GitHub Actions, GitLab CI, Jenkins, Azure Pipelines, Bitbucket Pipelines, CircleCI, Buildkite, Drone, Woodpecker).';
 const NOT_RUN = 'Tests executed by PramanaSutra: NO (static scan only). Executed-test results count only when supplied as evidence.';
+
+export function bindingText(ev) {
+  if (!ev) return 'Evidence binding: none. No evidence file was supplied.';
+  if (ev.github) return 'Evidence binding: ci-environment. The file names a repository, commit, run id and workflow. PramanaSutra did not verify those values with GitHub. A person can still write them by hand.';
+  return 'Evidence binding: unbound. This JSON is not tied to a CI identity. A passing file is not proof the command ran.';
+}
 const LIMITS = [
   'Heuristic checks do not prove the absence of bugs or release readiness.',
   'No target tests, security scanners, browser, load tests or deploy checks were run by this tool.',
@@ -31,7 +38,7 @@ export function markdown(report) {
   const ev = report.evidence || null;
   const L = [];
   L.push('# PramanaSutra AI: QA & Release Audit Report', '');
-  L.push('This audit is three files with the same facts: **report.md** (this file), **report.html** (open in a browser) and **report.json** (for CI). A static finding is text the scanner saw. It is not a test PramanaSutra ran.', '');
+  L.push('This audit is four files with the same facts: **report.md** (this file), **report.html** (open in a browser), **report.json** (for tools) and **report.sarif.json** (SARIF 2.1.0 for code scanning). A static finding is text the scanner saw. It is not a test PramanaSutra ran.', '');
   L.push('| | |', '|---|---|');
   L.push(`| Project | \`${escMd(report.scannedPath)}\` |`);
   L.push(`| Generated | ${escMd(report.generatedAt)} |`);
@@ -44,6 +51,7 @@ export function markdown(report) {
   L.push('## Supplied test evidence', '');
   if (!ev) {
     L.push('No evidence file was supplied. Counts below are not test results. The release gate cannot treat the suite as passed.', '');
+    L.push(bindingText(ev), '');
   } else {
     L.push('These numbers come from the evidence file the operator supplied. PramanaSutra did not run that command.', '');
     L.push('| Field | Value |', '|---|---|');
@@ -56,7 +64,14 @@ export function markdown(report) {
     L.push(`| Skipped | ${escMd(ev.skipped ?? 0)} |`);
     if (ev.environment) L.push(`| Environment | ${escMd(ev.environment)} |`);
     if (ev.commit) L.push(`| Commit | \`${escMd(ev.commit)}\` |`);
+    if (ev.github) {
+      L.push(`| GitHub repository | \`${escMd(ev.github.repository)}\` |`);
+      L.push(`| GitHub commit | \`${escMd(ev.github.sha)}\` |`);
+      L.push(`| GitHub run | \`${escMd(ev.github.runId)}\` |`);
+      L.push(`| GitHub workflow | \`${escMd(ev.github.workflow)}\` |`);
+    }
     L.push('');
+    L.push(bindingText(ev), '');
   }
   L.push('## Findings at a glance', '');
   if (!report.findings.length) L.push('No static issues detected. This does **not** mean the project is release-ready; other checks were not run.', '');
@@ -73,7 +88,11 @@ export function markdown(report) {
   L.push('## Test files seen', '');
   L.push(...listOrNote(report.inventory.testFiles, 'None. Either there are no tests, or they use a naming convention this scanner does not recognise.'));
   L.push('## CI workflows seen', '');
-  L.push(...listOrNote(report.inventory.ciWorkflows, 'None recognised (GitHub Actions, GitLab CI, Jenkins, Azure Pipelines, Bitbucket Pipelines).'));
+  L.push(...listOrNote(report.inventory.ciWorkflows, CI_NONE));
+  if (Array.isArray(report.inventory.changedFiles)) {
+    L.push('## Changed files', '', 'These names came from `git diff`. They are not a list of tests to run.', '');
+    L.push(...listOrNote(report.inventory.changedFiles, 'git reported no changed files.'));
+  }
   L.push('## Capabilities', '', '| Capability | State | What that means |', '|---|---|---|');
   const capHelp = {
     staticAudit: 'Source text was inspected with heuristic rules.',
@@ -88,7 +107,7 @@ export function markdown(report) {
   for (const r of (gate ? gate.reasons : ['Not requested'])) L.push(`- ${escMd(r)}`);
   L.push('', '## Limitations', '');
   for (const lim of [...report.limitations, ...LIMITS]) L.push(`- ${escMd(lim)}`);
-  L.push('', '---', '*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html and report.json.*', '');
+  L.push('', '---', '*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*', '');
   return L.join('\n');
 }
 
@@ -131,7 +150,7 @@ export function html(report) {
   const stat = (n, label) => `<div class="stat card"><b>${e(n)}</b><span>${e(label)}</span></div>`;
   const fileList = (items, empty) => items.length ? `<ul>${items.slice(0, 40).map(x => `<li><code>${e(x)}</code></li>`).join('')}${items.length > 40 ? `<li>… ${e(items.length - 40)} more not listed.</li>` : ''}</ul>` : `<p>${e(empty)}</p>`;
   const evidence = !ev
-    ? '<p>No evidence file was supplied. Counts on this page are not test results. The release gate cannot treat the suite as passed.</p>'
+    ? `<p>No evidence file was supplied. Counts on this page are not test results. The release gate cannot treat the suite as passed.</p><p>${e(bindingText(ev))}</p>`
     : `<p>These numbers come from the evidence file the operator supplied. PramanaSutra did not run that command.</p><table><tbody>
 <tr><th scope="row">Source</th><td><code>${e(ev.source)}</code></td></tr>
 <tr><th scope="row">Command</th><td><code>${e(ev.command)}</code></td></tr>
@@ -142,9 +161,10 @@ export function html(report) {
 <tr><th scope="row">Skipped</th><td>${e(ev.skipped ?? 0)}</td></tr>
 ${ev.environment ? `<tr><th scope="row">Environment</th><td>${e(ev.environment)}</td></tr>` : ''}
 ${ev.commit ? `<tr><th scope="row">Commit</th><td><code>${e(ev.commit)}</code></td></tr>` : ''}
-</tbody></table>`;
+${ev.github ? `<tr><th scope="row">GitHub repository</th><td><code>${e(ev.github.repository)}</code></td></tr><tr><th scope="row">GitHub commit</th><td><code>${e(ev.github.sha)}</code></td></tr><tr><th scope="row">GitHub run</th><td><code>${e(ev.github.runId)}</code></td></tr><tr><th scope="row">GitHub workflow</th><td><code>${e(ev.github.workflow)}</code></td></tr>` : ''}
+</tbody></table><p>${e(bindingText(ev))}</p>`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="description" content="PramanaSutra AI QA and release audit report. Decision support, not a certification."><title>PramanaSutra AI QA &amp; Release Audit Report</title><style>${CSS}</style></head><body><a class="skip" href="#content">Skip to content</a><main id="content">
-<p class="muted">PramanaSutra AI &middot; QA &amp; Release Audit &middot; Markdown, HTML and JSON are the same audit</p><h1>${e(report.scannedPath)}</h1><p class="muted">Generated ${e(report.generatedAt)} &middot; schema ${e(report.schemaVersion)} &middot; tool ${e(report.toolVersion || '')}</p>
+<p class="muted">PramanaSutra AI &middot; QA &amp; Release Audit &middot; Markdown, HTML, JSON and SARIF are the same audit</p><h1>${e(report.scannedPath)}</h1><p class="muted">Generated ${e(report.generatedAt)} &middot; schema ${e(report.schemaVersion)} &middot; tool ${e(report.toolVersion || '')}</p>
 ${gate ? `<section class="card banner ${e(gate.decision)}" role="status"><p class="muted" style="margin:0">Release decision</p><p style="margin:.35rem 0"><span class="pill ${e(gate.decision)}">${e(gate.decision)}</span></p><p style="margin:.4rem 0 0">${e(GATE_TEXT[gate.decision])}</p><p class="muted" style="margin:.35rem 0 0">Policy: ${e(gate.policy)} &middot; Supplied test evidence: ${e(gate.evidenceState)}</p></section>` : '<p class="card">Release decision: not evaluated. This was a scan without a gate.</p>'}
 <section class="grid" aria-label="Summary">${stat(report.inventory.fileCount, 'files inspected')}${stat(report.inventory.testFiles.length, 'test files')}${stat(report.inventory.ciWorkflows.length, 'CI workflows')}${stat(report.findings.length, 'findings')}${stat(c.critical + c.high, 'critical + high')}</section>
 <p class="card"><strong>${e(NOT_RUN)}</strong></p>
@@ -152,18 +172,53 @@ ${gate ? `<section class="card banner ${e(gate.decision)}" role="status"><p clas
 <h2>Findings at a glance</h2>${report.findings.length ? `<div class="card" style="overflow-x:auto"><table><thead><tr><th>Severity</th><th>Rule</th><th>Where</th><th>Fix</th></tr></thead><tbody>${glance}</tbody></table></div>` : '<p class="card">No static issues detected. This does <strong>not</strong> mean the project is release-ready; other checks were not run.</p>'}
 <h2>Findings</h2>${cards || '<p class="card">None.</p>'}
 <h2>Test files seen</h2><div class="card">${fileList(report.inventory.testFiles, 'None. Either there are no tests, or they use a naming convention this scanner does not recognise.')}</div>
-<h2>CI workflows seen</h2><div class="card">${fileList(report.inventory.ciWorkflows, 'None recognised (GitHub Actions, GitLab CI, Jenkins, Azure Pipelines, Bitbucket Pipelines).')}</div>
+<h2>CI workflows seen</h2><div class="card">${fileList(report.inventory.ciWorkflows, CI_NONE)}</div>
+${Array.isArray(report.inventory.changedFiles) ? `<h2>Changed files</h2><div class="card"><p>These names came from git diff. They are not a list of tests to run.</p>${fileList(report.inventory.changedFiles, 'git reported no changed files.')}</div>` : ''}
 <h2>Release gate reasons</h2><div class="card"><ul>${reasons}</ul></div>
 <h2>Capabilities</h2><div class="card" style="overflow-x:auto"><table><thead><tr><th>Capability</th><th>State</th><th>What that means</th></tr></thead><tbody>${caps}</tbody></table></div>
 <h2>Limitations</h2><div class="card"><ul>${lims}</ul></div>
 <footer>Created by Vatsal Shah. Generated locally; nothing was sent over the network. Not a compliance certification, a security test, or a release authorization. Open <code>report.md</code> for the same audit in Markdown.</footer></main></body></html>`;
 }
 
+export function sarif(report) {
+  const rules = [...new Map(report.findings.map((finding) => [finding.ruleId, finding])).values()];
+  const level = (severity) => (severity === 'critical' || severity === 'high' ? 'error' : severity === 'medium' ? 'warning' : 'note');
+  return {
+    version: '2.1.0',
+    runs: [{
+      tool: {
+        driver: {
+          name: 'PramanaSutra AI',
+          version: String(report.toolVersion || ''),
+          informationUri: 'https://github.com/shahvatsalofficial/pramanasutra-ai',
+          rules: rules.map((finding) => ({ id: finding.ruleId, shortDescription: { text: finding.title } }))
+        }
+      },
+      results: report.findings.map((finding) => ({
+        ruleId: finding.ruleId,
+        level: level(finding.severity),
+        message: { text: finding.title },
+        locations: [{
+          physicalLocation: {
+            artifactLocation: { uri: finding.evidence.path },
+            ...(finding.evidence.line ? { region: { startLine: finding.evidence.line } } : {})
+          }
+        }]
+      }))
+    }]
+  };
+}
+
 export function writeReports(report, out) {
   if (!out) return [];
   const target = path.resolve(out);
   fs.mkdirSync(target, { recursive: true });
-  const outputs = [['report.md', markdown(report)], ['report.html', html(report)], ['report.json', JSON.stringify(report, null, 2) + '\n']];
+  const outputs = [
+    ['report.md', markdown(report)],
+    ['report.html', html(report)],
+    ['report.json', JSON.stringify(report, null, 2) + '\n'],
+    ['report.sarif.json', JSON.stringify(sarif(report), null, 2) + '\n']
+  ];
   for (const [file, content] of outputs) fs.writeFileSync(path.join(target, file), content, 'utf8');
   return outputs.map(([file]) => path.join(target, file));
 }

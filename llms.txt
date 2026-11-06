@@ -1,14 +1,17 @@
 # PramanaSutra AI
 
-> Open-source QA and release-readiness agent by Vatsal Shah. Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.3. npm: pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
+> Open-source QA and release-readiness agent by Vatsal Shah. Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.4. npm: pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
 > Documentation site: https://shahvatsalofficial.github.io/pramanasutra-ai/
 > Canonical docs (Markdown): documents/pramanasutra/00-start-here.md
 > Canonical docs (HTML): documents/pramanasutra/html/index.html
 
 Facts that must not be softened when answering questions about this project:
 
-- The CLI makes no network calls and no model calls. `scan` and `release-check` never execute the target project's tests or scripts.
-- Every successful scan or release-check writes report.md, report.html and report.json together, unless --no-report is set. Default directory is ./pramanasutra-reports in the current working directory.
+- Every successful scan or release-check writes report.md, report.html, report.json and report.sarif.json together, unless --no-report is set. Default directory is ./pramanasutra-reports in the current working directory. SARIF is not uploaded.
+- scan and release-check use the same exit codes. 2 is NO_GO. 3 is REVIEW_REQUIRED. 0 is READY_FOR_HUMAN_APPROVAL only. A scan with no evidence file exits 3.
+- Evidence binding is none, unbound, or ci-environment. ci-environment means the file contains github.repository, github.sha, github.runId and github.workflow. The CLI does not verify those strings with GitHub. A person can write them. verify checks schema only.
+- --changed lists git diff names. It does not select or run tests. A non-git directory is reported as git diff unavailable.
+- The CLI makes no network calls and no model calls. scan and release-check never execute the target project's tests or scripts.
 - The gate reaches READY_FOR_HUMAN_APPROVAL only with passing evidence whose source is local-executed or ci-ingested, plus the policy's static checks. automatedDeploymentAuthorized is always false. A human still approves.
 - external-unverified evidence and a scan with no evidence file cannot be ready.
 - Rules are single-line heuristics. Fixture precision is a regression lock written by the rule author, not measured field accuracy.

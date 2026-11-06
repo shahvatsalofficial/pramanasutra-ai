@@ -26,7 +26,7 @@ A separate `macos-14` workflow was tried on the 0.3.0 push. Run [42098256304](ht
 1. Runs `node --test --test-reporter=spec tests/cli.test.mjs`.
 2. Reads the last `pass` and `fail` counts from that output.
 3. If it cannot read them, exits 1. It does not invent a passing evidence file.
-4. Writes a temporary evidence file with `source: ci-ingested` and those counts.
+4. Writes a temporary evidence file with `source: ci-ingested` and those counts. When `GITHUB_REPOSITORY`, `GITHUB_SHA`, `GITHUB_RUN_ID` and `GITHUB_WORKFLOW` are all set, it also writes `github` with those four strings. The report then says `ci-environment`. That is not a signature. A checkout outside Actions omits `github`, and the report says `unbound`.
 5. Runs `release-check` on the repository root with that file.
 6. Exits with the gate code.
 

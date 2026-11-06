@@ -22,12 +22,12 @@ Source of the running tool: `packages/cli/`. Node.js ES modules. No `npm install
 
 | Code | When |
 |---|---|
-| 0 | `doctor` on Node 20+, `help`, `version`, `agents`, `init`, `verify` success, `scan` finished, `release-check` with `READY_FOR_HUMAN_APPROVAL` |
+| 0 | `doctor` on Node 20+, `help`, `version`, `agents`, `init`, `verify` success, `scan` or `release-check` with `READY_FOR_HUMAN_APPROVAL` |
 | 1 | Bad arguments, unreadable input, invalid evidence, invalid policy, doctor on Node older than 20, unknown command |
-| 2 | `release-check` decision `NO_GO` |
-| 3 | `release-check` decision `REVIEW_REQUIRED` |
+| 2 | `scan` or `release-check` decision `NO_GO` |
+| 3 | `scan` or `release-check` decision `REVIEW_REQUIRED` |
 
-`scan` does not use 2 or 3. It always exits 0 after a successful inspection so a search can be informational. Use `release-check` when the exit code must mean the gate.
+`scan` and `release-check` both use 2 for `NO_GO` and 3 for `REVIEW_REQUIRED`. Exit 0 from either command is `READY_FOR_HUMAN_APPROVAL` only. A scan without an evidence file cannot be ready.
 
 ## Report object (schema 1.0.0)
 
@@ -44,13 +44,14 @@ Written as `report.json`. The Markdown and HTML are renderings of this object, p
 | `inventory.fileCount` | Files that were listed, after ignore rules and skip directories |
 | `inventory.testFiles` | Relative paths classified as tests |
 | `inventory.manifests` | `package.json`, `pyproject.toml`, `go.mod`, Gradle, Maven, Cargo, Gemfile, Composer, pubspec, `.sln`, `.csproj`, `requirements.txt` |
-| `inventory.ciWorkflows` | GitHub Actions under `.github/workflows`, plus GitLab, Jenkins, Azure Pipelines, Bitbucket Pipelines file names |
+| `inventory.ciWorkflows` | GitHub Actions under `.github/workflows`, plus GitLab, Jenkins, Azure Pipelines, Bitbucket Pipelines, CircleCI, Buildkite, Drone and Woodpecker file names |
+| `inventory.changedFiles` | Present as an array only when `--changed` could run `git diff`. `null` when the flag was omitted or git was unavailable |
 | `inventory.partial` | True when the walk truncated, skipped a large or binary test file, or could not read a directory |
 | `inventory.ignoredPaths` | Count of file or directory entries skipped because of `.pramanasutraignore` |
 | `findings[]` | `id`, `ruleId`, `severity`, `confidence`, `title`, `description`, `evidence.path`, `evidence.line`, `recommendation`, `status` |
 | `limitations[]` | Sentences about skips, truncation, ignore |
 | `releaseGate` | `decision`, `policy`, `reasons[]`, `requiresHumanApproval`, `executedTestEvidence`, `evidenceState`, `automatedDeploymentAuthorized` |
-| `evidence` | Present only when `--evidence` was accepted. Echoes source, command, time, exit code, passed, failed, skipped, environment, commit. Omitted on a plain scan |
+| `evidence` | Present only when `--evidence` was accepted. Echoes source, command, time, exit code, passed, failed, skipped, environment, commit, and `github` or null. Omitted on a plain scan |
 
 Adding `toolVersion` and `evidence` does not change `schemaVersion`. Consumers that ignore unknown fields keep working. Consumers that reject unknown fields will need a change; none are shipped in this repo.
 
@@ -66,6 +67,7 @@ Adding `toolVersion` and `evidence` does not change `schemaVersion`. Consumers t
 | `passed`, `failed` | Integers ≥ 0 |
 | `skipped` | Optional integer ≥ 0 |
 | `environment`, `commit` | Optional strings |
+| `github` | Optional object. When present, `repository`, `sha`, `runId` and `workflow` must each be a non-empty string. The report then says `ci-environment`. Missing `github` is `unbound`. Neither state is a signature |
 
 Classification order: no file → `absent`. `failed > 0` or `exitCode !== 0` → `failing`. `passed === 0` → `inconclusive`. `external-unverified` → `unverified`. Otherwise → `passing`. Only `passing` can unlock the ready state, and only together with the policy's static requirements.
 

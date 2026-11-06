@@ -1,12 +1,12 @@
 # PramanaSutra AI: QA & Release Audit Report
 
-This audit is three files with the same facts: **report.md** (this file), **report.html** (open in a browser) and **report.json** (for CI). A static finding is text the scanner saw. It is not a test PramanaSutra ran.
+This audit is four files with the same facts: **report.md** (this file), **report.html** (open in a browser), **report.json** (for tools) and **report.sarif.json** (SARIF 2.1.0 for code scanning). A static finding is text the scanner saw. It is not a test PramanaSutra ran.
 
 | | |
 |---|---|
 | Project | `PramanaSutra-AI` |
 | Generated | 2026-11-06T00:00:00.000Z |
-| Tool | PramanaSutra AI 0.3.0 (schema 1.0.0) |
+| Tool | PramanaSutra AI 0.3.4 (schema 1.0.0) |
 | **Release decision** | **READY_FOR_HUMAN_APPROVAL** |
 | Policy | recommended |
 | Supplied test evidence | passing |
@@ -15,9 +15,9 @@ This audit is three files with the same facts: **report.md** (this file), **repo
 
 ## Summary
 
-- Files inspected: 292
+- Files inspected: 320
 - Test files detected: 1
-- CI workflows detected: 2
+- CI workflows detected: 3
 - Manifests detected: 1
 - Findings: 0 (critical 0, high 0, medium 0, low 0, info 0)
 - Tests executed by PramanaSutra: NO (static scan only). Executed-test results count only when supplied as evidence.
@@ -32,10 +32,12 @@ These numbers come from the evidence file the operator supplied. PramanaSutra di
 | Command | `node --test --test-reporter=spec tests/cli.test.mjs` |
 | Executed at | 2026-11-06T00:00:00.000Z |
 | Exit code | 0 |
-| Passed | 37 |
+| Passed | 43 |
 | Failed | 0 |
-| Skipped | 1 |
+| Skipped | 0 |
 | Environment | win32 v24.15.0 |
+
+Evidence binding: unbound. This JSON is not tied to a CI identity. A passing file is not proof the command ran.
 
 ## Findings at a glance
 
@@ -53,6 +55,7 @@ None.
 
 - `.github/workflows/ci.yml`
 - `.github/workflows/codeql.yml`
+- `.github/workflows/publish.yml`
 
 ## Capabilities
 
@@ -77,4 +80,4 @@ None.
 - This report is decision support, not a compliance certification or legal advice.
 
 ---
-*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html and report.json.*
+*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*

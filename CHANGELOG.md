@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.3.4 - 2026-11-07
+
+### Added
+- `report.sarif.json` (SARIF 2.1.0) is written with `report.md`, `report.html` and `report.json`. Nothing uploads it.
+- `--changed` on `scan` and `release-check` lists names from `git diff`. It does not select or run tests. A directory that is not a Git checkout says git diff was not available.
+- Reports state an evidence binding: `none`, `unbound`, or `ci-environment`. `ci-environment` means the JSON names a repository, commit, run id and workflow. It is not a signature.
+- `scripts/ci-gate.mjs` writes that `github` object when `GITHUB_REPOSITORY`, `GITHUB_SHA`, `GITHUB_RUN_ID` and `GITHUB_WORKFLOW` are set.
+- CI file detection also matches CircleCI (`.circleci/config.yml`), Buildkite (`.buildkite/pipeline.yml`), Drone (`.drone.yml`) and Woodpecker (`woodpecker.yml`).
+- The 17 skill workflows are different procedures. A test rejects a copied Safe workflow.
+- The documentation site opens on a product page. The 16 handbook chapters stay linked from it.
+- `scan` and `release-check` use the same exit codes. Exit 0 is only `READY_FOR_HUMAN_APPROVAL`. A scan with no evidence file exits 3.
+- The Windows symlink test uses a directory junction when the OS refuses a symlink.
+
+### Not in this release
+- The CLI still does not run the target's tests, a browser, a load generator, or a vulnerability scanner.
+- Evidence JSON is still unsigned. A person can hand-write a `ci-environment` file.
+- macOS stays off the required CI matrix.
+- The twelve `packages/*` READMEs that say planned are still notes.
+
 ## 0.3.3 - 2026-11-06
 
 ### Fixed

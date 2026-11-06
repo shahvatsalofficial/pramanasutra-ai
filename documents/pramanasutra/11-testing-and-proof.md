@@ -22,20 +22,20 @@ The sample reports pin `generatedAt` to `2026-11-06T00:00:00.000Z` so a review i
 
 ## Captured unit run
 
-On the run committed with version 0.3.0 the summary was:
+On the run captured for version 0.3.4 the summary was:
 
-- tests: 38
-- pass: 37
+- tests: 43
+- pass: 43
 - fail: 0
-- skipped: 1
+- skipped: 0
 
-The skipped test is `nested symlink is skipped rather than followed`. The runtime could not create a symlink (`Symlink creation prohibited by OS permissions`). The test skips instead of failing. On a machine that allows symlinks the same test runs and must show the link was not followed. Do not quote "37 passed" as a universal CI number. Quote the file, and quote the CI run for Ubuntu and Windows.
+`nested symlink is skipped rather than followed` now runs on this Windows machine. A real symlink is refused, so the test creates a directory junction and checks the scanner does not follow it. On a machine that allows symlinks, the same test uses a symlink. Do not quote "43 passed" as a universal CI number. Quote the file, and quote the CI run for Ubuntu and Windows.
 
 The command does not use a network and does not need `npm install`.
 
 ## What the tests lock
 
-The suite in `tests/cli.test.mjs` covers doctor, the 17 skills' frontmatter, focused and skipped tests, missing tests/CI/license, the three exit codes, HTML and Markdown escaping, default report paths, evidence classification, policy rejection, Java/C#/Ruby file names, the multi-language fixture, ignore-file traversal, binary test files, and `pytest.skip` / `test.todo`.
+The suite in `tests/cli.test.mjs` covers doctor, the 17 skills' frontmatter and distinct Safe workflow bodies, focused and skipped tests, missing tests/CI/license, CircleCI recognition, shared `scan` and `release-check` exit codes, HTML and Markdown escaping, default report paths, SARIF 2.1.0, evidence classification, the unbound and ci-environment binding sentences, `--changed` when git is unavailable, policy rejection, Java/C#/Ruby file names, the multi-language fixture, ignore-file traversal, binary test files, and `pytest.skip` / `test.todo`.
 
 It does not cover a live IDE. It does not measure recall on a corpus the author did not write.
 

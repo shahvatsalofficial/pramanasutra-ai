@@ -140,11 +140,12 @@ const docs = files.map((f) => {
   return { file: f, out: f.replace(/\.md$/, '.html'), title, desc, html, toc, questions, text: md.replace(/[#*`|>]/g, ' ').replace(/\s+/g, ' ') };
 });
 const searchIndex = docs.map((d) => ({ t: d.title, u: d.out, x: d.text.slice(0, 5000) }));
+searchIndex.unshift({ t: 'PramanaSutra AI', u: 'index.html', x: 'Offline QA and release check. Four report files. Evidence binding none unbound ci-environment. Five static rules. Skills are instructions. scan and release-check share exit codes. macOS CI is not scheduled.' });
 
 function page(d, idx) {
   const prev = docs[idx - 1];
   const next = docs[idx + 1];
-  const nav = docs.map((x) => `<li><a href="${x.out}"${x.file === d.file ? ' aria-current="page"' : ''}>${esc(x.title)}</a></li>`).join('');
+  const nav = `<li><a href="index.html">Home</a></li>` + docs.map((x) => `<li><a href="${x.out}"${x.file === d.file ? ' aria-current="page"' : ''}>${esc(x.title)}</a></li>`).join('');
   const toc = d.toc.length ? `<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul>${d.toc.map((t) => `<li class="l${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`).join('')}</ul></nav>` : '';
   const graph = [{ '@context': 'https://schema.org', '@type': 'TechArticle', headline: d.title, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah', url: 'https://github.com/shahvatsalofficial' }, inLanguage: 'en', isPartOf: { '@type': 'SoftwareSourceCode', name: 'PramanaSutra AI', codeRepository: REPO, license: 'https://www.apache.org/licenses/LICENSE-2.0', version: pkg.version } }];
   if (d.file.startsWith('00-')) graph.push({ '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'PramanaSutra AI', applicationCategory: 'DeveloperApplication', operatingSystem: 'Windows, macOS, Linux', softwareVersion: pkg.version, license: 'https://www.apache.org/licenses/LICENSE-2.0', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah' }, codeRepository: REPO });
@@ -211,9 +212,87 @@ function copyInto(name) {
   walk(from, dest);
 }
 
+function landing() {
+  const nav = `<li><a href="index.html" aria-current="page">Home</a></li>` + docs.map((x) => `<li><a href="${x.out}">${esc(x.title)}</a></li>`).join('');
+  const cards = docs.map((d) => `<article class="mini"><h2><a href="${d.out}">${esc(d.title)}</a></h2><p>${esc(d.desc)}</p></article>`).join('');
+  const desc = 'Offline QA and release check. Reads a repository, does not run its tests, and writes Markdown, HTML, JSON and SARIF. A ready result still needs a person.';
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PramanaSutra AI</title>
+<meta name="description" content="${esc(desc)}">
+<meta name="author" content="Vatsal Shah">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="PramanaSutra AI">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="${SITE}/">
+<link rel="canonical" href="${SITE}/">
+<meta name="color-scheme" content="light dark">
+<style>${CSS}</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+<button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open navigation">Menu</button>
+<a class="brand" href="index.html"><span class="logo" aria-hidden="true">PS</span><span>PramanaSutra AI <small>v${esc(pkg.version)}</small></span></a>
+<div class="search"><label class="sr" for="q">Search documentation</label><input id="q" type="search" placeholder="Search docs (press /)" autocomplete="off" aria-controls="results"><ul id="results" role="listbox" hidden></ul></div>
+<button class="theme-btn" type="button" aria-label="Toggle colour theme">Theme</button>
+<a class="gh" href="${REPO}" rel="noopener">GitHub</a>
+</header>
+<div class="layout">
+<aside id="sidebar" class="sidebar"><nav aria-label="Documentation"><ol>${nav}</ol></nav></aside>
+<main id="content" class="content home" tabindex="-1">
+<p class="muted">Created by Vatsal Shah · Apache-2.0 · version ${esc(pkg.version)}</p>
+<h1>PramanaSutra AI</h1>
+<p class="lead">An offline check for a repository you are about to ship. It reads files. It does not run the project's tests. It writes four copies of one audit, then stops for a person.</p>
+<div class="actions"><a class="primary" href="00-start-here.html">Start here</a><a class="secondary" href="${REPO}" rel="noopener">Source</a><a class="secondary" href="https://www.npmjs.com/package/pramanasutra" rel="noopener">npm</a></div>
+<section class="stat-grid" aria-label="What this version actually is">
+<article class="stat"><b>5</b><span>static rules. Focused test, skipped test, no tests, no CI, no license.</span></article>
+<article class="stat"><b>0</b><span>runtime dependencies. The CLI makes no network call.</span></article>
+<article class="stat"><b>4</b><span>report files: Markdown, HTML, JSON, SARIF 2.1.0. SARIF is not uploaded.</span></article>
+<article class="stat"><b>17</b><span>skills. They are instructions. They do not execute tests.</span></article>
+</section>
+<h2>What the command does</h2>
+<div class="card-grid">
+<article class="mini"><h2>scan</h2><p>Same exit codes as release-check. Exit 2 is NO_GO. Exit 3 is REVIEW_REQUIRED. Exit 0 needs passing evidence. A scan with no evidence file exits 3.</p></article>
+<article class="mini"><h2>release-check</h2><p>Exit 2 is NO_GO. Exit 3 is REVIEW_REQUIRED. Exit 0 is READY_FOR_HUMAN_APPROVAL. Ready is not a deploy.</p></article>
+<article class="mini"><h2>Evidence</h2><p>No file is binding <code>none</code>. A file with no GitHub identity is <code>unbound</code>. Four GitHub strings is <code>ci-environment</code>, and that is still not a signature.</p></article>
+<article class="mini"><h2>--changed</h2><p>Lists names from git diff. It does not choose tests. A folder that is not a checkout says git diff was not available.</p></article>
+</div>
+<h2>What this version does not do</h2>
+<ul>
+<li>It does not run the target's tests, a browser, a load generator, or a vulnerability scanner.</li>
+<li>It does not sign evidence. <code>verify</code> checks the JSON shape.</li>
+<li>Fixture precision is a regression lock written by the rule author, not field accuracy.</li>
+<li>Required CI is Ubuntu and Windows, Node 20 and 22. macOS is not scheduled.</li>
+<li>The npm page shows the last published tarball. It can lag the version in git until a person completes publish.</li>
+<li>Twelve <code>packages/*</code> directories are notes. The CLI does not import them.</li>
+</ul>
+<h2>Handbook</h2>
+<div class="card-grid">${cards}</div>
+<h2>Questions</h2>
+<div class="card-grid">
+<article class="mini"><h2>Does it run my tests?</h2><p>No. You run them, then pass an evidence file. The report says the tool did not execute tests.</p></article>
+<article class="mini"><h2>Is a ready result a release?</h2><p>No. <code>automatedDeploymentAuthorized</code> is false. A person still approves.</p></article>
+<article class="mini"><h2>Can I paste a passing JSON?</h2><p>Yes, and the report will say unbound or ci-environment. Neither label proves the command ran.</p></article>
+<article class="mini"><h2>Where is macOS?</h2><p>Not on the required matrix. Earlier macOS jobs were cancelled with zero steps. That is not a pass.</p></article>
+</div>
+<footer class="foot">PramanaSutra AI ${esc(pkg.version)} · Created by Vatsal Shah · Apache-2.0 · Decision support, not a certification</footer>
+</main>
+</div>
+<script>window.__DOCS_INDEX__=${JSON.stringify(searchIndex).replace(/</g, '\\u003c')};</script>
+<script>${JS}</script>
+</body>
+</html>
+`;
+}
+
 mkdirSync(outDir, { recursive: true });
 docs.forEach((d, i) => writeFileSync(path.join(outDir, d.out), page(d, i)));
-writeFileSync(path.join(outDir, 'index.html'), page(docs[0], 0));
+writeFileSync(path.join(outDir, 'index.html'), landing());
 for (const name of ['samples', 'proof', 'audit']) copyInto(name);
 const urls = ['index.html', ...docs.map((d) => d.out)];
 writeFileSync(path.join(outDir, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}/${u}</loc></url>`).join('\n')}\n</urlset>\n`);

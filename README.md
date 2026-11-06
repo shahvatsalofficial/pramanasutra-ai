@@ -9,15 +9,17 @@ QA and release-readiness agent for Claude Code, Cursor, Codex, GitHub Copilot an
 ![Node](https://img.shields.io/badge/node-%E2%89%A520-339933)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 
-Evidence-first review with `file:line` findings. The audit is a Markdown file, an HTML file, and JSON for tools. No extra API key.
+Evidence-first review with `file:line` findings. The audit is Markdown, HTML, JSON, and SARIF. No extra API key.
 
 [Documentation](https://shahvatsalofficial.github.io/pramanasutra-ai/) · [Start here](https://shahvatsalofficial.github.io/pramanasutra-ai/00-start-here.html) · [GitHub](https://github.com/shahvatsalofficial/pramanasutra-ai) · [npm](https://www.npmjs.com/package/pramanasutra)
 
-PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and release-readiness agent**. It ships 17 portable [Agent Skills](https://agentskills.io/specification), led by **PramanaSutra Prime**, and a deterministic offline CLI. The CLI reads a repository, does not run its tests, and writes **`report.md`**, **`report.html`** and **`report.json`** of the same audit. The release gate is `NO_GO`, `REVIEW_REQUIRED` or `READY_FOR_HUMAN_APPROVAL`. A ready result still needs a person. It is never a deploy order.
+PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and release-readiness agent**. It ships 17 portable [Agent Skills](https://agentskills.io/specification), led by **PramanaSutra Prime**, and a deterministic offline CLI. The CLI reads a repository, does not run its tests, and writes **`report.md`**, **`report.html`**, **`report.json`** and **`report.sarif.json`** of the same audit. The release gate is `NO_GO`, `REVIEW_REQUIRED` or `READY_FOR_HUMAN_APPROVAL`. A ready result still needs a person. It is never a deploy order.
+
+`scan` and `release-check` use the same exit codes. Exit `2` is `NO_GO`, `3` is `REVIEW_REQUIRED`, `0` is `READY_FOR_HUMAN_APPROVAL`. A scan with no evidence file is `REVIEW_REQUIRED`. `--changed` lists names from `git diff`. It does not choose or run tests. An evidence file with no `github` object is marked **unbound**. A file that names a repository, commit, run id and workflow is marked **ci-environment**. That label is not a signature. PramanaSutra does not ask GitHub whether those four values are real.
 
 > **No extra API key.** Skills use the IDE's own model. The CLI makes no network calls and has no telemetry.
 
-Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0. Version 0.3.3.
+Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0. Version 0.3.4. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
 
 ## Install
 
@@ -32,7 +34,7 @@ npm install -g pramanasutra
 pramanasutra release-check --path .
 ```
 
-Writes `./pramanasutra-reports/report.md`, `report.html` and `report.json` in the current directory. Exit `2` is `NO_GO`, `3` is `REVIEW_REQUIRED`, `0` is `READY_FOR_HUMAN_APPROVAL`.
+Writes `./pramanasutra-reports/report.md`, `report.html`, `report.json` and `report.sarif.json` in the current directory. Exit `2` is `NO_GO`, `3` is `REVIEW_REQUIRED`, `0` is `READY_FOR_HUMAN_APPROVAL`. `scan` and `release-check` use that mapping. Exit 0 still needs passing evidence.
 
 ```bash
 npx pramanasutra init --ide cursor --target .
@@ -64,7 +66,7 @@ The first check exits 2. The second exits 0.
 
 | Evidence | Result |
 |---|---|
-| Unit tests on the captured Windows run | **38 tests, 37 passed, 0 failed, 1 skipped** (symlink creation was prohibited). [test-results.txt](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/proof/test-results.txt) |
+| Unit tests on the captured Windows run | **43 tests, 43 passed, 0 failed, 0 skipped**. The symlink test uses a directory junction when Windows refuses a symlink. [test-results.txt](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/proof/test-results.txt) |
 | Labeled fixtures | 6 of 6 match the expected rules and decision. Precision and recall are 1 **on those author-written fixtures**, which is a regression lock, not field accuracy. [eval-results.json](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/proof/eval-results.json) |
 | This repository, with that test output as evidence | `READY_FOR_HUMAN_APPROVAL`, 0 findings, after `fixtures/` and `examples/sample-app/` were excluded and named in the report. [Audit Markdown](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/audit/report.md), [audit HTML](https://shahvatsalofficial.github.io/pramanasutra-ai/audit/report.html) |
 | Required CI | Ubuntu and Windows, Node 20 and 22, then the same release gate. [Actions](https://github.com/shahvatsalofficial/pramanasutra-ai/actions) |
@@ -76,13 +78,16 @@ Not yet proven: live behavior in each IDE, accuracy on large real repositories, 
 
 ## Reports
 
-Every `scan` and `release-check` writes the three files together unless you pass `--no-report`. Default directory: `./pramanasutra-reports` in the current working directory, not inside the scanned tree.
+Every `scan` and `release-check` writes the four files together unless you pass `--no-report`. Default directory: `./pramanasutra-reports` in the current working directory, not inside the scanned tree.
 
 | File | Use |
 |---|---|
 | `report.md` | Pull requests and plain reading |
 | `report.html` | Browser. No remote assets. Light, dark, print |
-| `report.json` | CI. Schema 1.0.0 |
+| `report.json` | CI and scripts. Schema 1.0.0 |
+| `report.sarif.json` | SARIF 2.1.0. The file is written locally. Nothing uploads it |
+
+`--changed` adds a changed-file list when `git diff` works. A directory that is not a Git checkout says `git diff was not available for this directory, so no changed-file list was collected.`
 
 Open a finished example: [Markdown](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/samples/focused-test/report.md), [HTML](https://shahvatsalofficial.github.io/pramanasutra-ai/samples/focused-test/report.html). How to read them: [CLI and reports](https://shahvatsalofficial.github.io/pramanasutra-ai/06-cli-and-reports.html).
 
@@ -98,7 +103,9 @@ Open a finished example: [Markdown](https://github.com/shahvatsalofficial/praman
 
 ## Skills
 
-`pramanasutra-prime` plus strategy, unit, flow, api, visual, access, load, data, secure, regression, flake, defect, pipeline, release, evidence, verify. Canonical source: [`.agents/skills`](https://github.com/shahvatsalofficial/pramanasutra-ai/tree/main/.agents/skills). Catalog: [skills and agents](https://shahvatsalofficial.github.io/pramanasutra-ai/08-skills-and-agents.html).
+`pramanasutra-prime` plus strategy, unit, flow, api, visual, access, load, data, secure, regression, flake, defect, pipeline, release, evidence, verify. Each `## Safe workflow` is a different procedure. They are instructions. They do not run tests, open a browser, or sign evidence. Canonical source: [`.agents/skills`](https://github.com/shahvatsalofficial/pramanasutra-ai/tree/main/.agents/skills). Catalog: [skills and agents](https://shahvatsalofficial.github.io/pramanasutra-ai/08-skills-and-agents.html).
+
+These directories are notes, not programs: `packages/runner`, `packages/server`, `packages/reporter`, `packages/quality-gates`, `packages/release`, `packages/impact`, `packages/integrators`, `packages/evidence`, `packages/discovery`, `packages/core`, `packages/static-audit`, `packages/test-generation`. The CLI does not import them.
 
 | Host | Skill path | Verified live? |
 |---|---|---|

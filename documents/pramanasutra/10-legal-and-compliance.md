@@ -12,7 +12,7 @@ Apache-2.0 is a permissive license with a patent grant and a requirement to keep
 
 ## Third-party code
 
-Version 0.3.0 has no runtime npm dependencies and does not vendor third-party libraries inside `packages/cli`. [THIRD_PARTY_NOTICES.md](../../THIRD_PARTY_NOTICES.md) records that. If a later change adds a dependency, that file has to change in the same commit. Documentation pages use system fonts and no remote script, so the HTML does not pull in a font license or a CDN library.
+Version 0.3.4 has no runtime npm dependencies and does not vendor third-party libraries inside `packages/cli`. [THIRD_PARTY_NOTICES.md](../../THIRD_PARTY_NOTICES.md) records that. If a later change adds a dependency, that file has to change in the same commit. Documentation pages use system fonts and no remote script, so the HTML does not pull in a font license or a CDN library.
 
 GitHub Actions are third-party workflows pinned by SHA for checkout and setup-node. Their licenses are their own. Using them does not copy their source into this repository.
 

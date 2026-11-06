@@ -14,25 +14,27 @@ code{font-family:ui-monospace,Consolas,monospace;background:var(--bg);padding:.0
 @media(prefers-color-scheme:dark){.skip{color:#10201f}}
 @media print{body{background:#fff;color:#000}.card{break-inside:avoid}.skip{display:none}}
 @media(max-width:640px){body{font-size:16px}}</style></head><body><a class="skip" href="#content">Skip to content</a><main id="content">
-<p class="muted">PramanaSutra AI &middot; QA &amp; Release Audit &middot; Markdown, HTML and JSON are the same audit</p><h1>PramanaSutra-AI</h1><p class="muted">Generated 2026-11-06T00:00:00.000Z &middot; schema 1.0.0 &middot; tool 0.3.0</p>
+<p class="muted">PramanaSutra AI &middot; QA &amp; Release Audit &middot; Markdown, HTML, JSON and SARIF are the same audit</p><h1>PramanaSutra-AI</h1><p class="muted">Generated 2026-11-06T00:00:00.000Z &middot; schema 1.0.0 &middot; tool 0.3.4</p>
 <section class="card banner READY_FOR_HUMAN_APPROVAL" role="status"><p class="muted" style="margin:0">Release decision</p><p style="margin:.35rem 0"><span class="pill READY_FOR_HUMAN_APPROVAL">READY_FOR_HUMAN_APPROVAL</span></p><p style="margin:.4rem 0 0">All policy checks passed. A human must still approve; this is never a deploy order.</p><p class="muted" style="margin:.35rem 0 0">Policy: recommended &middot; Supplied test evidence: passing</p></section>
-<section class="grid" aria-label="Summary"><div class="stat card"><b>292</b><span>files inspected</span></div><div class="stat card"><b>1</b><span>test files</span></div><div class="stat card"><b>2</b><span>CI workflows</span></div><div class="stat card"><b>0</b><span>findings</span></div><div class="stat card"><b>0</b><span>critical + high</span></div></section>
+<section class="grid" aria-label="Summary"><div class="stat card"><b>320</b><span>files inspected</span></div><div class="stat card"><b>1</b><span>test files</span></div><div class="stat card"><b>3</b><span>CI workflows</span></div><div class="stat card"><b>0</b><span>findings</span></div><div class="stat card"><b>0</b><span>critical + high</span></div></section>
 <p class="card"><strong>Tests executed by PramanaSutra: NO (static scan only). Executed-test results count only when supplied as evidence.</strong></p>
 <h2>Supplied test evidence</h2><div class="card"><p>These numbers come from the evidence file the operator supplied. PramanaSutra did not run that command.</p><table><tbody>
 <tr><th scope="row">Source</th><td><code>local-executed</code></td></tr>
 <tr><th scope="row">Command</th><td><code>node --test --test-reporter=spec tests/cli.test.mjs</code></td></tr>
 <tr><th scope="row">Executed at</th><td>2026-11-06T00:00:00.000Z</td></tr>
 <tr><th scope="row">Exit code</th><td>0</td></tr>
-<tr><th scope="row">Passed</th><td>37</td></tr>
+<tr><th scope="row">Passed</th><td>43</td></tr>
 <tr><th scope="row">Failed</th><td>0</td></tr>
-<tr><th scope="row">Skipped</th><td>1</td></tr>
+<tr><th scope="row">Skipped</th><td>0</td></tr>
 <tr><th scope="row">Environment</th><td>win32 v24.15.0</td></tr>
 
-</tbody></table></div>
+
+</tbody></table><p>Evidence binding: unbound. This JSON is not tied to a CI identity. A passing file is not proof the command ran.</p></div>
 <h2>Findings at a glance</h2><p class="card">No static issues detected. This does <strong>not</strong> mean the project is release-ready; other checks were not run.</p>
 <h2>Findings</h2><p class="card">None.</p>
 <h2>Test files seen</h2><div class="card"><ul><li><code>tests/cli.test.mjs</code></li></ul></div>
-<h2>CI workflows seen</h2><div class="card"><ul><li><code>.github/workflows/ci.yml</code></li><li><code>.github/workflows/codeql.yml</code></li></ul></div>
+<h2>CI workflows seen</h2><div class="card"><ul><li><code>.github/workflows/ci.yml</code></li><li><code>.github/workflows/codeql.yml</code></li><li><code>.github/workflows/publish.yml</code></li></ul></div>
+
 <h2>Release gate reasons</h2><div class="card"><ul><li>All policy checks satisfied by supplied evidence and static inspection. A human must still approve and deploy.</li></ul></div>
 <h2>Capabilities</h2><div class="card" style="overflow-x:auto"><table><thead><tr><th>Capability</th><th>State</th><th>What that means</th></tr></thead><tbody><tr><th scope="row">staticAudit</th><td><code>executed</code></td><td>Source text was inspected with heuristic rules.</td></tr><tr><th scope="row">testExecution</th><td><code>evidence-supplied</code></td><td>not-run means this tool did not execute tests. evidence-supplied means an evidence file was attached.</td></tr><tr><th scope="row">browser</th><td><code>not-supported</code></td><td>No browser was launched.</td></tr><tr><th scope="row">securityScan</th><td><code>not-run</code></td><td>This is not a vulnerability scanner.</td></tr><tr><th scope="row">performanceTest</th><td><code>not-run</code></td><td>No load or timing test was run.</td></tr><tr><th scope="row">aiInference</th><td><code>not-run</code></td><td>The CLI did not call a model.</td></tr></tbody></table></div>
 <h2>Limitations</h2><div class="card"><ul><li>Excluded 2 path(s) listed in .pramanasutraignore. Excluded content was not inspected.</li><li>Heuristic checks do not prove the absence of bugs or release readiness.</li><li>No target tests, security scanners, browser, load tests or deploy checks were run by this tool.</li><li>This report is decision support, not a compliance certification or legal advice.</li></ul></div>

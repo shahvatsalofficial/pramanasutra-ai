@@ -37,6 +37,14 @@ if (passed === null || failed === null || test.status === null) {
     skipped: skipped ?? 0,
     environment: `${process.platform} ${os.release()} ${process.version}`
   };
+  if (process.env.GITHUB_REPOSITORY && process.env.GITHUB_SHA && process.env.GITHUB_RUN_ID && process.env.GITHUB_WORKFLOW) {
+    evidence.github = {
+      repository: process.env.GITHUB_REPOSITORY,
+      sha: process.env.GITHUB_SHA,
+      runId: process.env.GITHUB_RUN_ID,
+      workflow: process.env.GITHUB_WORKFLOW
+    };
+  }
   const evPath = path.join(os.tmpdir(), `pramanasutra-ci-evidence-${process.pid}.json`);
   fs.writeFileSync(evPath, JSON.stringify(evidence));
   const gate = spawnSync(process.execPath, [

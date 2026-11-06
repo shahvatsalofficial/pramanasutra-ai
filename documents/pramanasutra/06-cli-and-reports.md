@@ -1,6 +1,6 @@
 # CLI and reports
 
-<!-- summary: Every PramanaSutra AI command and flag, and how report.md, report.html and report.json present the same audit. -->
+<!-- summary: Every PramanaSutra AI command and flag, and how report.md, report.html, report.json and report.sarif.json present the same audit. -->
 
 Binary name: `pramanasutra`. From a clone: `node packages/cli/bin/pramanasutra.mjs`.
 
@@ -12,8 +12,8 @@ Binary name: `pramanasutra`. From a clone: `node packages/cli/bin/pramanasutra.m
 | `help`, `--help`, `-h` | Prints usage | 0 |
 | `doctor [--json]` | Node major version, platform, offline, no model | 0 if Node ≥ 20, else 1 |
 | `agents list [--json]` | Canonical skill names | 0 |
-| `scan --path <dir> [--out <dir>] [--no-report] [--json]` | Static audit plus a gate with no evidence file | 0 on success, 1 on bad input |
-| `release-check --path <dir> [--evidence <file>] [--policy <file>] [--out <dir>] [--no-report] [--json]` | Audit plus gate. This is the CI command | 0, 2, 3, or 1 |
+| `scan --path <dir> [--changed] [--out <dir>] [--no-report] [--json]` | Static audit plus a gate with no evidence file. Same exit codes as `release-check` | 0, 2, 3, or 1 |
+| `release-check --path <dir> [--evidence <file>] [--policy <file>] [--changed] [--out <dir>] [--no-report] [--json]` | Audit plus gate. This is the CI command | 0, 2, 3, or 1 |
 | `verify --evidence <file> [--json]` | Schema-check an evidence file. Does not scan | 0 or 1 |
 | `init --ide <name> --target <dir> [--force]` | Copy skills. `--ide` is `claude`, `cursor`, `codex`, `gemini`, `copilot`, `generic` or `all` | 0 or 1 |
 
@@ -23,20 +23,20 @@ Binary name: `pramanasutra`. From a clone: `node packages/cli/bin/pramanasutra.m
 
 ## Flags that take a value
 
-`--path`, `--out`, `--ide`, `--target`, `--evidence`, `--policy`. The value is the next argument. A missing value is an error. `--force`, `--json` and `--no-report` take no value.
+`--path`, `--out`, `--ide`, `--target`, `--evidence`, `--policy`. The value is the next argument. A missing value is an error. `--force`, `--json`, `--no-report` and `--changed` take no value. `--changed` is only meaningful on `scan` and `release-check`.
 
 ## Where files are written
 
 Default: `pramanasutra-reports` under the **current working directory**, resolved to an absolute path at write time. The scanned project is not the default output location, so a scan of a foreign tree does not drop files into it.
 
-The three names are fixed: `report.md`, `report.html`, `report.json`. They are written in that order, in one directory, in one call. If the directory cannot be created, nothing is reported as success.
+The four names are fixed: `report.md`, `report.html`, `report.json`, `report.sarif.json`. They are written in that order, in one directory, in one call. If the directory cannot be created, nothing is reported as success. SARIF is a rendering of the findings for other tools. The CLI does not upload it and does not fetch the SARIF schema.
 
 ## How to read report.md
 
 1. The first table is identity: project base name, time, tool version, schema, **Release decision**, policy, evidence state.
 2. The blockquote repeats the decision in a sentence.
 3. **Summary** counts files, test files, workflows, manifests and findings by severity. It states that this tool did not execute tests.
-4. **Supplied test evidence** is either an explicit "no file" or a table of source, command, time, exit code, passed, failed, skipped. Those numbers are from the file. They are not a new test run.
+4. **Supplied test evidence** is either an explicit "no file" or a table of source, command, time, exit code, passed, failed, skipped, and GitHub fields when present. Those numbers are from the file. They are not a new test run. The next paragraph is the binding: `none` (no file), `unbound` (no `github` object), or `ci-environment` (repository, commit, run id and workflow are all set). `ci-environment` is still not checked with GitHub. A person can type those four strings.
 5. **Findings at a glance** is the table to paste into a review: severity, rule, `path:line`, fix.
 6. **Findings** repeats each item with why it matters.
 7. **Test files seen** and **CI workflows seen** show what the classification actually matched, up to 40 paths, then a count of the rest.

@@ -1,0 +1,16 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PramanaSutra AI",
+          "version": "0.3.4",
+          "informationUri": "https://github.com/shahvatsalofficial/pramanasutra-ai",
+          "rules": []
+        }
+      },
+      "results": []
+    }
+  ]
+}

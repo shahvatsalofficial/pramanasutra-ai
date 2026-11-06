@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { classifyEvidence } from './evidence.mjs';
@@ -45,7 +46,18 @@ function existsFile(root, rel) {
   try { return fs.statSync(path.join(root, rel)).isFile(); } catch { return false; }
 }
 
-export function scanProject(target) {
+function readChanged(root) {
+  const unavailable = { files: null, note: 'git diff was not available for this directory, so no changed-file list was collected.' };
+  const probe = spawnSync('git', ['-C', root, 'rev-parse', '--is-inside-work-tree'], { encoding: 'utf8' });
+  if (probe.status !== 0) return unavailable;
+  const diff = spawnSync('git', ['-C', root, 'diff', '--name-only', 'HEAD'], { encoding: 'utf8' });
+  const staged = spawnSync('git', ['-C', root, 'diff', '--name-only', '--cached'], { encoding: 'utf8' });
+  if (diff.status !== 0) return unavailable;
+  const files = [...new Set(`${diff.stdout || ''}\n${staged.stdout || ''}`.split(/\r?\n/).map((line) => line.trim()).filter(Boolean))].sort();
+  return { files, note: 'Changed-file list is names from git diff. It is not a selection of tests to run.' };
+}
+
+export function scanProject(target, options = {}) {
   const targetPath = path.resolve(target);
   const info = fs.lstatSync(targetPath);
   if (!info.isDirectory() || info.isSymbolicLink()) throw new Error('Scan target must be a real directory (not a symlink)');
@@ -84,7 +96,7 @@ export function scanProject(target) {
   const testFiles = entries.filter(isTestFile);
   const findings = [];
   const manifests = entries.filter(p => /(?:^|\/)(?:package\.json|pyproject\.toml|requirements\.txt|pom\.xml|build\.gradle(?:\.kts)?|Cargo\.toml|go\.mod|Gemfile|composer\.json|pubspec\.yaml|[^/]+\.sln|[^/]+\.csproj)$/.test(p));
-  const workflows = entries.filter(p => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(p) || /(?:^|\/)(?:\.gitlab-ci\.yml|Jenkinsfile|azure-pipelines\.yml|bitbucket-pipelines\.yml)$/.test(p));
+  const workflows = entries.filter(p => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(p) || /(?:^|\/)(?:\.gitlab-ci\.yml|Jenkinsfile|azure-pipelines\.yml|bitbucket-pipelines\.yml|\.circleci\/config\.yml|\.buildkite\/pipeline\.yml|\.drone\.yml|woodpecker\.ya?ml)$/.test(p));
   for (const rel of testFiles) {
     if (!SOURCE_EXT.test(rel)) continue;
     const full=path.join(targetPath,...rel.split('/'));
@@ -107,6 +119,12 @@ export function scanProject(target) {
   if (oversizedFiles) limitations.push(`Skipped inspecting ${oversizedFiles} large test file(s) (> ${MAX_SOURCE_SIZE} bytes).`);
   if (binaryFiles) limitations.push(`Skipped inspecting ${binaryFiles} binary test file(s); they contain NUL bytes and were not treated as source.`);
   if (ignoredPaths) limitations.push(`Excluded ${ignoredPaths} path(s) listed in .pramanasutraignore. Excluded content was not inspected.`);
+  let changedFiles = null;
+  if (options.changed) {
+    const changed = readChanged(targetPath);
+    changedFiles = changed.files;
+    limitations.push(changed.note);
+  }
   if (!testFiles.length) findings.push(finding('NO_TESTS','medium','medium','No tests discovered','No test files matched the starter\'s supported path conventions.',{path:'.',line:null},'Confirm test framework location; add and execute relevant tests.'));
   if (!workflows.length) findings.push(finding('NO_CI','medium','medium','No recognized CI workflow discovered','No recognized CI configuration was found in the files scanned.',{path:'.',line:null},'Verify your CI configuration and enforce required test gates.'));
   const license = entries.some(p => /^(?:LICENSE|LICENSE\.md|LICENSE\.txt|COPYING)$/i.test(p));
@@ -114,7 +132,7 @@ export function scanProject(target) {
   const output = {
     schemaVersion: '1.0.0', product: 'PramanaSutra AI', toolVersion: toolVersion(), generatedAt: new Date().toISOString(), scannedPath: path.basename(targetPath) || ".",
     capabilities: { staticAudit:'executed', testExecution:'not-run', browser:'not-supported', securityScan:'not-run', performanceTest:'not-run', aiInference:'not-run' },
-    inventory: { fileCount:entries.length, testFiles, manifests, ciWorkflows:workflows, skippedSymlinks, oversizedFiles, binaryFiles, ignoredPaths, partial:truncated || oversizedFiles > 0 || binaryFiles > 0 || limitations.some(x=>x.startsWith('Unreadable')) },
+    inventory: { fileCount:entries.length, testFiles, manifests, ciWorkflows:workflows, changedFiles, skippedSymlinks, oversizedFiles, binaryFiles, ignoredPaths, partial:truncated || oversizedFiles > 0 || binaryFiles > 0 || limitations.some(x=>x.startsWith('Unreadable')) },
     findings, limitations,
     releaseGate: null
   };

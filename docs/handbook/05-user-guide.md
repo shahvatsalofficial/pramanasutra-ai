@@ -25,13 +25,14 @@ The sample app has a deliberate `test.only`, so the expected result is `NO_GO` a
 
 ## 2. Read the reports
 
-Each run writes three files to `./pramanasutra-reports` (or `--out <dir>`):
+Each run writes four files to `./pramanasutra-reports` (or `--out <dir>`): `report.md`, `report.html`, `report.json` and `report.sarif.json`. The numbered handbook in `documents/pramanasutra/` is the copy to trust. This file is an older write-up.
 
 | File | For | Contents |
 |---|---|---|
 | `report.md` | People, pull requests | Decision, summary, capabilities, every finding with fix, gate reasons, limitations |
 | `report.html` | People, sharing | Same content, styled, light and dark, printable, all text escaped |
 | `report.json` | Tools, CI | Machine-readable schema 1.0.0 |
+| `report.sarif.json` | SARIF readers | Same findings. The CLI does not upload the file |
 
 Open `report.html` in a browser. Use `--no-report` to write nothing.
 

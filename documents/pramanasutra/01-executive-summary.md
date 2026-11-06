@@ -17,7 +17,7 @@ PramanaSutra AI is a counter to that habit. It separates three things that get m
 | Piece | What a buyer gets | What they do not get |
 |---|---|---|
 | Agent Skills (17) | Instructions a supported IDE can load, so the assistant plans QA, cites files, and asks before running tests | A private model, a hosted agent, or a guarantee the IDE obeyed the skill |
-| CLI | An offline scan and a release gate, with Markdown, HTML and JSON of the same audit | Test execution, coverage, a browser, a vulnerability scan, or a deploy |
+| CLI | An offline scan and a release gate. Four files of the same audit: Markdown, HTML, JSON, SARIF. `scan` and `release-check` both exit 2, 3, or 0 | Test execution, coverage, a browser, a vulnerability scan, a signed evidence file, or a deploy |
 | Reports | A page a reviewer can read without the CLI | A certificate, an audit attestation, or legal advice |
 | Policy | A fail-closed JSON file. Unknown keys are rejected. "Allow automatic deploy" cannot be turned on | A workflow engine or an approval product |
 
@@ -37,7 +37,7 @@ Price of the software: zero. License: Apache-2.0. Operator cost: Node.js 20+ and
 
 Supported by the artifacts in [Testing and proof](11-testing-and-proof.md):
 
-- The unit suite on the captured Windows run: 38 tests, 37 passed, 0 failed, 1 skipped (OS refused a symlink).
+- The unit suite on the captured Windows run: 43 tests, 43 passed, 0 failed, 0 skipped. The symlink case uses a directory junction when Windows refuses a symlink.
 - Ubuntu and Windows CI are required checks on Node 20 and 22. The job runs the tests and then the release gate with that output as evidence.
 - macOS is not in CI. Actions run `41884015367` cancelled both macOS jobs while they were queued, with zero steps. Run `42098256304` cancelled a `macos-14` job in about a second, with no runner. Neither run executed tests. Ubuntu and Windows are the required checks.
 - Six author-written fixtures produce exactly the expected rules. State the caveat in the same sentence: perfect precision here is a regression lock, not field accuracy.

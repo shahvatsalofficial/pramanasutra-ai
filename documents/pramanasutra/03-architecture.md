@@ -45,7 +45,7 @@ There is one program: `packages/cli/bin/pramanasutra.mjs`. It loads four librari
 <text x="40" y="416" font-size="12" fill="#5e584e">Writes go to the output directory the operator chose, default ./pramanasutra-reports in the current working directory.</text>
 </svg>
 
-The diagram is inline. The page does not fetch a chart library.
+The diagram is inline. The page does not fetch a chart library. The reports box lists Markdown, HTML and JSON. The same write also emits `report.sarif.json` (SARIF 2.1.0).
 
 ## Trust boundaries
 

@@ -1,0 +1,125 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PramanaSutra AI",
+          "version": "0.3.4",
+          "informationUri": "https://github.com/shahvatsalofficial/pramanasutra-ai",
+          "rules": [
+            {
+              "id": "SKIPPED_TEST",
+              "shortDescription": {
+                "text": "Skipped test found"
+              }
+            },
+            {
+              "id": "NO_CI",
+              "shortDescription": {
+                "text": "No recognized CI workflow discovered"
+              }
+            },
+            {
+              "id": "NO_LICENSE",
+              "shortDescription": {
+                "text": "No license file at root"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "SKIPPED_TEST",
+          "level": "note",
+          "message": {
+            "text": "Skipped test found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "pkg/b_test.go"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SKIPPED_TEST",
+          "level": "note",
+          "message": {
+            "text": "Skipped test found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UserServiceTest.java"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SKIPPED_TEST",
+          "level": "note",
+          "message": {
+            "text": "Skipped test found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_api.py"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "NO_CI",
+          "level": "warning",
+          "message": {
+            "text": "No recognized CI workflow discovered"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "NO_LICENSE",
+          "level": "note",
+          "message": {
+            "text": "No license file at root"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

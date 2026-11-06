@@ -57,7 +57,7 @@ test('report HTML escapes untrusted strings',()=>temp(folder=>{
 test('scan command creates three reports without executing tests',()=>temp(folder=>{
   put(folder,'tests/sample.test.js','test.only("x", () => {});');
   const out=path.join(folder,'out');
-  const res=run(['scan','--path',folder,'--out',out]);assert.equal(res.status,0,res.stderr);
+  const res=run(['scan','--path',folder,'--out',out]);assert.equal(res.status,2,res.stderr);
   for(const ext of ['json','md','html'])assert.ok(fs.existsSync(path.join(out,`report.${ext}`)));
   assert.equal(JSON.parse(fs.readFileSync(path.join(out,'report.json'),'utf8')).capabilities.testExecution,'not-run');
 }));
@@ -88,8 +88,12 @@ test('nested symlink is skipped rather than followed',t=>temp(folder=>{
   const outside=fs.mkdtempSync(path.join(os.tmpdir(),'ps-outside-'));
   try {
     put(outside,'outside.test.js','test.only("danger",()=>{});');
-    try{fs.symlinkSync(outside,path.join(folder,'outsidelink'),'dir');}
-    catch {t.skip('Symlink creation prohibited by OS permissions');return;}
+    const link=path.join(folder,'outsidelink');
+    try{fs.symlinkSync(outside,link,'dir');}
+    catch {
+      try{fs.symlinkSync(outside,link,'junction');}
+      catch {t.skip('Symlink creation prohibited by OS permissions');return;}
+    }
     const report=scanProject(folder);assert.equal(report.inventory.skippedSymlinks,1);
     assert.ok(!report.findings.some(x=>x.ruleId==='FOCUSED_TEST'));
   } finally {fs.rmSync(outside,{recursive:true,force:true});}
@@ -194,7 +198,7 @@ test('HTML and Markdown reports escape malicious file names',()=>temp(folder=>{
 test('scan writes md, html and json reports by default into ./pramanasutra-reports',()=>temp(folder=>{
   cleanProject(folder);const cwd=fs.mkdtempSync(path.join(os.tmpdir(),'ps-cwd-'));
   try{
-    const res=run(['scan','--path',folder],cwd);assert.equal(res.status,0,res.stderr);
+    const res=run(['scan','--path',folder],cwd);assert.equal(res.status,3,res.stderr);
     for(const f of ['report.md','report.html','report.json'])assert.ok(fs.existsSync(path.join(cwd,'pramanasutra-reports',f)),f);
     assert.ok(!fs.existsSync(path.join(folder,'pramanasutra-reports')),'must not write into scanned project');
     assert.match(fs.readFileSync(path.join(cwd,'pramanasutra-reports','report.md'),'utf8'),/Release decision/);
@@ -203,7 +207,7 @@ test('scan writes md, html and json reports by default into ./pramanasutra-repor
 }));
 test('--no-report writes nothing',()=>temp(folder=>{
   cleanProject(folder);const cwd=fs.mkdtempSync(path.join(os.tmpdir(),'ps-cwd-'));
-  try{assert.equal(run(['scan','--path',folder,'--no-report'],cwd).status,0);assert.ok(!fs.existsSync(path.join(cwd,'pramanasutra-reports')));}
+  try{assert.equal(run(['scan','--path',folder,'--no-report'],cwd).status,3);assert.ok(!fs.existsSync(path.join(cwd,'pramanasutra-reports')));}
   finally{fs.rmSync(cwd,{recursive:true,force:true});}
 }));
 test('scan rejects --evidence/--policy; they are release-check only',()=>temp(folder=>{
@@ -262,6 +266,46 @@ test('skills: unique names, frontmatter matches folder, non-empty workflow, no n
   for(const n of listAgents()){
     const c=fs.readFileSync(path.join(root,'.agents','skills',n,'SKILL.md'),'utf8');
     assert.ok(c.startsWith('---\n')||c.startsWith('---\r\n'),n);assert.ok(!names.has(n));names.add(n);
-    assert.match(c,new RegExp(`^name: ${n}\s*$`,'m'));assert.match(c,/## Safe workflow/);assert.match(c,/never (?:fabricate|claim|approve)|Never/i);
+    assert.match(c,new RegExp(`^name: ${n}\s*$`,'m'));    assert.match(c,/## Safe workflow/);assert.match(c,/never (?:fabricate|claim|approve)|Never/i);
   }
+  const workflows=listAgents().map(n=>fs.readFileSync(path.join(root,'.agents','skills',n,'SKILL.md'),'utf8').split('## Safe workflow')[1]);
+  assert.equal(new Set(workflows).size,workflows.length);
+});
+test('CircleCI config is recognised as CI',()=>temp(folder=>{
+  put(folder,'.circleci/config.yml','version: 2.1\n');
+  put(folder,'LICENSE','MIT\n');
+  put(folder,'tests/a.test.js','test("a", () => {});\n');
+  const report=scanProject(folder);
+  assert.ok(report.inventory.ciWorkflows.some(p=>p.endsWith('.circleci/config.yml')));
+  assert.equal(report.findings.some(f=>f.ruleId==='NO_CI'),false);
+}));
+test('evidence binding is quoted for unbound and ci-environment files',()=>{
+  const base={schemaVersion:'1.0.0',scannedPath:'demo',generatedAt:'2026-11-07T00:00:00.000Z',toolVersion:'0.3.4',inventory:{fileCount:1,testFiles:[],ciWorkflows:[],manifests:[],changedFiles:null,partial:false},findings:[],limitations:[],capabilities:{},releaseGate:{decision:'REVIEW_REQUIRED',policy:'recommended',evidenceState:'passing',reasons:['x']}};
+  const unbound={...base,evidence:{source:'local-executed',command:'npm test',executedAt:'2026-11-07T00:00:00.000Z',exitCode:0,passed:1,failed:0,skipped:0,environment:null,commit:null,github:null}};
+  const bound={...unbound,evidence:{...unbound.evidence,github:{repository:'o/r',sha:'abc',runId:'9',workflow:'CI'}}};
+  assert.match(markdown(unbound),/Evidence binding: unbound/);
+  assert.match(markdown(bound),/Evidence binding: ci-environment/);
+  assert.match(html(bound),/ci-environment/);
+});
+test('SARIF 2.1.0 is written beside the other reports',()=>temp(folder=>{
+  put(folder,'tests/a.test.js','test.only("x", () => {});\n');
+  const out=path.join(folder,'out');
+  const res=run(['scan','--path',folder,'--out',out]);
+  assert.equal(res.status,2,res.stderr);
+  const sarif=JSON.parse(fs.readFileSync(path.join(out,'report.sarif.json'),'utf8'));
+  assert.equal(sarif.version,'2.1.0');
+  assert.equal(sarif.runs[0].results[0].ruleId,'FOCUSED_TEST');
+  assert.equal(sarif.runs[0].results[0].locations[0].physicalLocation.region.startLine,1);
+}));
+test('--changed without a git repository says diff was unavailable',()=>temp(folder=>{
+  put(folder,'tests/a.test.js','test("a", () => {});\n');
+  const out=path.join(folder,'out');
+  const res=run(['scan','--path',folder,'--changed','--out',out]);
+  assert.equal(res.status,3,res.stderr);
+  assert.match(fs.readFileSync(path.join(out,'report.md'),'utf8'),/git diff was not available/);
+}));
+test('help says scan does not fail the build',()=>{
+  const res=run(['help']);
+  assert.equal(res.status,0);
+  assert.match(res.stdout,/scan and release-check use the same exit codes/);
 });

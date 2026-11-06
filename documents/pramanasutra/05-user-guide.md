@@ -26,13 +26,18 @@ npx pramanasutra doctor
 node packages/cli/bin/pramanasutra.mjs release-check --path path/to/project
 ```
 
-You get a paragraph on the terminal and three files in `./pramanasutra-reports/`:
+You get a paragraph on the terminal and four files in `./pramanasutra-reports/`:
 
 | File | Open it with |
 |---|---|
 | `report.md` | The pull request, an editor, or GitHub |
 | `report.html` | Any browser. Light and dark follow the system. It prints |
-| `report.json` | A script. Same facts as the other two |
+| `report.json` | A script. Same facts as the other files |
+| `report.sarif.json` | A SARIF 2.1.0 reader. The CLI writes the file and does not upload it |
+
+`scan` and `release-check` use the same exit codes: `2` for `NO_GO`, `3` for `REVIEW_REQUIRED`, `0` for `READY_FOR_HUMAN_APPROVAL`. A scan with no evidence file exits `3`.
+
+`--changed` adds names from `git diff` when the directory is a Git checkout. Those names are not a test selection. If git cannot read the directory, the report says `git diff was not available for this directory, so no changed-file list was collected.`
 
 Choose another folder with `--out reports/feature-a`. Skip the files with `--no-report` if you only want the exit code.
 

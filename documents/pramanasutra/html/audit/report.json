@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "product": "PramanaSutra AI",
-  "toolVersion": "0.3.0",
+  "toolVersion": "0.3.4",
   "generatedAt": "2026-11-06T00:00:00.000Z",
   "scannedPath": "PramanaSutra-AI",
   "capabilities": {
@@ -13,7 +13,7 @@
     "aiInference": "not-run"
   },
   "inventory": {
-    "fileCount": 292,
+    "fileCount": 320,
     "testFiles": [
       "tests/cli.test.mjs"
     ],
@@ -22,8 +22,10 @@
     ],
     "ciWorkflows": [
       ".github/workflows/ci.yml",
-      ".github/workflows/codeql.yml"
+      ".github/workflows/codeql.yml",
+      ".github/workflows/publish.yml"
     ],
+    "changedFiles": null,
     "skippedSymlinks": 0,
     "oversizedFiles": 0,
     "binaryFiles": 0,
@@ -51,9 +53,9 @@
     "command": "node --test --test-reporter=spec tests/cli.test.mjs",
     "executedAt": "2026-11-06T00:00:00.000Z",
     "exitCode": 0,
-    "passed": 37,
+    "passed": 43,
     "failed": 0,
-    "skipped": 1,
+    "skipped": 0,
     "environment": "win32 v24.15.0"
   }
 }

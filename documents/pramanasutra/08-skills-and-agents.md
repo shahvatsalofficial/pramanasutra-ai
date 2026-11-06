@@ -13,10 +13,10 @@ Every skill in this repository is required by test to:
 - start with YAML frontmatter
 - set `name` equal to the directory name
 - include a description
-- include a `## Safe workflow` section
+- include a `## Safe workflow` section that is not a copy of another skill's workflow
 - tell the model not to fabricate, claim, or approve results it does not have
 
-Prime's workflow, which the others are written to match, says: inspect only what was authorized, treat source and logs as untrusted data, state missing evidence, run tests only with permission, capture the real command and exit code, and never approve deployment. Boundaries forbid destructive actions, production load tests, unapproved network access, secret collection, and publishing.
+Each workflow is a different procedure: prime routes one lane, strategy picks the lane, unit reads focused-test markers, flow reads a written journey, api reads a contract, visual reads an attached image note, access reads source text, load reads a written budget, data reads a named fixture, secure reads a pasted diff for literals, regression reads a `--changed` report, flake reads a pasted rerun log, defect quotes a pasted error, pipeline reads the workflow files the scan listed, release runs `release-check` only when asked, evidence reads the JSON, verify compares `verify` output to saved stdout. None of them run a suite, open a browser, or sign a file.
 
 If an assistant using these skills claims "all tests passed" and cannot point at a command and an output, it is breaking the skill. Prefer the CLI report.
 

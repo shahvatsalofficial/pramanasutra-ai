@@ -1,13 +1,13 @@
 # Start here
 
-<!-- summary: PramanaSutra AI is an open-source QA and release-readiness agent: 17 portable skills plus an offline CLI that writes a Markdown report, an HTML report and JSON, and a human release gate. Created by Vatsal Shah. Apache-2.0. -->
+<!-- summary: PramanaSutra AI is an open-source QA and release-readiness agent: 17 portable skills plus an offline CLI that writes Markdown, HTML, JSON and SARIF, and a human release gate. Created by Vatsal Shah. Apache-2.0. -->
 
 PramanaSutra AI (from Sanskrit *pramana*, "valid proof") is an open-source **QA and release-readiness agent**. It has two parts that do different jobs:
 
 1. **Seventeen Agent Skills**, led by PramanaSutra Prime, for Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI. The skill uses the IDE's own model. There is no extra API key.
-2. **A deterministic command-line tool** that reads a project, does not run its tests, and writes three files of the same audit: `report.md`, `report.html` and `report.json`. A release check then returns `NO_GO`, `REVIEW_REQUIRED` or `READY_FOR_HUMAN_APPROVAL`.
+2. **A deterministic command-line tool** that reads a project, does not run its tests, and writes four files of the same audit: `report.md`, `report.html`, `report.json` and `report.sarif.json`. `scan` and `release-check` both return `NO_GO` (exit 2), `REVIEW_REQUIRED` (exit 3) or `READY_FOR_HUMAN_APPROVAL` (exit 0).
 
-Created by Vatsal Shah. Licensed Apache-2.0. Version 0.3.3. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**.
+Created by Vatsal Shah. Licensed Apache-2.0. Version 0.3.4. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**. The copy on npmjs.com is the last tarball someone published. It can lag this version until that publish finishes.
 
 > **Important:** The tool does not certify quality, security or compliance. `READY_FOR_HUMAN_APPROVAL` means the configured checks passed. A person still decides. It is never a deploy order.
 
@@ -35,7 +35,7 @@ Node.js 20 or newer.
 npx pramanasutra release-check --path .
 ```
 
-That writes `./pramanasutra-reports/report.md`, `report.html` and `report.json` in the current directory, not inside the project you scanned. Open the HTML file in a browser. The exit code is `2` for `NO_GO`, `3` for `REVIEW_REQUIRED`, `0` for `READY_FOR_HUMAN_APPROVAL`.
+That writes `./pramanasutra-reports/report.md`, `report.html`, `report.json` and `report.sarif.json` in the current directory, not inside the project you scanned. Open the HTML file in a browser. For both `scan` and `release-check`, the exit code is `2` for `NO_GO`, `3` for `REVIEW_REQUIRED`, `0` for `READY_FOR_HUMAN_APPROVAL`. A scan with no evidence file exits `3`.
 
 To copy the skills into an IDE:
 
@@ -47,7 +47,7 @@ Use `claude`, `cursor`, `codex`, `gemini`, `copilot`, `generic` or `all`. The co
 
 ## What is already proven
 
-The captured run on the maintainer's Windows machine is in [proof/test-results.txt](proof/test-results.txt): **38 tests, 37 passed, 0 failed, 1 skipped**. The skip is the symlink test, because creating a symlink was prohibited by the OS. Six labeled fixtures match the expected rules and gate with no false positives and no false negatives **on those fixtures**. That is a regression check written by the same author as the rules. It is not a measure of accuracy on arbitrary repositories.
+The captured run on the maintainer's Windows machine is in [proof/test-results.txt](proof/test-results.txt): **43 tests, 43 passed, 0 failed, 0 skipped**. The symlink test creates a directory junction when Windows refuses a symlink, and checks the scanner does not follow it. Six labeled fixtures match the expected rules and gate with no false positives and no false negatives **on those fixtures**. That is a regression check written by the same author as the rules. It is not a measure of accuracy on arbitrary repositories.
 
 With that same test output supplied as evidence, a release check of this repository returned `READY_FOR_HUMAN_APPROVAL`. The report is [audit/report.md](audit/report.md) and [audit/report.html](audit/report.html). Focused-test examples under `fixtures/` and `examples/sample-app/` are excluded by `.pramanasutraignore` so they are not treated as product failures. The report says they were excluded.
 

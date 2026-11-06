@@ -1,8 +1,8 @@
 # Functional specification
 
-<!-- summary: Actors, use cases, functional requirements and acceptance criteria for PramanaSutra AI 0.3.0. Planned work is marked planned and is not described as shipped. -->
+<!-- summary: Actors, use cases, functional requirements and acceptance criteria for PramanaSutra AI 0.3.4. Planned work is marked planned and is not described as shipped. -->
 
-This specification describes version 0.3.0 as implemented. A requirement marked **planned** is not available. Tests that mention a requirement are named so a reader can find them in `tests/cli.test.mjs`.
+This specification describes version 0.3.4 as implemented. A requirement marked **planned** is not available. Tests that mention a requirement are named so a reader can find them in `tests/cli.test.mjs`.
 
 ## Actors
 
@@ -19,7 +19,7 @@ This specification describes version 0.3.0 as implemented. A requirement marked 
 
 ### UC-1 Static audit
 
-The developer points the CLI at a directory. The tool walks the tree, skips symlinks, skips ignored paths, and reports focused tests, skipped tests, missing tests, missing CI and a missing license. It writes `report.md`, `report.html` and `report.json` together. It does not execute the project.
+The developer points the CLI at a directory. The tool walks the tree, skips symlinks, skips ignored paths, and reports focused tests, skipped tests, missing tests, missing CI and a missing license. It writes `report.md`, `report.html`, `report.json` and `report.sarif.json` together. It does not execute the project. `scan` and `release-check` use the same exit codes.
 
 ### UC-2 Release check with evidence
 
@@ -46,7 +46,7 @@ A repository that contains labeled bad examples (this one does) lists them in `.
 | FR-3 | `agents list` lists 17 skills whose folder name matches frontmatter | Implemented | Test `agents catalog includes Prime and 16 specialists` |
 | FR-4 | `scan` and `release-check` require `--path` to a real directory | Implemented | Missing path exits 1, no stack trace |
 | FR-5 | Default output is `./pramanasutra-reports` in the current working directory, not inside the scanned project | Implemented | Test `scan writes md, html and json reports by default` |
-| FR-6 | The three report files are always written together unless `--no-report` | Implemented | Tests assert `report.md`, `report.html`, `report.json` |
+| FR-6 | The four report files are always written together unless `--no-report` | Implemented | Tests assert `report.md`, `report.html`, `report.json`, and SARIF 2.1.0 |
 | FR-7 | HTML and Markdown escape `<`, `>` and quotes from file names, titles and evidence commands | Implemented | Escape tests, including a portable path test that does not need a forbidden file name |
 | FR-8 | The scanned path stored in the report is the directory's base name, not the absolute path | Implemented | Test `reports do not disclose absolute target paths by default` |
 | FR-9 | A focused test (`test.only`, `it.only`, `describe.only`, `fit`, `fdescribe`) is high severity and `NO_GO` under the default policy | Implemented | Fixture `focused-test`, exit code 2 |

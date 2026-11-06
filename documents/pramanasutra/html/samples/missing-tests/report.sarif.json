@@ -1,0 +1,40 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PramanaSutra AI",
+          "version": "0.3.4",
+          "informationUri": "https://github.com/shahvatsalofficial/pramanasutra-ai",
+          "rules": [
+            {
+              "id": "NO_TESTS",
+              "shortDescription": {
+                "text": "No tests discovered"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "NO_TESTS",
+          "level": "warning",
+          "message": {
+            "text": "No tests discovered"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

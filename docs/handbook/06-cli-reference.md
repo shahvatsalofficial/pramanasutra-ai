@@ -41,7 +41,7 @@ Binary: `pramanasutra` (`packages/cli/bin/pramanasutra.mjs`). Without installati
 | 2 | `NO_GO` (release-check) |
 | 3 | `REVIEW_REQUIRED` (release-check) |
 
-`scan` exits 0 even when it has findings. Use `release-check` to gate a build.
+`scan` and `release-check` use the same exit codes. Exit 2 is `NO_GO`. Exit 3 is `REVIEW_REQUIRED`. Exit 0 is `READY_FOR_HUMAN_APPROVAL` only.
 
 ## Skill install locations
 

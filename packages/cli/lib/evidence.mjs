@@ -27,12 +27,26 @@ export function validateEvidence(data) {
   if (!count(data.passed)) errors.push('passed must be a non-negative integer');
   if (!count(data.failed)) errors.push('failed must be a non-negative integer');
   if (data.skipped !== undefined && !count(data.skipped)) errors.push('skipped must be a non-negative integer when present');
+  let github = null;
+  if (data.github !== undefined) {
+    const g = data.github;
+    if (!g || typeof g !== 'object' || Array.isArray(g)) errors.push('github must be an object when present');
+    else {
+      for (const key of ['repository', 'sha', 'runId', 'workflow']) {
+        if (typeof g[key] !== 'string' || !g[key].trim()) errors.push(`github.${key} must be a non-empty string`);
+      }
+      if (!errors.some((item) => item.startsWith('github.'))) {
+        github = { repository: g.repository, sha: g.sha, runId: g.runId, workflow: g.workflow };
+      }
+    }
+  }
   if (errors.length) throw new Error(`Invalid evidence: ${errors.join('; ')}`);
   return {
     schemaVersion: data.schemaVersion, source: data.source, command: data.command, executedAt: data.executedAt,
     exitCode: data.exitCode, passed: data.passed, failed: data.failed, skipped: data.skipped ?? 0,
     environment: typeof data.environment === 'string' ? data.environment : null,
-    commit: typeof data.commit === 'string' ? data.commit : null
+    commit: typeof data.commit === 'string' ? data.commit : null,
+    github
   };
 }
 

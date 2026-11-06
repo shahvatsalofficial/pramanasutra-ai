@@ -1,6 +1,6 @@
 # Rule catalog
 
-<!-- summary: Every static rule PramanaSutra AI 0.3.0 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
+<!-- summary: Every static rule PramanaSutra AI 0.3.4 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
 
 Rules are regular expressions on a single line of a file already classified as a test. They are not ASTs. Confidence is `medium` unless noted. Status on a finding is `observed`, which means "the pattern matched", not "a test was executed".
 
@@ -52,8 +52,8 @@ False positive: tests live in a folder this regex does not treat as tests, and n
 |---|---|
 | Severity | medium |
 | Default gate | `REVIEW_REQUIRED` when `requireCi` is true and no workflow file matched |
-| Recognises | `.github/workflows/*.yml` and `.yaml`, `.gitlab-ci.yml`, `Jenkinsfile`, `azure-pipelines.yml`, `bitbucket-pipelines.yml` |
-| Does not recognise | CircleCI's usual `.circleci/config.yml`, Buildkite, a CI config with another name, or a workflow that exists only in a hosted UI |
+| Recognises | `.github/workflows/*.yml` and `.yaml`, `.gitlab-ci.yml`, `Jenkinsfile`, `azure-pipelines.yml`, `bitbucket-pipelines.yml`, `.circleci/config.yml`, `.buildkite/pipeline.yml`, `.drone.yml`, `woodpecker.yml` |
+| Does not recognise | A CI config with another name, a workflow that exists only in a hosted UI, or a file that is present but never runs |
 | Sample | [samples/missing-ci](samples/missing-ci/report.md) |
 
 Finding a workflow file does not mean the workflow runs tests. The rule is presence, not semantics.

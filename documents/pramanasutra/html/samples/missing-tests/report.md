@@ -1,12 +1,12 @@
 # PramanaSutra AI: QA & Release Audit Report
 
-This audit is three files with the same facts: **report.md** (this file), **report.html** (open in a browser) and **report.json** (for CI). A static finding is text the scanner saw. It is not a test PramanaSutra ran.
+This audit is four files with the same facts: **report.md** (this file), **report.html** (open in a browser), **report.json** (for tools) and **report.sarif.json** (SARIF 2.1.0 for code scanning). A static finding is text the scanner saw. It is not a test PramanaSutra ran.
 
 | | |
 |---|---|
 | Project | `missing-tests` |
 | Generated | 2026-11-06T00:00:00.000Z |
-| Tool | PramanaSutra AI 0.3.0 (schema 1.0.0) |
+| Tool | PramanaSutra AI 0.3.4 (schema 1.0.0) |
 | **Release decision** | **REVIEW_REQUIRED** |
 | Policy | recommended |
 | Supplied test evidence | absent |
@@ -25,6 +25,8 @@ This audit is three files with the same facts: **report.md** (this file), **repo
 ## Supplied test evidence
 
 No evidence file was supplied. Counts below are not test results. The release gate cannot treat the suite as passed.
+
+Evidence binding: none. No evidence file was supplied.
 
 ## Findings at a glance
 
@@ -72,4 +74,4 @@ None. Either there are no tests, or they use a naming convention this scanner do
 - This report is decision support, not a compliance certification or legal advice.
 
 ---
-*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html and report.json.*
+*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*

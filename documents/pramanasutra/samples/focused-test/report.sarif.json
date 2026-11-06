@@ -1,0 +1,43 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PramanaSutra AI",
+          "version": "0.3.4",
+          "informationUri": "https://github.com/shahvatsalofficial/pramanasutra-ai",
+          "rules": [
+            {
+              "id": "FOCUSED_TEST",
+              "shortDescription": {
+                "text": "Focused test found"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "FOCUSED_TEST",
+          "level": "error",
+          "message": {
+            "text": "Focused test found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/a.test.js"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
