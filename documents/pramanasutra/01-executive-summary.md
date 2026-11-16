@@ -38,7 +38,7 @@ Price of the software: zero. License: Apache-2.0. Operator cost: Node.js 20+ and
 Supported by the artifacts in [Testing and proof](11-testing-and-proof.md):
 
 - The unit suite on the captured Windows run: 43 tests, 43 passed, 0 failed, 0 skipped. The symlink case uses a directory junction when Windows refuses a symlink.
-- Ubuntu and Windows CI are required checks on Node 20 and 22. The job runs the tests and then the release gate with that output as evidence.
+- Ubuntu and Windows CI are required checks on Node 20, 22 and 24. The job runs the tests and then the release gate with that output as evidence.
 - macOS is not in CI. Actions run `41884015367` cancelled both macOS jobs while they were queued, with zero steps. Run `42098256304` cancelled a `macos-14` job in about a second, with no runner. Neither run executed tests. Ubuntu and Windows are the required checks.
 - Six author-written fixtures produce exactly the expected rules. State the caveat in the same sentence: perfect precision here is a regression lock, not field accuracy.
 - The CLI's own release check of this repository, given that test evidence, was `READY_FOR_HUMAN_APPROVAL`. Read [audit/report.md](audit/report.md).

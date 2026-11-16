@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "product": "PramanaSutra AI",
-  "toolVersion": "0.3.4",
+  "toolVersion": "0.3.5",
   "generatedAt": "2026-11-06T00:00:00.000Z",
   "scannedPath": "clean-project",
   "capabilities": {

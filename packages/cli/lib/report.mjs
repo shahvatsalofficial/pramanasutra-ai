@@ -107,7 +107,7 @@ export function markdown(report) {
   for (const r of (gate ? gate.reasons : ['Not requested'])) L.push(`- ${escMd(r)}`);
   L.push('', '## Limitations', '');
   for (const lim of [...report.limitations, ...LIMITS]) L.push(`- ${escMd(lim)}`);
-  L.push('', '---', '*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*', '');
+  L.push('', '---', '*Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*', '');
   return L.join('\n');
 }
 
@@ -177,7 +177,7 @@ ${Array.isArray(report.inventory.changedFiles) ? `<h2>Changed files</h2><div cla
 <h2>Release gate reasons</h2><div class="card"><ul>${reasons}</ul></div>
 <h2>Capabilities</h2><div class="card" style="overflow-x:auto"><table><thead><tr><th>Capability</th><th>State</th><th>What that means</th></tr></thead><tbody>${caps}</tbody></table></div>
 <h2>Limitations</h2><div class="card"><ul>${lims}</ul></div>
-<footer>Created by Vatsal Shah. Generated locally; nothing was sent over the network. Not a compliance certification, a security test, or a release authorization. Open <code>report.md</code> for the same audit in Markdown.</footer></main></body></html>`;
+<footer>Created by <a href="https://shahvatsal.com" rel="noopener">Vatsal Shah</a>. Official site: <a href="https://shahvatsal.com" rel="noopener">shahvatsal.com</a>. Generated locally; nothing was sent over the network. Not a compliance certification, a security test, or a release authorization. Open <code>report.md</code> for the same audit in Markdown.</footer></main></body></html>`;
 }
 
 export function sarif(report) {

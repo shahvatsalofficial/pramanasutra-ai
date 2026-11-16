@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.5 - 2026-11-16
+
+### Added
+- Node 24 (current LTS) joins the required CI matrix: Ubuntu and Windows, Node 20, 22 and 24.
+- Reports, the documentation site and package metadata link the author site https://shahvatsal.com.
+
+### Changed
+- Version bump only for code: no scanner, gate or evidence behavior changed.
+
+### Not in this release
+- The CLI still does not run the target's tests, a browser, a load generator, or a vulnerability scanner.
+- Evidence JSON is still unsigned. macOS stays off the required CI matrix.
+
 ## 0.3.4 - 2026-11-07
 
 ### Added

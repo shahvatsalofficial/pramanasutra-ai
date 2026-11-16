@@ -1,10 +1,10 @@
 # Roadmap and status
 
-<!-- summary: Honest status of PramanaSutra AI 0.3.4. Implemented, planned, and explicitly not claimed. -->
+<!-- summary: Honest status of PramanaSutra AI 0.3.5. Implemented, planned, and explicitly not claimed. -->
 
 Status words mean only what they say. **Implemented** has a command or file and a test or a committed artifact. **Planned** is a directory, a sentence, or an intention. It does not run. **Not claimed** is something people might assume that this project refuses.
 
-## Implemented in 0.3.4
+## Implemented in 0.3.5
 
 | Capability | Evidence |
 |---|---|
@@ -17,7 +17,7 @@ Status words mean only what they say. **Implemented** has a command or file and 
 | `scan` and `release-check` exit 2 or 3 for a failing gate. Exit 0 is `READY_FOR_HUMAN_APPROVAL` only | Help text and `packages/cli/bin/pramanasutra.mjs` |
 | `.pramanasutraignore` | Unit test, this repo's ignore file |
 | 17 skills with distinct Safe workflow sections | Installer tests and the uniqueness assertion |
-| Required CI on Ubuntu and Windows, Node 20 and 22, with a real release gate | `.github/workflows/ci.yml` |
+| Required CI on Ubuntu and Windows, Node 20, 22 and 24, with a real release gate | `.github/workflows/ci.yml` |
 | CI gate writes `github` when the four `GITHUB_*` variables exist | `scripts/ci-gate.mjs` |
 | macOS in GitHub Actions | Not scheduled. Runs 41884015367 and 42098256304 cancelled with zero steps |
 | CodeQL workflow | `.github/workflows/codeql.yml` |
@@ -65,7 +65,7 @@ These README-level packages exist as notes only. The CLI does not import them.
 
 | Environment | Status |
 |---|---|
-| Node 20 and 22 on Ubuntu and Windows in CI | Required workflow. Trust the latest green run, not this sentence |
+| Node 20, 22 and 24 on Ubuntu and Windows in CI | Required workflow. Trust the latest green run, not this sentence |
 | Node on the maintainer's Windows machine | The captured proof file |
 | macOS in CI | Not scheduled. Unverified |
 | Claude Code, Cursor, Codex, Copilot, Gemini CLI | Copy paths implemented. Behavior not verified |

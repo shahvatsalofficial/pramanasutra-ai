@@ -11,7 +11,7 @@ QA and release-readiness agent for Claude Code, Cursor, Codex, GitHub Copilot an
 
 Evidence-first review with `file:line` findings. The audit is Markdown, HTML, JSON, and SARIF. No extra API key.
 
-[Documentation](https://shahvatsalofficial.github.io/pramanasutra-ai/) · [Start here](https://shahvatsalofficial.github.io/pramanasutra-ai/00-start-here.html) · [GitHub](https://github.com/shahvatsalofficial/pramanasutra-ai) · [npm](https://www.npmjs.com/package/pramanasutra)
+[Documentation](https://shahvatsalofficial.github.io/pramanasutra-ai/) · [Start here](https://shahvatsalofficial.github.io/pramanasutra-ai/00-start-here.html) · [GitHub](https://github.com/shahvatsalofficial/pramanasutra-ai) · [npm](https://www.npmjs.com/package/pramanasutra) · [shahvatsal.com](https://shahvatsal.com)
 
 PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and release-readiness agent**. It ships 17 portable [Agent Skills](https://agentskills.io/specification), led by **PramanaSutra Prime**, and a deterministic offline CLI. The CLI reads a repository, does not run its tests, and writes **`report.md`**, **`report.html`**, **`report.json`** and **`report.sarif.json`** of the same audit. The release gate is `NO_GO`, `REVIEW_REQUIRED` or `READY_FOR_HUMAN_APPROVAL`. A ready result still needs a person. It is never a deploy order.
 
@@ -19,7 +19,7 @@ PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and relea
 
 > **No extra API key.** Skills use the IDE's own model. The CLI makes no network calls and has no telemetry.
 
-Created by **[Vatsal Shah](https://github.com/shahvatsalofficial)**. Apache-2.0. Version 0.3.4. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
+Created by **[Vatsal Shah](https://shahvatsal.com)**. Official site: [shahvatsal.com](https://shahvatsal.com). Apache-2.0. Version 0.3.5. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
 
 ## Install
 
@@ -69,7 +69,7 @@ The first check exits 2. The second exits 0.
 | Unit tests on the captured Windows run | **43 tests, 43 passed, 0 failed, 0 skipped**. The symlink test uses a directory junction when Windows refuses a symlink. [test-results.txt](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/proof/test-results.txt) |
 | Labeled fixtures | 6 of 6 match the expected rules and decision. Precision and recall are 1 **on those author-written fixtures**, which is a regression lock, not field accuracy. [eval-results.json](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/proof/eval-results.json) |
 | This repository, with that test output as evidence | `READY_FOR_HUMAN_APPROVAL`, 0 findings, after `fixtures/` and `examples/sample-app/` were excluded and named in the report. [Audit Markdown](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/audit/report.md), [audit HTML](https://shahvatsalofficial.github.io/pramanasutra-ai/audit/report.html) |
-| Required CI | Ubuntu and Windows, Node 20 and 22, then the same release gate. [Actions](https://github.com/shahvatsalofficial/pramanasutra-ai/actions) |
+| Required CI | Ubuntu and Windows, Node 20, 22 and 24, then the same release gate. [Actions](https://github.com/shahvatsalofficial/pramanasutra-ai/actions) |
 | macOS in GitHub Actions | Not scheduled. Jobs were cancelled with zero steps: [41884015367](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/41884015367) (queued) and [42098256304](https://github.com/shahvatsalofficial/pramanasutra-ai/actions/runs/42098256304) (cancelled in about a second, no runner). That is not a test result |
 | Runtime dependencies | 0 |
 | Network calls by the CLI | 0 |

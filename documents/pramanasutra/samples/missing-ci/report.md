@@ -6,7 +6,7 @@ This audit is four files with the same facts: **report.md** (this file), **repor
 |---|---|
 | Project | `missing-ci` |
 | Generated | 2026-11-06T00:00:00.000Z |
-| Tool | PramanaSutra AI 0.3.4 (schema 1.0.0) |
+| Tool | PramanaSutra AI 0.3.5 (schema 1.0.0) |
 | **Release decision** | **REVIEW_REQUIRED** |
 | Policy | recommended |
 | Supplied test evidence | absent |
@@ -74,4 +74,4 @@ None recognised (GitHub Actions, GitLab CI, Jenkins, Azure Pipelines, Bitbucket 
 - This report is decision support, not a compliance certification or legal advice.
 
 ---
-*Created by Vatsal Shah. Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*
+*Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Generated locally; nothing was sent over the network. Same audit: report.html, report.json and report.sarif.json.*

@@ -6,7 +6,7 @@
 
 | File | What it gates | Badge |
 |---|---|---|
-| `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20 and 22. Unit tests, `doctor`, then `scripts/ci-gate.mjs`. Does not publish | The CI badge on the README |
+| `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20, 22 and 24. Unit tests, `doctor`, then `scripts/ci-gate.mjs`. Does not publish | The CI badge on the README |
 | `.github/workflows/publish.yml` | On a GitHub Release: `npm test`, then `npm publish --provenance` for the unscoped package `pramanasutra` | None. It is not a required check |
 | `.github/workflows/codeql.yml` | CodeQL `javascript-typescript` on Ubuntu | CodeQL badge |
 | `.github/dependabot.yml` | Update PRs for Actions | None |

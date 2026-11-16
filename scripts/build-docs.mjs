@@ -10,6 +10,7 @@ const outDir = path.join(srcDir, 'html');
 const pkg = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
 const REPO = 'https://github.com/shahvatsalofficial/pramanasutra-ai';
 const SITE = 'https://shahvatsalofficial.github.io/pramanasutra-ai';
+const AUTHOR = 'https://shahvatsal.com';
 const CSS = readFileSync(path.join(root, 'scripts', 'docs-site.css'), 'utf8');
 const JS = readFileSync(path.join(root, 'scripts', 'docs-site.js'), 'utf8');
 
@@ -147,8 +148,8 @@ function page(d, idx) {
   const next = docs[idx + 1];
   const nav = `<li><a href="index.html">Home</a></li>` + docs.map((x) => `<li><a href="${x.out}"${x.file === d.file ? ' aria-current="page"' : ''}>${esc(x.title)}</a></li>`).join('');
   const toc = d.toc.length ? `<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul>${d.toc.map((t) => `<li class="l${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`).join('')}</ul></nav>` : '';
-  const graph = [{ '@context': 'https://schema.org', '@type': 'TechArticle', headline: d.title, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah', url: 'https://github.com/shahvatsalofficial' }, inLanguage: 'en', isPartOf: { '@type': 'SoftwareSourceCode', name: 'PramanaSutra AI', codeRepository: REPO, license: 'https://www.apache.org/licenses/LICENSE-2.0', version: pkg.version } }];
-  if (d.file.startsWith('00-')) graph.push({ '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'PramanaSutra AI', applicationCategory: 'DeveloperApplication', operatingSystem: 'Windows, macOS, Linux', softwareVersion: pkg.version, license: 'https://www.apache.org/licenses/LICENSE-2.0', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah' }, codeRepository: REPO });
+  const graph = [{ '@context': 'https://schema.org', '@type': 'TechArticle', headline: d.title, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah', url: AUTHOR }, inLanguage: 'en', isPartOf: { '@type': 'SoftwareSourceCode', name: 'PramanaSutra AI', codeRepository: REPO, license: 'https://www.apache.org/licenses/LICENSE-2.0', version: pkg.version } }];
+  if (d.file.startsWith('00-')) graph.push({ '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'PramanaSutra AI', applicationCategory: 'DeveloperApplication', operatingSystem: 'Windows, macOS, Linux', softwareVersion: pkg.version, license: 'https://www.apache.org/licenses/LICENSE-2.0', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, description: d.desc, author: { '@type': 'Person', name: 'Vatsal Shah', url: AUTHOR }, codeRepository: REPO });
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -185,7 +186,7 @@ ${d.html}
 ${prev ? `<a class="prev" href="${prev.out}"><span>Previous</span>${esc(prev.title)}</a>` : '<span></span>'}
 ${next ? `<a class="next" href="${next.out}"><span>Next</span>${esc(next.title)}</a>` : '<span></span>'}
 </nav>
-<footer class="foot">PramanaSutra AI ${esc(pkg.version)} · Created by Vatsal Shah · Apache-2.0 · Decision support, not a certification · <a href="${REPO}/blob/main/documents/pramanasutra/${d.file}" rel="noopener">Page source</a></footer>
+<footer class="foot">PramanaSutra AI ${esc(pkg.version)} · Created by <a href="${AUTHOR}" rel="noopener">Vatsal Shah</a> · <a href="${AUTHOR}" rel="noopener">shahvatsal.com</a> · Apache-2.0 · Decision support, not a certification · <a href="${REPO}/blob/main/documents/pramanasutra/${d.file}" rel="noopener">Page source</a></footer>
 </main>
 ${toc}
 </div>
@@ -245,7 +246,7 @@ function landing() {
 <div class="layout">
 <aside id="sidebar" class="sidebar"><nav aria-label="Documentation"><ol>${nav}</ol></nav></aside>
 <main id="content" class="content home" tabindex="-1">
-<p class="muted">Created by Vatsal Shah · Apache-2.0 · version ${esc(pkg.version)}</p>
+<p class="muted">Created by <a href="${AUTHOR}" rel="noopener">Vatsal Shah</a> · <a href="${AUTHOR}" rel="noopener">shahvatsal.com</a> · Apache-2.0 · version ${esc(pkg.version)}</p>
 <h1>PramanaSutra AI</h1>
 <p class="lead">An offline check for a repository you are about to ship. It reads files. It does not run the project's tests. It writes four copies of one audit, then stops for a person.</p>
 <div class="actions"><a class="primary" href="00-start-here.html">Start here</a><a class="secondary" href="${REPO}" rel="noopener">Source</a><a class="secondary" href="https://www.npmjs.com/package/pramanasutra" rel="noopener">npm</a></div>
@@ -267,7 +268,7 @@ function landing() {
 <li>It does not run the target's tests, a browser, a load generator, or a vulnerability scanner.</li>
 <li>It does not sign evidence. <code>verify</code> checks the JSON shape.</li>
 <li>Fixture precision is a regression lock written by the rule author, not field accuracy.</li>
-<li>Required CI is Ubuntu and Windows, Node 20 and 22. macOS is not scheduled.</li>
+<li>Required CI is Ubuntu and Windows, Node 20, 22 and 24. macOS is not scheduled.</li>
 <li>The npm page shows the last published tarball. It can lag the version in git until a person completes publish.</li>
 <li>Twelve <code>packages/*</code> directories are notes. The CLI does not import them.</li>
 </ul>
@@ -280,7 +281,7 @@ function landing() {
 <article class="mini"><h2>Can I paste a passing JSON?</h2><p>Yes, and the report will say unbound or ci-environment. Neither label proves the command ran.</p></article>
 <article class="mini"><h2>Where is macOS?</h2><p>Not on the required matrix. Earlier macOS jobs were cancelled with zero steps. That is not a pass.</p></article>
 </div>
-<footer class="foot">PramanaSutra AI ${esc(pkg.version)} · Created by Vatsal Shah · Apache-2.0 · Decision support, not a certification</footer>
+<footer class="foot">PramanaSutra AI ${esc(pkg.version)} · Created by <a href="${AUTHOR}" rel="noopener">Vatsal Shah</a> · <a href="${AUTHOR}" rel="noopener">shahvatsal.com</a> · Apache-2.0 · Decision support, not a certification</footer>
 </main>
 </div>
 <script>window.__DOCS_INDEX__=${JSON.stringify(searchIndex).replace(/</g, '\\u003c')};</script>
