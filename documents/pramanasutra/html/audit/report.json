@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "product": "PramanaSutra AI",
-  "toolVersion": "0.3.6",
+  "toolVersion": "0.3.7",
   "generatedAt": "2026-11-06T00:00:00.000Z",
   "scannedPath": "PramanaSutra-AI",
   "capabilities": {
@@ -13,7 +13,7 @@
     "aiInference": "not-run"
   },
   "inventory": {
-    "fileCount": 369,
+    "fileCount": 415,
     "testFiles": [
       "tests/cli.test.mjs"
     ],

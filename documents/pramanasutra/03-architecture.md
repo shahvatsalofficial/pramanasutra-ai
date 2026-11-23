@@ -9,46 +9,9 @@
 
 There is one program: `packages/cli/bin/pramanasutra.mjs`. It loads four libraries and nothing else. There is no database, no daemon, no plugin loader and no network stack in the scan path.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="archTitle archDesc">
-<title id="archTitle">PramanaSutra components</title>
-<desc id="archDesc">Skills stay in the IDE. The CLI reads the repo, optional policy and evidence, evaluates a gate, and writes Markdown, HTML and JSON locally.</desc>
-<style>text{font-family:ui-sans-serif,system-ui,sans-serif}</style>
-<rect width="880" height="460" fill="#f7f4ee"/>
-<rect x="24" y="24" width="250" height="120" rx="12" fill="#fff" stroke="#0f3d3e"/>
-<text x="40" y="56" font-size="15" font-weight="700" fill="#0f3d3e">AI IDE</text>
-<text x="40" y="80" font-size="13" fill="#1c1915">Claude, Cursor, Codex,</text>
-<text x="40" y="100" font-size="13" fill="#1c1915">Copilot, Gemini CLI</text>
-<text x="40" y="124" font-size="12" fill="#5e584e">Model stays in the IDE</text>
-<rect x="24" y="168" width="250" height="100" rx="12" fill="#fff" stroke="#0f3d3e"/>
-<text x="40" y="200" font-size="15" font-weight="700" fill="#0f3d3e">17 Agent Skills</text>
-<text x="40" y="224" font-size="13" fill="#1c1915">.agents/skills is canonical</text>
-<text x="40" y="244" font-size="12" fill="#5e584e">init copies them. It does not run them</text>
-<rect x="330" y="70" width="250" height="210" rx="12" fill="#0f3d3e"/>
-<text x="348" y="104" font-size="16" font-weight="700" fill="#f4fffe">pramanasutra CLI</text>
-<text x="348" y="132" font-size="13" fill="#d5efec">scanner.mjs walk + rules</text>
-<text x="348" y="156" font-size="13" fill="#d5efec">policy.mjs fail-closed</text>
-<text x="348" y="180" font-size="13" fill="#d5efec">evidence.mjs schema</text>
-<text x="348" y="204" font-size="13" fill="#d5efec">evaluateGate</text>
-<text x="348" y="236" font-size="13" fill="#f4fffe">No network. No test exec.</text>
-<rect x="630" y="24" width="226" height="78" rx="12" fill="#fff" stroke="#92400e"/>
-<text x="646" y="52" font-size="14" font-weight="700" fill="#92400e">Policy JSON</text>
-<text x="646" y="76" font-size="12" fill="#1c1915">optional --policy</text>
-<rect x="630" y="118" width="226" height="78" rx="12" fill="#fff" stroke="#92400e"/>
-<text x="646" y="146" font-size="14" font-weight="700" fill="#92400e">Evidence JSON</text>
-<text x="646" y="170" font-size="12" fill="#1c1915">optional --evidence</text>
-<rect x="630" y="214" width="226" height="110" rx="12" fill="#fff" stroke="#166534"/>
-<text x="646" y="244" font-size="14" font-weight="700" fill="#166534">Reports</text>
-<text x="646" y="268" font-size="13" fill="#1c1915">report.md</text>
-<text x="646" y="288" font-size="13" fill="#1c1915">report.html</text>
-<text x="646" y="308" font-size="13" fill="#1c1915">report.json</text>
-<rect x="24" y="310" width="832" height="124" rx="12" fill="#fff" stroke="#ddd4c4"/>
-<text x="40" y="342" font-size="14" font-weight="700" fill="#1c1915">Target repository (read-only)</text>
-<text x="40" y="368" font-size="13" fill="#1c1915">Files, test names, CI config, LICENSE. Symlinks skipped. .pramanasutraignore prefixes excluded.</text>
-<text x="40" y="392" font-size="13" fill="#1c1915">The report stores the folder's base name, not the absolute path.</text>
-<text x="40" y="416" font-size="12" fill="#5e584e">Writes go to the output directory the operator chose, default ./pramanasutra-reports in the current working directory.</text>
-</svg>
+![Where the pieces sit: your files, test results and policy go in, four report files and an exit code come out, and a person decides](diagrams/overview.svg)
 
-The diagram is inline. The page does not fetch a chart library. The reports box lists Markdown, HTML and JSON. The same write also emits `report.sarif.json` (SARIF 2.1.0).
+The diagrams are plain SVG files. The page does not fetch a chart library. One scan writes `report.md`, `report.html`, `report.json` and `report.sarif.json` (SARIF 2.1.0).
 
 ## Trust boundaries
 

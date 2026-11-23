@@ -52,6 +52,14 @@ function arrow(pts, { label, lx, ly, color = C.mute, dash = false } = {}) {
   if (label) s += text(lx ?? pts[0][0], ly ?? pts[0][1] - 6, label, { size: 13, weight: 700, fill: color });
   return s;
 }
+// Dark variant: the same drawing with the palette swapped. Code panes (#1b2423) stay dark in both.
+const DARK = {
+  '#fffdf8': '#1a201d', '#cfc6b4': '#3b4740', '#1c1915': '#f3efe6', '#5e584e': '#c3bba9', '#efeae0': '#26302c',
+  '#dff0ee': '#173735', '#0f3d3e': '#a8e3dc', '#0b5f63': '#5fb9b2', '#dcfce7': '#12301d', '#166534': '#86efac',
+  '#fef3c7': '#3a2f10', '#92400e': '#fbbf24', '#fee2e2': '#3b1a1a', '#991b1b': '#fca5a5', '#dbeafe': '#16274a',
+  '#1e40af': '#9db9ff', '#ffffff': '#212925', '#fffffe': '#10201f'
+};
+function toDark(doc) { return doc.replace(/#[0-9a-fA-F]{6}/g, (m) => DARK[m.toLowerCase()] ?? m); }
 function svg(name, w, h, title, desc, body) {
   const doc = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="t d" font-family="${FONT}">
 <title id="t">${esc(title)}</title><desc id="d">${esc(desc)}</desc>
@@ -61,6 +69,7 @@ ${body}
 </svg>
 `;
   writeFileSync(path.join(out, `${name}.svg`), doc);
+  writeFileSync(path.join(out, `${name}-dark.svg`), toDark(doc));
 }
 
 // 1. Overview ---------------------------------------------------------------
@@ -196,7 +205,7 @@ svg('scenario-focused-test', 960, 420, 'Scenario: a focused test hides half the 
   text(14, 106, '2', { size: 12, fill: C.bad, weight: 700 }),
   text(30, 186, 'Tests the runner executes', { size: 13, anchor: 'start', fill: C.mute }),
   `<rect x="30" y="196" width="420" height="22" rx="6" fill="${C.neutral}"/><rect x="30" y="196" width="210" height="22" rx="6" fill="${C.bad}"/>`,
-  text(125, 213, '1 of 2 run', { size: 13, weight: 700, fill: '#ffffff' }),
+  text(125, 213, '1 of 2 run', { size: 13, weight: 700, fill: '#fffffe' }),
   arrow([[250, 232], [250, 262]]),
   box(30, 266, 420, 120, { title: 'PramanaSutra: NO_GO (exit 2)', lines: ['FOCUSED_TEST  high', 'tests/a.test.js:2', 'Remove .only, run the full suite'], kind: 'bad', tsize: 15 }),
   arrow([[450, 130], [510, 130]], { label: 'fix', lx: 480, ly: 120, color: C.ok }),
@@ -207,7 +216,7 @@ svg('scenario-focused-test', 960, 420, 'Scenario: a focused test hides half the 
   text(526, 134, 'test("no longer skipped", () => {});', { size: 13.5, anchor: 'start', fill: '#bbf7d0', mono: true }),
   text(510, 186, 'Tests the runner executes', { size: 13, anchor: 'start', fill: C.mute }),
   `<rect x="510" y="196" width="420" height="22" rx="6" fill="${C.ok}"/>`,
-  text(720, 213, '2 of 2', { size: 13, weight: 700, fill: '#ffffff' }),
+  text(720, 213, '2 of 2', { size: 13, weight: 700, fill: '#fffffe' }),
   arrow([[720, 232], [720, 262]]),
   box(510, 266, 420, 120, { title: 'READY_FOR_HUMAN_APPROVAL (exit 0)', lines: ['with passing evidence supplied', 'and no other blocker', 'a person still approves'], kind: 'ok', tsize: 15 })
 ].join('\n'));
@@ -272,10 +281,10 @@ const ci = [['Ubuntu', 20], ['Ubuntu', 22], ['Ubuntu', 24], ['Windows', 20], ['W
 svg('proof-graphs', 960, 470, 'Recorded results', 'Forty-three of forty-three unit tests passed, six of six labeled fixtures matched, and six of six required CI jobs passed on commit 43309a8.', [
   text(30, 34, 'UNIT TESTS (tests/cli.test.mjs)', { size: 13, weight: 700, fill: C.mute, anchor: 'start' }),
   `<rect x="30" y="46" width="900" height="34" rx="8" fill="${C.ok}"/>`,
-  text(480, 69, '43 passed    0 failed    0 skipped', { size: 15, weight: 700, fill: '#ffffff' }),
+  text(480, 69, '43 passed    0 failed    0 skipped', { size: 15, weight: 700, fill: '#fffffe' }),
   text(30, 120, 'LABELED FIXTURES (rule author wrote them: a regression lock, not field accuracy)', { size: 13, weight: 700, fill: C.mute, anchor: 'start' }),
   `<rect x="30" y="132" width="900" height="34" rx="8" fill="${C.ok}"/>`,
-  text(480, 155, '6 of 6 matched the expected rules and gate    0 false positives    0 false negatives', { size: 15, weight: 700, fill: '#ffffff' }),
+  text(480, 155, '6 of 6 matched the expected rules and gate    0 false positives    0 false negatives', { size: 15, weight: 700, fill: '#fffffe' }),
   text(30, 206, 'REQUIRED CI JOBS on commit 43309a8 (macOS is not scheduled)', { size: 13, weight: 700, fill: C.mute, anchor: 'start' }),
   ...ci.flatMap(([os, n], i) => { const col = i % 3, row = Math.floor(i / 3); const x = 30 + col * 300, y = 222 + row * 78; return [`<rect x="${x}" y="${y}" width="280" height="62" rx="10" fill="${C.okSoft}" stroke="${C.ok}" stroke-width="1.6"/>`, text(x + 140, y + 27, `${os}  Node ${n}`, { size: 15, weight: 700, fill: C.ok }), text(x + 140, y + 48, 'passed', { size: 13, fill: C.ok })]; }),
   text(480, 410, 'Numbers come from docs/proof/test-results.txt, docs/proof/eval-results.json and the GitHub Actions run.', { size: 13, fill: C.mute }),

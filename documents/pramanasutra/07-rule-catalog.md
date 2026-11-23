@@ -1,6 +1,6 @@
 # Rule catalog
 
-<!-- summary: Every static rule PramanaSutra AI 0.3.6 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
+<!-- summary: Every static rule PramanaSutra AI 0.3.7 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
 
 Rules are regular expressions on a single line of a file already classified as a test. They are not ASTs. Confidence is `medium` unless noted. Status on a finding is `observed`, which means "the pattern matched", not "a test was executed".
 

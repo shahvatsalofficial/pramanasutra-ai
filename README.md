@@ -19,7 +19,7 @@ PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and relea
 
 > **No extra API key.** Skills use the IDE's own model. The CLI makes no network calls and has no telemetry.
 
-Created by **[Vatsal Shah](https://shahvatsal.com)**. Official site: [shahvatsal.com](https://shahvatsal.com). Apache-2.0. Version 0.3.6. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
+Created by **[Vatsal Shah](https://shahvatsal.com)**. Official site: [shahvatsal.com](https://shahvatsal.com). Apache-2.0. Version 0.3.7. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
 
 ## At a glance
 

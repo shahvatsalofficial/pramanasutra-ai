@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.7 - 2026-11-24
+
+### Changed
+- The documentation site is redesigned as a website: a landing page (hero, facts, features, three steps, gate outcomes, scenario cards, docs map, limits, FAQ, call to action) and a docs layout with grouped navigation, an on-this-page rail, mobile drawer, search that ranks title matches first, and previous/next pages.
+- Light is the default theme everywhere. A visible toggle switches to dark and remembers the choice. The system colour scheme is no longer used, so nobody lands on dark by accident.
+- Every diagram has a dark variant (`*-dark.svg`) that swaps in with the theme.
+- Phone layout checked at 375 px: no sideways scroll, 44 px touch targets, tables and code scroll inside their own box.
+- Chapter order follows how people read: Get started, Understand, Trust, Operate.
+- Removed an old hand-drawn inline diagram from the architecture chapter in favour of the generated ones.
+
+### Fixed
+- The mobile menu markup no longer shows on desktop.
+- No scanner, gate, evidence or report behavior changed.
+
 ## 0.3.6 - 2026-11-23
 
 ### Added

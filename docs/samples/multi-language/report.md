@@ -6,7 +6,7 @@ This audit is four files with the same facts: **report.md** (this file), **repor
 |---|---|
 | Project | `multi-language` |
 | Generated | 2026-11-06T00:00:00.000Z |
-| Tool | PramanaSutra AI 0.3.6 (schema 1.0.0) |
+| Tool | PramanaSutra AI 0.3.7 (schema 1.0.0) |
 | **Release decision** | **REVIEW_REQUIRED** |
 | Policy | recommended |
 | Supplied test evidence | absent |

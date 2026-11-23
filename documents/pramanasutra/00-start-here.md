@@ -7,7 +7,7 @@ PramanaSutra AI (from Sanskrit *pramana*, "valid proof") is an open-source **QA 
 1. **Seventeen Agent Skills**, led by PramanaSutra Prime, for Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI. The skill uses the IDE's own model. There is no extra API key.
 2. **A deterministic command-line tool** that reads a project, does not run its tests, and writes four files of the same audit: `report.md`, `report.html`, `report.json` and `report.sarif.json`. `scan` and `release-check` both return `NO_GO` (exit 2), `REVIEW_REQUIRED` (exit 3) or `READY_FOR_HUMAN_APPROVAL` (exit 0).
 
-Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Licensed Apache-2.0. Version 0.3.6. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**. The copy on npmjs.com is the last tarball someone published. It can lag this version until that publish finishes.
+Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Licensed Apache-2.0. Version 0.3.7. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**. The copy on npmjs.com is the last tarball someone published. It can lag this version until that publish finishes.
 
 > **Important:** The tool does not certify quality, security or compliance. `READY_FOR_HUMAN_APPROVAL` means the configured checks passed. A person still decides. It is never a deploy order.
 

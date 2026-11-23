@@ -1,10 +1,10 @@
 # Roadmap and status
 
-<!-- summary: Honest status of PramanaSutra AI 0.3.6. Implemented, planned, and explicitly not claimed. -->
+<!-- summary: Honest status of PramanaSutra AI 0.3.7. Implemented, planned, and explicitly not claimed. -->
 
 Status words mean only what they say. **Implemented** has a command or file and a test or a committed artifact. **Planned** is a directory, a sentence, or an intention. It does not run. **Not claimed** is something people might assume that this project refuses.
 
-## Implemented in 0.3.6
+## Implemented in 0.3.7
 
 | Capability | Evidence |
 |---|---|

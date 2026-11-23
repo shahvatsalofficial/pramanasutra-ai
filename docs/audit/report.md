@@ -6,7 +6,7 @@ This audit is four files with the same facts: **report.md** (this file), **repor
 |---|---|
 | Project | `PramanaSutra-AI` |
 | Generated | 2026-11-06T00:00:00.000Z |
-| Tool | PramanaSutra AI 0.3.6 (schema 1.0.0) |
+| Tool | PramanaSutra AI 0.3.7 (schema 1.0.0) |
 | **Release decision** | **READY_FOR_HUMAN_APPROVAL** |
 | Policy | recommended |
 | Supplied test evidence | passing |
@@ -15,7 +15,7 @@ This audit is four files with the same facts: **report.md** (this file), **repor
 
 ## Summary
 
-- Files inspected: 369
+- Files inspected: 415
 - Test files detected: 1
 - CI workflows detected: 3
 - Manifests detected: 1
