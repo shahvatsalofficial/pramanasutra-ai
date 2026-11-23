@@ -25,6 +25,9 @@ Price of the software: zero. License: Apache-2.0. Operator cost: Node.js 20+ and
 
 ## The decision, in one table
 
+
+![The release gate as a flowchart. Read it as: stop on a blocker, ask for evidence if anything is missing, and hand a clean result to a person](diagrams/gate-flow.svg)
+
 | Gate | Exit code | Plain meaning | Typical next step |
 |---|---|---|---|
 | `NO_GO` | 2 | A blocking static finding (by default a focused test) or supplied evidence that failed | Fix, re-run the tests, re-check |

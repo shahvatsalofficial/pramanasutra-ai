@@ -60,6 +60,13 @@ function convert(md) {
       out.push(`<pre class="code" data-lang="${esc(lang)}"><code>${esc(buf.join('\n'))}</code><button class="copy" type="button">Copy</button></pre>`);
       continue;
     }
+    const img = /^!\[([^\]]*)\]\(([^)\s]+)\)\s*$/.exec(line);
+    if (img) {
+      const src = rewrite(img[2]);
+      out.push(`<figure class="fig"><a href="${esc(src)}" class="figlink" aria-label="Open diagram full size"><img src="${esc(src)}" alt="${esc(img[1])}" loading="lazy" decoding="async"></a><figcaption>${esc(img[1])}</figcaption></figure>`);
+      i++;
+      continue;
+    }
     if (/^<(svg|div|figure|details|section|table)\b/.test(line)) {
       const buf = [];
       while (i < lines.length && lines[i].trim() !== '') buf.push(lines[i++]);
@@ -123,7 +130,7 @@ function convert(md) {
     }
     if (!line.trim()) { i++; continue; }
     const buf = [];
-    while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|```|>\s?|\s*([-*]|\d+\.)\s|<(svg|div|figure|details|section|table)\b)/.test(lines[i]) && !(lines[i].includes('|') && lines[i + 1] && isTableSep(lines[i + 1]))) buf.push(lines[i++]);
+    while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|```|!\[|>\s?|\s*([-*]|\d+\.)\s|<(svg|div|figure|details|section|table)\b)/.test(lines[i]) && !(lines[i].includes('|') && lines[i + 1] && isTableSep(lines[i + 1]))) buf.push(lines[i++]);
     out.push(`<p>${inline(buf.join(' '))}</p>`);
   }
   return { html: out.join('\n'), toc, questions };
@@ -250,12 +257,18 @@ function landing() {
 <h1>PramanaSutra AI</h1>
 <p class="lead">An offline check for a repository you are about to ship. It reads files. It does not run the project's tests. It writes four copies of one audit, then stops for a person.</p>
 <div class="actions"><a class="primary" href="00-start-here.html">Start here</a><a class="secondary" href="${REPO}" rel="noopener">Source</a><a class="secondary" href="https://www.npmjs.com/package/pramanasutra" rel="noopener">npm</a></div>
+<figure class="fig hero-fig"><img src="diagrams/overview.svg" alt="Overview: your project files, test results and policy go into the pramanasutra command, which writes four report files and an exit code. A person decides." decoding="async"><figcaption>The whole tool in one picture. It never runs your tests.</figcaption></figure>
 <section class="stat-grid" aria-label="What this version actually is">
 <article class="stat"><b>5</b><span>static rules. Focused test, skipped test, no tests, no CI, no license.</span></article>
 <article class="stat"><b>0</b><span>runtime dependencies. The CLI makes no network call.</span></article>
 <article class="stat"><b>4</b><span>report files: Markdown, HTML, JSON, SARIF 2.1.0. SARIF is not uploaded.</span></article>
 <article class="stat"><b>17</b><span>skills. They are instructions. They do not execute tests.</span></article>
 </section>
+<h2>How a decision is made</h2>
+<figure class="fig"><a class="figlink" href="diagrams/gate-flow.svg"><img src="diagrams/gate-flow.svg" alt="Release gate flowchart: a blocking finding or failing evidence is NO_GO; anything missing is REVIEW_REQUIRED; otherwise READY_FOR_HUMAN_APPROVAL, then a person decides." loading="lazy" decoding="async"></a><figcaption>First match wins. There is no score and no percentage.</figcaption></figure>
+<h2>Real-world scenarios</h2>
+<p>Eight true-to-life stories, with the real terminal output: a stray <code>test.only</code>, an AI that says "all tests pass", a pull-request gate, piled-up skips, a pasted JSON, a legacy service, hostile file names, and teaching your IDE.</p>
+<div class="actions"><a class="primary" href="16-real-world-scenarios.html">Read the scenarios</a><a class="secondary" href="05-user-guide.html">User guide</a></div>
 <h2>What the command does</h2>
 <div class="card-grid">
 <article class="mini"><h2>scan</h2><p>Same exit codes as release-check. Exit 2 is NO_GO. Exit 3 is REVIEW_REQUIRED. Exit 0 needs passing evidence. A scan with no evidence file exits 3.</p></article>
@@ -294,7 +307,7 @@ function landing() {
 mkdirSync(outDir, { recursive: true });
 docs.forEach((d, i) => writeFileSync(path.join(outDir, d.out), page(d, i)));
 writeFileSync(path.join(outDir, 'index.html'), landing());
-for (const name of ['samples', 'proof', 'audit']) copyInto(name);
+for (const name of ['samples', 'proof', 'audit', 'diagrams']) copyInto(name);
 const urls = ['index.html', ...docs.map((d) => d.out)];
 writeFileSync(path.join(outDir, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}/${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(path.join(outDir, 'robots.txt'), `User-agent: *\nAllow: /\n\n# Explicit allow for answer engines and LLM crawlers. This documentation is meant to be found.\nUser-agent: GPTBot\nAllow: /\nUser-agent: OAI-SearchBot\nAllow: /\nUser-agent: ChatGPT-User\nAllow: /\nUser-agent: ClaudeBot\nAllow: /\nUser-agent: Google-Extended\nAllow: /\nUser-agent: PerplexityBot\nAllow: /\nUser-agent: Applebot\nAllow: /\nUser-agent: CCBot\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" role="img" aria-labelledby="t d" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+<title id="t">Recorded results</title><desc id="d">Forty-three of forty-three unit tests passed, six of six labeled fixtures matched, and six of six required CI jobs passed on commit 43309a8.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5e584e"/></marker></defs>
+<rect x="1" y="1" width="958" height="468" rx="16" fill="#fffdf8" stroke="#cfc6b4" stroke-width="2"/>
+<text x="30" y="34" font-size="13" font-weight="700" fill="#5e584e" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="30" dy="0">UNIT TESTS (tests/cli.test.mjs)</tspan></text>
+<rect x="30" y="46" width="900" height="34" rx="8" fill="#166534"/>
+<text x="480" y="69" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">43 passed    0 failed    0 skipped</tspan></text>
+<text x="30" y="120" font-size="13" font-weight="700" fill="#5e584e" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="30" dy="0">LABELED FIXTURES (rule author wrote them: a regression lock, not field accuracy)</tspan></text>
+<rect x="30" y="132" width="900" height="34" rx="8" fill="#166534"/>
+<text x="480" y="155" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">6 of 6 matched the expected rules and gate    0 false positives    0 false negatives</tspan></text>
+<text x="30" y="206" font-size="13" font-weight="700" fill="#5e584e" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="30" dy="0">REQUIRED CI JOBS on commit 43309a8 (macOS is not scheduled)</tspan></text>
+<rect x="30" y="222" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="170" y="249" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="170" dy="0">Ubuntu  Node 20</tspan></text>
+<text x="170" y="270" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="170" dy="0">passed</tspan></text>
+<rect x="330" y="222" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="470" y="249" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="470" dy="0">Ubuntu  Node 22</tspan></text>
+<text x="470" y="270" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="470" dy="0">passed</tspan></text>
+<rect x="630" y="222" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="770" y="249" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="770" dy="0">Ubuntu  Node 24</tspan></text>
+<text x="770" y="270" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="770" dy="0">passed</tspan></text>
+<rect x="30" y="300" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="170" y="327" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="170" dy="0">Windows  Node 20</tspan></text>
+<text x="170" y="348" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="170" dy="0">passed</tspan></text>
+<rect x="330" y="300" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="470" y="327" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="470" dy="0">Windows  Node 22</tspan></text>
+<text x="470" y="348" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="470" dy="0">passed</tspan></text>
+<rect x="630" y="300" width="280" height="62" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="770" y="327" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="770" dy="0">Windows  Node 24</tspan></text>
+<text x="770" y="348" font-size="13" font-weight="400" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="770" dy="0">passed</tspan></text>
+<text x="480" y="410" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">Numbers come from docs/proof/test-results.txt, docs/proof/eval-results.json and the GitHub Actions run.</tspan></text>
+<text x="480" y="436" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">Not measured: accuracy on large real repositories, live behaviour in each AI IDE.</tspan></text>
+</svg>

@@ -19,7 +19,15 @@ PramanaSutra AI (from *pramana*, "valid proof") is an open-source **QA and relea
 
 > **No extra API key.** Skills use the IDE's own model. The CLI makes no network calls and has no telemetry.
 
-Created by **[Vatsal Shah](https://shahvatsal.com)**. Official site: [shahvatsal.com](https://shahvatsal.com). Apache-2.0. Version 0.3.5. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
+Created by **[Vatsal Shah](https://shahvatsal.com)**. Official site: [shahvatsal.com](https://shahvatsal.com). Apache-2.0. Version 0.3.6. The npm page stays on the last published tarball until `npm view pramanasutra version` matches this line.
+
+## At a glance
+
+![Overview: your project files, test results and policy go into the pramanasutra command, which writes four report files and an exit code. A person decides.](https://raw.githubusercontent.com/shahvatsalofficial/pramanasutra-ai/main/documents/pramanasutra/diagrams/overview.svg)
+
+The tool never runs your tests. It reads the project and reads the test results you give it, then decides one of three outcomes.
+
+![Release gate flowchart: a blocking finding or failing evidence is NO_GO; anything missing is REVIEW_REQUIRED; otherwise READY_FOR_HUMAN_APPROVAL, then a person decides.](https://raw.githubusercontent.com/shahvatsalofficial/pramanasutra-ai/main/documents/pramanasutra/diagrams/gate-flow.svg)
 
 ## Install
 
@@ -91,6 +99,12 @@ Every `scan` and `release-check` writes the four files together unless you pass 
 
 Open a finished example: [Markdown](https://github.com/shahvatsalofficial/pramanasutra-ai/blob/main/documents/pramanasutra/samples/focused-test/report.md), [HTML](https://shahvatsalofficial.github.io/pramanasutra-ai/samples/focused-test/report.html). How to read them: [CLI and reports](https://shahvatsalofficial.github.io/pramanasutra-ai/06-cli-and-reports.html).
 
+## Real-world scenarios
+
+Eight true stories with the real terminal output: a stray `test.only`, an AI that says "all tests pass", a pull-request gate, piled-up skipped tests, a pasted JSON, a legacy service, hostile file names, and teaching your IDE. [Read the scenarios](https://shahvatsalofficial.github.io/pramanasutra-ai/16-real-world-scenarios.html).
+
+![Before and after fixing a test.only: 1 of 2 tests run, then 2 of 2, and the gate moves from NO_GO to ready for a human](https://raw.githubusercontent.com/shahvatsalofficial/pramanasutra-ai/main/documents/pramanasutra/diagrams/scenario-focused-test.svg)
+
 ## Release gate
 
 | Decision | Exit | Meaning |
@@ -126,6 +140,7 @@ The maintained pack is [documents/pramanasutra](https://github.com/shahvatsaloff
 | Architecture | [03](https://shahvatsalofficial.github.io/pramanasutra-ai/03-architecture.html) |
 | Technical reference | [04](https://shahvatsalofficial.github.io/pramanasutra-ai/04-technical-reference.html) |
 | User guide | [05](https://shahvatsalofficial.github.io/pramanasutra-ai/05-user-guide.html) |
+| Real-world scenarios | [16](https://shahvatsalofficial.github.io/pramanasutra-ai/16-real-world-scenarios.html) |
 | Security | [09](https://shahvatsalofficial.github.io/pramanasutra-ai/09-security-and-privacy.html) |
 | Legal | [10](https://shahvatsalofficial.github.io/pramanasutra-ai/10-legal-and-compliance.html) |
 | Roadmap | [13](https://shahvatsalofficial.github.io/pramanasutra-ai/13-roadmap-and-status.html) |

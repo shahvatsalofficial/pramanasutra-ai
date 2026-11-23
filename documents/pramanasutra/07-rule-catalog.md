@@ -1,10 +1,12 @@
 # Rule catalog
 
-<!-- summary: Every static rule PramanaSutra AI 0.3.5 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
+<!-- summary: Every static rule PramanaSutra AI 0.3.6 can emit, with severity, what the line looks like, a committed sample, and the misses to expect. -->
 
 Rules are regular expressions on a single line of a file already classified as a test. They are not ASTs. Confidence is `medium` unless noted. Status on a finding is `observed`, which means "the pattern matched", not "a test was executed".
 
 A line that is a string in the middle of other code does not match, because the pattern is anchored at the start of the line (after whitespace). A line that is only the declaration does match. That is why a fixture string inside `const fixture = 'test.only(...)'` is not a finding, and a real `test.only` line is.
+
+![The five rules, their severity and their effect on the gate](diagrams/rules-overview.svg)
 
 ## FOCUSED_TEST
 

@@ -7,9 +7,21 @@ PramanaSutra AI (from Sanskrit *pramana*, "valid proof") is an open-source **QA 
 1. **Seventeen Agent Skills**, led by PramanaSutra Prime, for Claude Code, Cursor, OpenAI Codex, GitHub Copilot and Gemini CLI. The skill uses the IDE's own model. There is no extra API key.
 2. **A deterministic command-line tool** that reads a project, does not run its tests, and writes four files of the same audit: `report.md`, `report.html`, `report.json` and `report.sarif.json`. `scan` and `release-check` both return `NO_GO` (exit 2), `REVIEW_REQUIRED` (exit 3) or `READY_FOR_HUMAN_APPROVAL` (exit 0).
 
-Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Licensed Apache-2.0. Version 0.3.5. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**. The copy on npmjs.com is the last tarball someone published. It can lag this version until that publish finishes.
+Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com](https://shahvatsal.com). Licensed Apache-2.0. Version 0.3.6. npm package: `pramanasutra`. The command line has **zero runtime dependencies** and makes **no network calls**. The copy on npmjs.com is the last tarball someone published. It can lag this version until that publish finishes.
 
 > **Important:** The tool does not certify quality, security or compliance. `READY_FOR_HUMAN_APPROVAL` means the configured checks passed. A person still decides. It is never a deploy order.
+
+## The whole thing in one picture
+
+You give the tool your project and, optionally, test results. It scans, checks the evidence and decides. A person makes the last call.
+
+![Overview: your project files, test results and policy go in; four report files, an exit code and a human decision come out](diagrams/overview.svg)
+
+## How a decision is made
+
+The gate reads top to bottom. The first match wins. There is no score and no percentage.
+
+![Flowchart of the release gate: blocking finding or failing evidence gives NO_GO; anything missing gives REVIEW_REQUIRED; otherwise READY_FOR_HUMAN_APPROVAL, then a person decides](diagrams/gate-flow.svg)
 
 ## Who should read what
 
@@ -18,7 +30,7 @@ Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com
 | Deciding whether to adopt it | [Executive summary](01-executive-summary.md), then [Legal](10-legal-and-compliance.md) |
 | Writing requirements or a QA process | [Functional specification](02-functional-specification.md) |
 | Reviewing the design | [Architecture](03-architecture.md), then [Technical reference](04-technical-reference.md) |
-| Going to run it today | [User guide](05-user-guide.md) |
+| Going to run it today | [User guide](05-user-guide.md), then [Real-world scenarios](16-real-world-scenarios.md) |
 | Wiring it to CI | [CI and release](12-ci-and-release.md) and [CLI and reports](06-cli-and-reports.md) |
 | Asking what a finding means | [Rule catalog](07-rule-catalog.md) |
 | Asking what the skills do | [Skills and agents](08-skills-and-agents.md) |
@@ -28,6 +40,9 @@ Created by [Vatsal Shah](https://shahvatsal.com). Official site: [shahvatsal.com
 | Looking up a word | [FAQ and glossary](14-faq-and-glossary.md) |
 
 ## Sixty seconds
+
+
+![Three steps: run release-check, read report.html, then run your tests and supply the evidence file](diagrams/quickstart.svg)
 
 Node.js 20 or newer.
 
@@ -78,5 +93,6 @@ With that same test output supplied as evidence, a release check of this reposit
 | 13 | Roadmap and status | Implemented, planned, and not claimed |
 | 14 | FAQ and glossary | Short answers and terms |
 | 15 | Maintainer guide | How to change a rule, rebuild docs, and release |
+| 16 | Real-world scenarios | Eight true stories with real terminal output and pictures |
 
 Machine-readable summary for tools: [llms.txt](../../llms.txt) at the repository root.

@@ -27,6 +27,9 @@ Binary name: `pramanasutra`. From a clone: `node packages/cli/bin/pramanasutra.m
 
 ## Where files are written
 
+
+![One audit written as four files: Markdown, HTML, JSON and SARIF](diagrams/report-files.svg)
+
 Default: `pramanasutra-reports` under the **current working directory**, resolved to an absolute path at write time. The scanned project is not the default output location, so a scan of a foreign tree does not drop files into it.
 
 The four names are fixed: `report.md`, `report.html`, `report.json`, `report.sarif.json`. They are written in that order, in one directory, in one call. If the directory cannot be created, nothing is reported as success. SARIF is a rendering of the findings for other tools. The CLI does not upload it and does not fetch the SARIF schema.

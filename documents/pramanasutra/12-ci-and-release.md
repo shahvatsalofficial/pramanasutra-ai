@@ -4,6 +4,9 @@
 
 ## Workflows in this repository
 
+
+![A pull request through tests, evidence, the gate and a human decision to release](diagrams/ci-pipeline.svg)
+
 | File | What it gates | Badge |
 |---|---|---|
 | `.github/workflows/ci.yml` | Ubuntu and Windows, Node 20, 22 and 24. Unit tests, `doctor`, then `scripts/ci-gate.mjs`. Does not publish | The CI badge on the README |

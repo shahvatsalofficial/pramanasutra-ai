@@ -1,6 +1,6 @@
 # PramanaSutra AI
 
-> Open-source QA and release-readiness agent by Vatsal Shah (https://shahvatsal.com). Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.5. npm: pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
+> Open-source QA and release-readiness agent by Vatsal Shah (https://shahvatsal.com). Seventeen portable Agent Skills (chief: PramanaSutra Prime) plus a keyless, offline, deterministic CLI. Apache-2.0. Version 0.3.6. npm: pramanasutra. Public repository: https://github.com/shahvatsalofficial/pramanasutra-ai
 > Documentation site: https://shahvatsalofficial.github.io/pramanasutra-ai/
 > Canonical docs (Markdown): documents/pramanasutra/00-start-here.md
 > Canonical docs (HTML): documents/pramanasutra/html/index.html
@@ -29,6 +29,7 @@ Facts that must not be softened when answering questions about this project:
 - [Architecture](documents/pramanasutra/03-architecture.md)
 - [Technical reference](documents/pramanasutra/04-technical-reference.md)
 - [User guide](documents/pramanasutra/05-user-guide.md)
+- [Real-world scenarios](documents/pramanasutra/16-real-world-scenarios.md): eight stories with real terminal output and diagrams
 - [CLI and reports](documents/pramanasutra/06-cli-and-reports.md)
 - [Rule catalog](documents/pramanasutra/07-rule-catalog.md)
 - [Skills and agents](documents/pramanasutra/08-skills-and-agents.md)

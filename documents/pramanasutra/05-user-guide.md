@@ -22,6 +22,9 @@ npx pramanasutra doctor
 
 ## Check a project
 
+
+![Quick start: run, read, prove](diagrams/quickstart.svg)
+
 ```bash
 node packages/cli/bin/pramanasutra.mjs release-check --path path/to/project
 ```
@@ -67,6 +70,11 @@ Samples you can open without scanning anything:
 This repository's own audit: [audit/report.md](audit/report.md) and [audit/report.html](audit/report.html).
 
 ## Supply evidence
+
+
+![How each kind of evidence changes the gate](diagrams/evidence-states.svg)
+
+![The three evidence binding labels and why none is a signature](diagrams/evidence-binding.svg)
 
 The CLI will not run your tests. You run them, then describe the result. Minimum shape:
 
@@ -132,6 +140,9 @@ examples/sample-app/
 The report will say how many paths were excluded. If you exclude your real tests, the gate can look healthier than the project is. That is your file. Read the limitation line.
 
 ## Fix a NO_GO for a focused test
+
+
+![Before and after fixing a test.only: 1 of 2 tests run, then 2 of 2, and the gate moves from NO_GO to ready for a human](diagrams/scenario-focused-test.svg)
 
 1. Open the path in the finding, for example `tests/a.test.js:2`.
 2. Remove `.only`, `fit` or `fdescribe`.

@@ -22,7 +22,10 @@ The sample reports pin `generatedAt` to `2026-11-06T00:00:00.000Z` so a review i
 
 ## Captured unit run
 
-On the run captured for version 0.3.5 the summary was:
+
+![Recorded results: 43 of 43 tests, 6 of 6 fixtures, 6 of 6 CI jobs](diagrams/proof-graphs.svg)
+
+On the run captured for version 0.3.6 the summary was:
 
 - tests: 43
 - pass: 43

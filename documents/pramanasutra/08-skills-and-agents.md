@@ -22,6 +22,9 @@ If an assistant using these skills claims "all tests passed" and cannot point at
 
 ## The roster
 
+
+![The 17 skills grouped by job around PramanaSutra Prime](diagrams/skills-team.svg)
+
 | Skill | Job |
 |---|---|
 | `pramanasutra-prime` | Coordinates inspection, QA strategy, evidence review and a release recommendation. Does not approve a deploy |

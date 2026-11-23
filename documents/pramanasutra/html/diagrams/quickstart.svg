@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-labelledby="t d" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+<title id="t">Three steps to your first audit</title><desc id="d">Run release-check, open report.html, then fix findings and supply real test results as evidence.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5e584e"/></marker></defs>
+<rect x="1" y="1" width="958" height="258" rx="16" fill="#fffdf8" stroke="#cfc6b4" stroke-width="2"/>
+<rect x="20" y="30" width="290" height="200" rx="12" fill="#dff0ee" stroke="#0b5f63" stroke-width="1.6"/>
+<text x="165" y="70" font-size="20" font-weight="700" fill="#0f3d3e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="165" dy="0">1  Run</tspan></text>
+<text x="165" y="110" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace"><tspan x="165" dy="0">npx pramanasutra</tspan></text>
+<text x="165" y="132" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace"><tspan x="165" dy="0">release-check --path .</tspan></text>
+<text x="165" y="175" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="165" dy="0">Offline. Read-only.</tspan></text>
+<text x="165" y="195" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="165" dy="0">No account, no API key.</tspan></text>
+<rect x="335" y="30" width="290" height="200" rx="12" fill="#dbeafe" stroke="#1e40af" stroke-width="1.6"/>
+<text x="480" y="70" font-size="20" font-weight="700" fill="#1e40af" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">2  Read</tspan></text>
+<text x="480" y="110" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace"><tspan x="480" dy="0">pramanasutra-reports/</tspan></text>
+<text x="480" y="132" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace"><tspan x="480" dy="0">report.html</tspan></text>
+<text x="480" y="175" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">Gate, findings with</tspan></text>
+<text x="480" y="195" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">file:line, and fixes.</tspan></text>
+<rect x="650" y="30" width="290" height="200" rx="12" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/>
+<text x="795" y="70" font-size="20" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="795" dy="0">3  Prove</tspan></text>
+<text x="795" y="110" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="795" dy="0">run your tests, then</tspan></text>
+<text x="795" y="132" font-size="14" font-weight="400" fill="#1c1915" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace"><tspan x="795" dy="0">--evidence results.json</tspan></text>
+<text x="795" y="175" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="795" dy="0">Only real results</tspan></text>
+<text x="795" y="195" font-size="13" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="795" dy="0">can reach READY.</tspan></text>
+<polyline points="310,130 335,130" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="625,130 650,130" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+</svg>

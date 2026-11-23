@@ -1,8 +1,8 @@
 # Functional specification
 
-<!-- summary: Actors, use cases, functional requirements and acceptance criteria for PramanaSutra AI 0.3.5. Planned work is marked planned and is not described as shipped. -->
+<!-- summary: Actors, use cases, functional requirements and acceptance criteria for PramanaSutra AI 0.3.6. Planned work is marked planned and is not described as shipped. -->
 
-This specification describes version 0.3.5 as implemented. A requirement marked **planned** is not available. Tests that mention a requirement are named so a reader can find them in `tests/cli.test.mjs`.
+This specification describes version 0.3.6 as implemented. A requirement marked **planned** is not available. Tests that mention a requirement are named so a reader can find them in `tests/cli.test.mjs`.
 
 ## Actors
 

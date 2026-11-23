@@ -4,6 +4,9 @@
 
 ## What exists at runtime
 
+
+![Inside the CLI: bin file, scanner, evidence, policy, report and installer modules](diagrams/components.svg)
+
 There is one program: `packages/cli/bin/pramanasutra.mjs`. It loads four libraries and nothing else. There is no database, no daemon, no plugin loader and no network stack in the scan path.
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="archTitle archDesc">
@@ -48,6 +51,9 @@ There is one program: `packages/cli/bin/pramanasutra.mjs`. It loads four librari
 The diagram is inline. The page does not fetch a chart library. The reports box lists Markdown, HTML and JSON. The same write also emits `report.sarif.json` (SARIF 2.1.0).
 
 ## Trust boundaries
+
+
+![Trust boundaries: untrusted project text enters a trusted read-only engine, and reports escape every value](diagrams/trust-boundaries.svg)
 
 | Boundary | Rule |
 |---|---|

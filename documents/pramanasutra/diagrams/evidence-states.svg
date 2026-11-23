@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+<title id="t">How supplied test results are classified</title><desc id="d">Five evidence states: absent, failing, inconclusive, unverified and passing, and the gate effect of each.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5e584e"/></marker></defs>
+<rect x="1" y="1" width="958" height="418" rx="16" fill="#fffdf8" stroke="#cfc6b4" stroke-width="2"/>
+<text x="30" y="32" font-size="12" font-weight="700" fill="#5e584e" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="30" dy="0">WHAT YOU SUPPLY</tspan></text>
+<text x="490" y="32" font-size="12" font-weight="700" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">STATE</tspan></text>
+<text x="930" y="32" font-size="12" font-weight="700" fill="#5e584e" text-anchor="end" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="930" dy="0">GATE EFFECT</tspan></text>
+<rect x="30" y="50" width="360" height="58" rx="12" fill="#ffffff" stroke="#cfc6b4" stroke-width="1.6"/>
+<text x="46" y="85" font-size="14.5" font-weight="400" fill="#1c1915" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="46" dy="0">No --evidence file</tspan></text>
+<rect x="415" y="65" width="150" height="28" rx="14" fill="#efeae0" stroke="#cfc6b4" stroke-width="1.4"/><text x="490" y="83.9" font-size="14" font-weight="700" fill="#1c1915" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">absent</tspan></text>
+<polyline points="390,79 415,79" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="565,79 640,79" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="640" y="50" width="290" height="58" rx="12" fill="#fef3c7" stroke="#92400e" stroke-width="1.6"/><text x="785" y="83.5" font-size="15" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="785" dy="0">REVIEW_REQUIRED</tspan></text>
+<rect x="30" y="122" width="360" height="58" rx="12" fill="#ffffff" stroke="#cfc6b4" stroke-width="1.6"/>
+<text x="46" y="157" font-size="14.5" font-weight="400" fill="#1c1915" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="46" dy="0">failed above 0, or exit code not 0</tspan></text>
+<rect x="415" y="137" width="150" height="28" rx="14" fill="#fee2e2" stroke="#991b1b" stroke-width="1.4"/><text x="490" y="155.9" font-size="14" font-weight="700" fill="#991b1b" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">failing</tspan></text>
+<polyline points="390,151 415,151" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="565,151 640,151" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="640" y="122" width="290" height="58" rx="12" fill="#fee2e2" stroke="#991b1b" stroke-width="1.6"/><text x="785" y="155.5" font-size="15" font-weight="700" fill="#991b1b" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="785" dy="0">NO_GO</tspan></text>
+<rect x="30" y="194" width="360" height="58" rx="12" fill="#ffffff" stroke="#cfc6b4" stroke-width="1.6"/>
+<text x="46" y="229" font-size="14.5" font-weight="400" fill="#1c1915" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="46" dy="0">passed is 0</tspan></text>
+<rect x="415" y="209" width="150" height="28" rx="14" fill="#fef3c7" stroke="#92400e" stroke-width="1.4"/><text x="490" y="227.9" font-size="14" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">inconclusive</tspan></text>
+<polyline points="390,223 415,223" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="565,223 640,223" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="640" y="194" width="290" height="58" rx="12" fill="#fef3c7" stroke="#92400e" stroke-width="1.6"/><text x="785" y="227.5" font-size="15" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="785" dy="0">REVIEW_REQUIRED</tspan></text>
+<rect x="30" y="266" width="360" height="58" rx="12" fill="#ffffff" stroke="#cfc6b4" stroke-width="1.6"/>
+<text x="46" y="301" font-size="14.5" font-weight="400" fill="#1c1915" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="46" dy="0">source is external-unverified</tspan></text>
+<rect x="415" y="281" width="150" height="28" rx="14" fill="#fef3c7" stroke="#92400e" stroke-width="1.4"/><text x="490" y="299.9" font-size="14" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">unverified</tspan></text>
+<polyline points="390,295 415,295" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="565,295 640,295" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="640" y="266" width="290" height="58" rx="12" fill="#fef3c7" stroke="#92400e" stroke-width="1.6"/><text x="785" y="299.5" font-size="15" font-weight="700" fill="#92400e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="785" dy="0">REVIEW_REQUIRED</tspan></text>
+<rect x="30" y="338" width="360" height="58" rx="12" fill="#ffffff" stroke="#cfc6b4" stroke-width="1.6"/>
+<text x="46" y="373" font-size="14.5" font-weight="400" fill="#1c1915" text-anchor="start" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="46" dy="0">exit 0, passed above 0, failed 0, trusted source</tspan></text>
+<rect x="415" y="353" width="150" height="28" rx="14" fill="#dcfce7" stroke="#166534" stroke-width="1.4"/><text x="490" y="371.9" font-size="14" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="490" dy="0">passing</tspan></text>
+<polyline points="390,367 415,367" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="565,367 640,367" fill="none" stroke="#5e584e" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="640" y="338" width="290" height="58" rx="12" fill="#dcfce7" stroke="#166534" stroke-width="1.6"/><text x="785" y="371.5" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="785" dy="0">Counts toward READY</tspan></text>
+<text x="480" y="412" font-size="12.5" font-weight="400" fill="#5e584e" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"><tspan x="480" dy="0">Other checks (no blocking finding, complete scan, tests, CI, license) still apply to the last row.</tspan></text>
+</svg>

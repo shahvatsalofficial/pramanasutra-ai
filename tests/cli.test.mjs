@@ -280,7 +280,7 @@ test('CircleCI config is recognised as CI',()=>temp(folder=>{
   assert.equal(report.findings.some(f=>f.ruleId==='NO_CI'),false);
 }));
 test('evidence binding is quoted for unbound and ci-environment files',()=>{
-  const base={schemaVersion:'1.0.0',scannedPath:'demo',generatedAt:'2026-11-07T00:00:00.000Z',toolVersion:'0.3.5',inventory:{fileCount:1,testFiles:[],ciWorkflows:[],manifests:[],changedFiles:null,partial:false},findings:[],limitations:[],capabilities:{},releaseGate:{decision:'REVIEW_REQUIRED',policy:'recommended',evidenceState:'passing',reasons:['x']}};
+  const base={schemaVersion:'1.0.0',scannedPath:'demo',generatedAt:'2026-11-07T00:00:00.000Z',toolVersion:'0.3.6',inventory:{fileCount:1,testFiles:[],ciWorkflows:[],manifests:[],changedFiles:null,partial:false},findings:[],limitations:[],capabilities:{},releaseGate:{decision:'REVIEW_REQUIRED',policy:'recommended',evidenceState:'passing',reasons:['x']}};
   const unbound={...base,evidence:{source:'local-executed',command:'npm test',executedAt:'2026-11-07T00:00:00.000Z',exitCode:0,passed:1,failed:0,skipped:0,environment:null,commit:null,github:null}};
   const bound={...unbound,evidence:{...unbound.evidence,github:{repository:'o/r',sha:'abc',runId:'9',workflow:'CI'}}};
   assert.match(markdown(unbound),/Evidence binding: unbound/);
